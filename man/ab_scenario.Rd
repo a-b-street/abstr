@@ -16,11 +16,16 @@ ab_scenario(
 Generate A/B Street Scenario files/objects
 }
 \examples{
-ab_scenario(
+dslines = leeds_desire_lines
+ablines = ab_scenario(
   leeds_houses,
   leeds_buildings,
-  leeds_desire_lines,
-  leeds_desire_zones,
+  dslines,
+  leeds_zones,
   output_format = "sf"
 )
+plot(dslines$geometry, lwd = dslines[[3]] / 30)
+plot(leeds_site_area$geometry, add = TRUE)
+plot(leeds_buildings$geometry, add = TRUE)
+plot(ablines$geometry, col = "blue", add = TRUE)
 }

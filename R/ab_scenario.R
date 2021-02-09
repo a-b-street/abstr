@@ -16,6 +16,7 @@
 #' plot(ablines$geometry, col = "blue", add = TRUE)
 ab_scenario = function(houses, buildings, desire_lines, zones, output_format = "json_list") {
 
+  require(sf)
   # input data from data-raw/cambridge.R for testing
   # houses = osm_polygons_resi_site
   # buildings = buildings_in_zones
