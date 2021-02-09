@@ -4,13 +4,18 @@
 \alias{ab_scenario}
 \title{Generate A/B Street Scenario files/objects}
 \usage{
-ab_scenario(
-  houses,
-  buildings,
-  desire_lines,
-  zones,
-  output_format = "json_list"
-)
+ab_scenario(houses, buildings, desire_lines, zones, output_format = "sf")
+}
+\arguments{
+\item{houses}{Polygons where trips will originate (`sf` object)}
+
+\item{buildings}{Buildings where trips will end}
+
+\item{desire_lines}{Origin-Destination data represented as straight lines}
+
+\item{zones}{Zones with IDs that match the desire lines}
+
+\item{output_format}{Which output format? `"sf"` (default) or `"json_list"`?}
 }
 \description{
 Generate A/B Street Scenario files/objects

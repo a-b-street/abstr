@@ -1,5 +1,11 @@
 #' Generate A/B Street Scenario files/objects
 #'
+#' @param houses Polygons where trips will originate (`sf` object)
+#' @param buildings Buildings where trips will end
+#' @param desire_lines Origin-Destination data represented as straight lines
+#' @param zones Zones with IDs that match the desire lines
+#' @param output_format Which output format? `"sf"` (default) or `"json_list"`?
+#'
 #' @export
 #' @examples
 #' dslines = leeds_desire_lines
@@ -14,7 +20,7 @@
 #' plot(leeds_site_area$geometry, add = TRUE)
 #' plot(leeds_buildings$geometry, add = TRUE)
 #' plot(ablines$geometry, col = "blue", add = TRUE)
-ab_scenario = function(houses, buildings, desire_lines, zones, output_format = "json_list") {
+ab_scenario = function(houses, buildings, desire_lines, zones, output_format = "sf") {
 
   requireNamespace("sf", quietly = TRUE)
   # input data from data-raw/cambridge.R for testing
