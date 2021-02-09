@@ -16,7 +16,7 @@
 #' plot(ablines$geometry, col = "blue", add = TRUE)
 ab_scenario = function(houses, buildings, desire_lines, zones, output_format = "json_list") {
 
-  require(sf)
+  requireNamespace("sf", quietly = TRUE)
   # input data from data-raw/cambridge.R for testing
   # houses = osm_polygons_resi_site
   # buildings = buildings_in_zones
@@ -70,9 +70,9 @@ ab_scenario = function(houses, buildings, desire_lines, zones, output_format = "
       longitude = end_points[i, "X"],
       latitude = end_points[i, "Y"]
     )
-    destination = tibble(Position = Position)
+    destination = tibble::tibble(Position = Position)
     tibble::tibble(
-      departure = round(rnorm(n = 1, mean = 8 * 60^2, sd = 0.5 * 60^2)),
+      departure = round(stats::rnorm(n = 1, mean = 8 * 60^2, sd = 0.5 * 60^2)),
       destination = destination,
       mode = desire_lines_out$mode_baseline[i]
     )
