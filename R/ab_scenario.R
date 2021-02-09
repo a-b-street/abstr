@@ -94,3 +94,13 @@ ab_scenario = function(houses, buildings, desire_lines, zones, output_format = "
   # desire_lines[i, ]
 }
 
+#' Save OD data as JSON files for import into A/B Street
+#'
+#' Save scenarios with this function
+#'
+#' @param x A list object produced by [ab_scenario()]
+#' @param f A filename, e.g. `new_scenario.json`
+#' @export
+ab_save = function(x, f) {
+  jsonlite::write_json(x, f, pretty = TRUE, auto_unbox = TRUE)
+}
