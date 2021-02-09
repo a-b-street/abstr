@@ -16,7 +16,8 @@ Imports:
     sf,
     lwgeom,
     stplanr,
-    magrittr
+    magrittr,
+    jsonlite
 Depends: 
     R (>= 2.10)
 RoxygenNote: 7.1.1
