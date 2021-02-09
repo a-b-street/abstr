@@ -43,12 +43,15 @@ ab_scenario = function(houses, buildings, desire_lines, zones, output_format = "
     # mapview::mapview(desire_lines_disag) + mapview::mapview(destination_zone)
     desire_lines_disag$mode_baseline = desire_lines_disag$mode_godutch = NA
     n_walk = desire_lines$walk_base[i]
-    desire_lines_disag$mode_baseline[sample(nrow(desire_lines_disag), size = n_walk)] = "walk"
+    desire_lines_disag$mode_baseline[sample(nrow(desire_lines_disag), size = n_walk)] = "Walk"
     no_mode = which(is.na(desire_lines_disag$mode_baseline))
-    desire_lines_disag$mode_baseline[sample(no_mode, size = desire_lines$cycle_base[i])] = "cycle"
+    desire_lines_disag$mode_baseline[sample(no_mode, size = desire_lines$cycle_base[i])] = "Bike"
     no_mode = which(is.na(desire_lines_disag$mode_baseline))
-    desire_lines_disag$mode_baseline[sample(no_mode, size = desire_lines$drive_base[i])] = "drive"
-    desire_lines_disag$mode_baseline[is.na(desire_lines_disag$mode_baseline)] = "other"
+    desire_lines_disag$mode_baseline[sample(no_mode, size = desire_lines$drive_base[i])] = "Drive"
+    # Other modes include taking public transit and being a passenger in a car. A/B Street doesn't
+    # model the latter, so for now map all of these to transit. Also note that bus routes are mostly
+    # not imported yet, so transit trips will wind up walking.
+    desire_lines_disag$mode_baseline[is.na(desire_lines_disag$mode_baseline)] = "Transit"
     if(i == 1) {
       desire_lines_out = desire_lines_disag
     } else {
