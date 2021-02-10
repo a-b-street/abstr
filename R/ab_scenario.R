@@ -29,7 +29,7 @@
 #' )
 #' library(sf)
 #' plot(ablines["mode_base"], key.pos = 1, reset = FALSE)
-#' plot(dslines$geometry, lwd = dslines[[3]] / 30, add = TRUE)
+#' plot(leeds_desire_lines$geometry, lwd = leeds_desire_lines[[3]] / 30, add = TRUE)
 #' plot(leeds_site_area$geometry, add = TRUE)
 #' plot(leeds_buildings$geometry, add = TRUE)
 #' plot(ablines_dutch["mode_dutch"], key.pos = 1)
