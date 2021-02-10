@@ -16,11 +16,13 @@ ab_scenario(
 \arguments{
 \item{houses}{Polygons where trips will originate (`sf` object)}
 
-\item{buildings}{Buildings where trips will end}
+\item{buildings}{Buildings where trips will end represented as `sf` object}
 
-\item{desire_lines}{Origin-Destination data represented as straight lines}
+\item{desire_lines}{Origin-Destination data represented as `sf`
+objects with `LINESTRING` geometries with 2 vertices, start point and
+end point.}
 
-\item{zones}{Zones with IDs that match the desire lines}
+\item{zones}{Zones with IDs that match the desire lines and class `sf`}
 
 \item{scenario}{The name of the scenario, used to match column names.
 `"base"` by default.}

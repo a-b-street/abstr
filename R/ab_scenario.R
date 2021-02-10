@@ -1,9 +1,11 @@
 #' Generate A/B Street Scenario files/objects
 #'
 #' @param houses Polygons where trips will originate (`sf` object)
-#' @param buildings Buildings where trips will end
-#' @param desire_lines Origin-Destination data represented as straight lines
-#' @param zones Zones with IDs that match the desire lines
+#' @param buildings Buildings where trips will end represented as `sf` object
+#' @param desire_lines Origin-Destination data represented as `sf`
+#'   objects with `LINESTRING` geometries with 2 vertices, start point and
+#'   end point.
+#' @param zones Zones with IDs that match the desire lines and class `sf`
 #' @param scenario The name of the scenario, used to match column names.
 #'   `"base"` by default.
 #' @param output_format Which output format? `"sf"` (default) or `"json_list"`?
