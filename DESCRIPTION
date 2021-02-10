@@ -1,23 +1,32 @@
-Package: abstr
 Type: Package
+Package: abstr
 Title: Create Transport Scenarios for use in the A/B Street Software
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Authors@R: 
+    person(given = "Robin",
+           family = "Lovelace",
+           role = c("aut", "cre"),
+           email = "rob00x@gmail.com",
+           comment = c(ORCID = "0000-0001-5679-6536"))
+Description: Provides functions to convert origin-destination data,
+    represented as straight 'desire lines' in the 'sf' Simple Features
+    class system, into JSON files that can be directly imported into the
+    A/B Street transport planning/simulation software.
 License: Apache License (>= 2)
+URL: https://github.com/a-b-street/abstr,
+    https://a-b-street.github.io/abstr
+BugReports: https://github.com/a-b-street/abstr/issues
+Depends: 
+    R (>= 4.0.0)
+Imports: 
+    dplyr (>= 1.0.4),
+    jsonlite (>= 1.7.2),
+    lwgeom (>= 0.2.5),
+    magrittr (>= 2.0.1),
+    od (>= 0.1.0),
+    sf (>= 0.9-7),
+    stplanr (>= 0.8.1),
+    tibble (>= 3.0.6)
 Encoding: UTF-8
 LazyData: true
-Imports: 
-    od,
-    dplyr,
-    tibble,
-    sf,
-    lwgeom,
-    stplanr,
-    magrittr,
-    jsonlite
-Depends: 
-    R (>= 2.10)
 RoxygenNote: 7.1.1

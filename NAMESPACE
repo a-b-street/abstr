@@ -3,4 +3,5 @@
 export("%>%")
 export(ab_save)
 export(ab_scenario)
+export(ab_sf_to_json)
 importFrom(magrittr,"%>%")
