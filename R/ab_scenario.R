@@ -51,14 +51,10 @@ ab_scenario = function(houses, buildings, desire_lines, zones, scenario = "base"
     origin_coords = origins %>% sf::st_centroid() %>% sf::st_coordinates()
     destination_coords = destinations %>% sf::st_centroid() %>% sf::st_coordinates()
     desire_lines_disag = od::odc_to_sf(odc = cbind(origin_coords, destination_coords))
-    # mapview::mapview(desire_lines_disag) + mapview::mapview(destination_zone)
 
     # todo: Allow multiple scenarios to be calculated here? (RL 2020-02-10)
-    # browser()
     mode_cname = paste0("mode_", scenario)
     desire_lines_disag[[mode_cname]] = NA
-    # old hardcoded mode var name (to be deleted):
-    # desire_lines_disag$mode_baseline = desire_lines_disag$mode_godutch = NA
     n_walk = desire_lines[[match_scenario_mode(cnames, scenario, mode = "Walk")]][i]
     n_bike = desire_lines[[match_scenario_mode(cnames, scenario, mode = "Bike|cycle")]][i]
     n_drive = desire_lines[[match_scenario_mode(cnames, scenario, mode = "car_d|drive")]][i]
@@ -69,7 +65,7 @@ ab_scenario = function(houses, buildings, desire_lines, zones, scenario = "base"
     }
 
     # fix edge cases where n. people travelling by modes do not match population
-    # todo: fix input data (RL)
+    # todo: update input data (RL)
     n_mismatch = nrow(desire_lines_disag) -  sum(n_walk, n_bike, n_drive, n_transit)
     if(n_mismatch != 0) {
       warning("Mismatch between n. trips and population. Check your data")
