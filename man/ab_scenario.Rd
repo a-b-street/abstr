@@ -4,7 +4,14 @@
 \alias{ab_scenario}
 \title{Generate A/B Street Scenario files/objects}
 \usage{
-ab_scenario(houses, buildings, desire_lines, zones, output_format = "sf")
+ab_scenario(
+  houses,
+  buildings,
+  desire_lines,
+  zones,
+  scenario = "base",
+  output_format = "sf"
+)
 }
 \arguments{
 \item{houses}{Polygons where trips will originate (`sf` object)}
@@ -14,6 +21,9 @@ ab_scenario(houses, buildings, desire_lines, zones, output_format = "sf")
 \item{desire_lines}{Origin-Destination data represented as straight lines}
 
 \item{zones}{Zones with IDs that match the desire lines}
+
+\item{scenario}{The name of the scenario, used to match column names.
+`"base"` by default.}
 
 \item{output_format}{Which output format? `"sf"` (default) or `"json_list"`?}
 }
@@ -29,8 +39,18 @@ ablines = ab_scenario(
   leeds_zones,
   output_format = "sf"
 )
-plot(dslines$geometry, lwd = dslines[[3]] / 30)
+ablines_dutch = ab_scenario(
+  leeds_houses,
+  leeds_buildings,
+  dslines,
+  leeds_zones,
+  scenario = "dutch",
+  output_format = "sf"
+)
+library(sf)
+plot(ablines["mode_base"], key.pos = 1, reset = FALSE)
+plot(dslines$geometry, lwd = dslines[[3]] / 30, add = TRUE)
 plot(leeds_site_area$geometry, add = TRUE)
 plot(leeds_buildings$geometry, add = TRUE)
-plot(ablines$geometry, col = "blue", add = TRUE)
+plot(ablines_dutch["mode_dutch"], key.pos = 1)
 }
