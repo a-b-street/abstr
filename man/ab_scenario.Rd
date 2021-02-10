@@ -33,18 +33,17 @@ end point.}
 Generate A/B Street Scenario files/objects
 }
 \examples{
-dslines = leeds_desire_lines
 ablines = ab_scenario(
   leeds_houses,
   leeds_buildings,
-  dslines,
+  leeds_desire_lines,
   leeds_zones,
   output_format = "sf"
 )
 ablines_dutch = ab_scenario(
   leeds_houses,
   leeds_buildings,
-  dslines,
+  leeds_desire_lines,
   leeds_zones,
   scenario = "dutch",
   output_format = "sf"
