@@ -12,18 +12,17 @@
 #'
 #' @export
 #' @examples
-#' dslines = leeds_desire_lines
 #' ablines = ab_scenario(
 #'   leeds_houses,
 #'   leeds_buildings,
-#'   dslines,
+#'   leeds_desire_lines,
 #'   leeds_zones,
 #'   output_format = "sf"
 #' )
 #' ablines_dutch = ab_scenario(
 #'   leeds_houses,
 #'   leeds_buildings,
-#'   dslines,
+#'   leeds_desire_lines,
 #'   leeds_zones,
 #'   scenario = "dutch",
 #'   output_format = "sf"
@@ -46,14 +45,18 @@ ab_scenario = function(houses, buildings, desire_lines, zones, scenario = "base"
     cnames = names(desire_lines)
 
     # todo: split out the lines to odc_to_sf as function? (RL 2020-02-10)
-    origins = houses %>% dplyr::sample_n(size = pop, replace = TRUE)
-    destination_zone = zones %>% dplyr::filter(geo_code == desire_lines$geo_code2[i])
-    destination_buildings = buildings[destination_zone, , op = sf::st_within]
-    destinations = destination_buildings %>% dplyr::sample_n(size = pop, replace = TRUE)
-    origin_coords = origins %>% sf::st_centroid() %>% sf::st_coordinates()
-    destination_coords = destinations %>% sf::st_centroid() %>% sf::st_coordinates()
-    desire_lines_disag = od::odc_to_sf(odc = cbind(origin_coords, destination_coords))
-
+    # supressing messages associated with GEOS ops on unprojected data
+    suppressWarnings({
+      suppressMessages({
+        origins = houses %>% dplyr::sample_n(size = pop, replace = TRUE)
+        destination_zone = zones %>% dplyr::filter(geo_code == desire_lines$geo_code2[i])
+        destination_buildings = buildings[destination_zone, , op = sf::st_within]
+        destinations = destination_buildings %>% dplyr::sample_n(size = pop, replace = TRUE)
+        origin_coords = origins %>% sf::st_centroid() %>% sf::st_coordinates()
+        destination_coords = destinations %>% sf::st_centroid() %>% sf::st_coordinates()
+        desire_lines_disag = od::odc_to_sf(odc = cbind(origin_coords, destination_coords))
+      })
+    })
     # todo: Allow multiple scenarios to be calculated here? (RL 2020-02-10)
     mode_cname = paste0("mode_", scenario)
     desire_lines_disag[[mode_cname]] = NA
