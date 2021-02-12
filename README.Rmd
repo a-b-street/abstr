@@ -17,11 +17,11 @@ knitr::opts_chunk$set(
 
 
 <!-- badges: start -->
-[![R-CMD-check](https://github.com/Robinlovelace/abstr/workflows/R-CMD-check/badge.svg)](https://github.com/Robinlovelace/abstr/actions)
+[![R-CMD-check](https://github.com/a-b-street/abstr/workflows/R-CMD-check/badge.svg)](https://github.com/a-b-street/abstr/actions)
 <!-- badges: end -->
   
 The goal of abstr is to provide an R interface to the [A/B Street](https://github.com/a-b-street/abstreet#ab-street) transport planning/simulation game.
-In the first instance, it provides a way to generate scenarios of change and saving them as `.json` files that can be directly imported into the A/B Street game.
+Currently it provides a way to convert aggregated origin-destination data, combined with data on buildings representing origin and destination locations, into `.json` files that can be directly imported into the A/B Street game.
 See https://a-b-street.github.io/docs/dev/formats/scenarios.html#example for details of the schema that the package outputs.
 
 ## Installation
@@ -31,14 +31,15 @@ You can install the released version of abstr from
 GitHub as follows:
 
 ```r
-remotes::install_github("cyipt/abstr")
+remotes::install_github("a-b-street/abstr")
 ```
 
 ## Example
 
 ```{r output-sf, message=FALSE, warning=FALSE}
 library(abstr)
-dslines = leeds_desire_lines
+leeds_desire_lines # origin destination data with aggregate travel data
+plot(leeds_desire_lines)
 ablines = ab_scenario(
  leeds_houses,
  leeds_buildings,

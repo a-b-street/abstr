@@ -3,6 +3,7 @@
 library(tidyverse)
 site_name = "lcid"
 
+# see https://github.com/cyipt/actdev
 sites = sf::read_sf("~/cyipt/actdev/data-small/all-sites.geojson")
 site = sites[sites$site_name == site_name, ]
 path = file.path("~/cyipt/actdev/data-small", site_name)
