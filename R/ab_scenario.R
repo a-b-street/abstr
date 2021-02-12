@@ -68,6 +68,7 @@ ab_scenario = function(houses, buildings, desire_lines, zones, scenario = "base"
     } else {
       n_transit = 0
     }
+    corrent_n = n_walk + n_bike + n_transit + n_drive == pop
 
     # fix edge cases where n. people travelling by modes do not match population
     # todo: update input data (RL)
@@ -78,11 +79,17 @@ ab_scenario = function(houses, buildings, desire_lines, zones, scenario = "base"
     }
 
     # todo: update this next line? (RL)
-    desire_lines_disag[[mode_cname]][sample(nrow(desire_lines_disag), size = n_walk)] = "Walk"
+    if(n_walk > 0) {
+      desire_lines_disag[[mode_cname]][sample(nrow(desire_lines_disag), size = n_walk)] = "Walk"
+    }
     no_mode = which(is.na(desire_lines_disag[[mode_cname]]))
-    desire_lines_disag[[mode_cname]][sample(no_mode, size = n_bike)] = "Bike"
+    if(length(no_mode) > 0) {
+      desire_lines_disag[[mode_cname]][sample(no_mode, size = n_bike)] = "Bike"
+    }
     no_mode = which(is.na(desire_lines_disag[[mode_cname]]))
-    desire_lines_disag[[mode_cname]][sample(no_mode, size = n_drive)] = "Drive"
+    if(length(no_mode) > 0) {
+      desire_lines_disag[[mode_cname]][sample(no_mode, size = n_drive)] = "Drive"
+    }
     # Other modes include taking public transit and being a passenger in a car. A/B Street doesn't
     # model the latter, so for now map all of these to transit. Also note that bus routes are mostly
     # not imported yet, so transit trips will wind up walking.
@@ -96,7 +103,7 @@ ab_scenario = function(houses, buildings, desire_lines, zones, scenario = "base"
   if(output_format == "sf") {
     return(desire_lines_out)
   } else {
-    return(ab_sf_to_json(desire_lines_out))
+    return(ab_sf_to_json(desire_lines_out, mode_column = mode_cname))
   }
 }
 
