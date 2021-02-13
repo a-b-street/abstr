@@ -123,7 +123,8 @@
   <span class='va'>desire_lines</span>,
   <span class='va'>zones</span>,
   scenario <span class='op'>=</span> <span class='st'>"base"</span>,
-  output_format <span class='op'>=</span> <span class='st'>"sf"</span>
+  output_format <span class='op'>=</span> <span class='st'>"sf"</span>,
+  op <span class='op'>=</span> <span class='fu'>sf</span><span class='fu'>::</span><span class='va'><a href='https://r-spatial.github.io/sf/reference/geos_binary_pred.html'>st_intersects</a></span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -155,6 +156,12 @@ end point.</p></td>
     <tr>
       <th>output_format</th>
       <td><p>Which output format? `"sf"` (default) or `"json_list"`?</p></td>
+    </tr>
+    <tr>
+      <th>op</th>
+      <td><p>The binary predicate used to assign `buildings` to `zones`.
+See online documentation on binary predicates for further details, e.g.
+[Spatial Data Science](https://keen-swartz-3146c4.netlify.app/geommanip.html)</p></td>
     </tr>
     </table>
 
