@@ -9,6 +9,9 @@
 #' @param scenario The name of the scenario, used to match column names.
 #'   `"base"` by default.
 #' @param output_format Which output format? `"sf"` (default) or `"json_list"`?
+#' @param op The binary predicate used to assign `buildings` to `zones`.
+#' See online documentation on binary predicates for further details, e.g.
+#' [Spatial Data Science](https://keen-swartz-3146c4.netlify.app/geommanip.html)
 #'
 #' @export
 #' @examples
@@ -33,7 +36,14 @@
 #' plot(leeds_site_area$geometry, add = TRUE)
 #' plot(leeds_buildings$geometry, add = TRUE)
 #' plot(ablines_dutch["mode_dutch"], key.pos = 1)
-ab_scenario = function(houses, buildings, desire_lines, zones, scenario = "base", output_format = "sf") {
+ab_scenario = function(houses,
+                       buildings,
+                       desire_lines,
+                       zones,
+                       scenario = "base",
+                       output_format = "sf",
+                       op = sf::st_intersects
+                       ) {
 
   requireNamespace("sf", quietly = TRUE)
 
@@ -50,7 +60,7 @@ ab_scenario = function(houses, buildings, desire_lines, zones, scenario = "base"
       suppressMessages({
         origins = houses %>% dplyr::sample_n(size = pop, replace = TRUE)
         destination_zone = zones %>% dplyr::filter(geo_code == desire_lines$geo_code2[i])
-        destination_buildings = buildings[destination_zone, , op = sf::st_within]
+        destination_buildings = buildings[destination_zone, , op = op]
         destinations = destination_buildings %>% dplyr::sample_n(size = pop, replace = TRUE)
         origin_coords = origins %>% sf::st_centroid() %>% sf::st_coordinates()
         destination_coords = destinations %>% sf::st_centroid() %>% sf::st_coordinates()

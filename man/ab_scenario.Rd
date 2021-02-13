@@ -10,7 +10,8 @@ ab_scenario(
   desire_lines,
   zones,
   scenario = "base",
-  output_format = "sf"
+  output_format = "sf",
+  op = sf::st_intersects
 )
 }
 \arguments{
@@ -28,6 +29,10 @@ end point.}
 `"base"` by default.}
 
 \item{output_format}{Which output format? `"sf"` (default) or `"json_list"`?}
+
+\item{op}{The binary predicate used to assign `buildings` to `zones`.
+See online documentation on binary predicates for further details, e.g.
+[Spatial Data Science](https://keen-swartz-3146c4.netlify.app/geommanip.html)}
 }
 \description{
 Generate A/B Street Scenario files/objects
