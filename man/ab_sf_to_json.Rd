@@ -21,11 +21,10 @@ This function takes outputs from [ab_scenario()] and returns a list that
 can be saved as a JSON file for import into A/B Street.
 }
 \examples{
-library(sf) # for subsetting lines
 ablines = ab_scenario(
   leeds_houses,
   leeds_buildings,
-  leeds_desire_lines[7, ],
+  leeds_desire_lines,
   leeds_zones,
   output_format = "sf"
 )
@@ -35,7 +34,7 @@ ab_list$people$trips[[1]]
 ablines_dutch = ab_scenario(
   leeds_houses,
   leeds_buildings,
-  leeds_desire_lines[7, ],
+  leeds_desire_lines,
   leeds_zones,
   scenario = "godutch",
   output_format = "sf"

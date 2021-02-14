@@ -130,11 +130,10 @@ ab_scenario = function(houses,
 #' @export
 #'
 #' @examples
-#' library(sf) # for subsetting lines
 #' ablines = ab_scenario(
 #'   leeds_houses,
 #'   leeds_buildings,
-#'   leeds_desire_lines[7, ],
+#'   leeds_desire_lines,
 #'   leeds_zones,
 #'   output_format = "sf"
 #' )
@@ -144,7 +143,7 @@ ab_scenario = function(houses,
 #' ablines_dutch = ab_scenario(
 #'   leeds_houses,
 #'   leeds_buildings,
-#'   leeds_desire_lines[7, ],
+#'   leeds_desire_lines,
 #'   leeds_zones,
 #'   scenario = "godutch",
 #'   output_format = "sf"
