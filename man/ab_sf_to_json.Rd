@@ -52,4 +52,11 @@ dutch = ab_scenario(
 ab_list = ab_sf_to_json(dutch, mode_column = "mode_godutch")
 ab_list$scenario
 ab_list$people$trips[[9]]
+# add times
+dutch$departure = ab_time_normal(hr = 1, sd = 0, n = nrow(dutch))
+ab_list_times = ab_sf_to_json(dutch)
+f = tempfile(fileext = ".json")
+ab_save(ab_list_times, f)
+readLines(f)[13]
+60^2
 }

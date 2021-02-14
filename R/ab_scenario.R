@@ -172,8 +172,19 @@ ab_scenario = function(houses,
 #' ab_list = ab_sf_to_json(dutch, mode_column = "mode_godutch")
 #' ab_list$scenario
 #' ab_list$people$trips[[9]]
+#' # add times
+#' dutch$departure = ab_time_normal(hr = 1, sd = 0, n = nrow(dutch))
+#' ab_list_times = ab_sf_to_json(dutch)
+#' f = tempfile(fileext = ".json")
+#' ab_save(ab_list_times, f)
+#' readLines(f)[13]
+#' 60^2
 ab_sf_to_json = function(desire_lines_out, mode_column = "mode_base", time_fun = ab_time_normal, ...) {
   n = nrow(desire_lines_out)
+
+  if(is.null(desire_lines_out$departure)) {
+    desire_lines_out$departure = time_fun(n = n, ...)
+  }
 
   start_points = lwgeom::st_startpoint(desire_lines_out) %>% sf::st_coordinates()
   end_points = lwgeom::st_endpoint(desire_lines_out) %>% sf::st_coordinates()
@@ -190,7 +201,7 @@ ab_sf_to_json = function(desire_lines_out, mode_column = "mode_base", time_fun =
     )
     destination = tibble::tibble(Position = Position)
     tibble::tibble(
-      departure = time_fun(...),
+      departure = desire_lines_out$departure[i],
       destination = destination,
       mode = desire_lines_out[[mode_column]][i]
     )
