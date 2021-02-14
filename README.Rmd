@@ -39,7 +39,7 @@ remotes::install_github("a-b-street/abstr")
 The example below shows how `abstr` can be used.
 The input datasets include `sf` objects representing houses, buildings, origin-destination (OD) data represented as desire lines and administrative zones representing the areas within which trips in the desire lines start and end.
 With the exception of OD data, each of the input datasets is readily available for most cities.
-The input datasets are illustrated in the plots below, which so a small example dataset taken from the city of Leeds, UK.
+The input datasets are illustrated in the plots below, which show example data shipped in the package, taken from the city of Leeds, UK.
 
 ```{r input, fig.cap="Example data that can be used as an input by functions in abstr to generate trip-level scenarios that can be imported by A/B Street."}
 library(abstr)

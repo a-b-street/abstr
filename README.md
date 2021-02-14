@@ -34,8 +34,8 @@ include `sf` objects representing houses, buildings, origin-destination
 representing the areas within which trips in the desire lines start and
 end. With the exception of OD data, each of the input datasets is
 readily available for most cities. The input datasets are illustrated in
-the plots below, which so a small example dataset taken from the city of
-Leeds, UK.
+the plots below, which show example data shipped in the package, taken
+from the city of Leeds, UK.
 
 ``` r
 library(abstr)
