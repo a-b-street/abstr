@@ -25,7 +25,7 @@
 #'   leeds_zones,
 #'   output_format = "sf"
 #' )
-#' ablines_dutch = ab_scenario(
+#' dutch = ab_scenario(
 #'   leeds_houses,
 #'   leeds_buildings,
 #'   leeds_desire_lines,
@@ -36,9 +36,10 @@
 #' plot(ablines, key.pos = 1, reset = FALSE)
 #' plot(leeds_site_area$geometry, add = TRUE)
 #' plot(leeds_buildings$geometry, add = TRUE)
-#' plot(ablines_dutch, key.pos = 1, reset = FALSE)
+#' plot(dutch, key.pos = 1, reset = FALSE)
 #' plot(leeds_site_area$geometry, add = TRUE)
 #' plot(leeds_buildings$geometry, add = TRUE)
+#' dutch$departure = ab_time_normal(hr = 8, sd = 0.5, n = nrow(dutch))
 #' ab_evening_dutch = ab_scenario(
 #'   leeds_houses,
 #'   leeds_buildings,
@@ -160,7 +161,7 @@ ab_scenario = function(houses,
 #' ab_list = ab_sf_to_json(ablines, mode_column = "mode_base")
 #' ab_list$scenario
 #' ab_list$people$trips[[1]]
-#' ablines_dutch = ab_scenario(
+#' dutch = ab_scenario(
 #'   leeds_houses,
 #'   leeds_buildings,
 #'   leeds_desire_lines,
@@ -168,7 +169,7 @@ ab_scenario = function(houses,
 #'   scenario = "godutch",
 #'   output_format = "sf"
 #' )
-#' ab_list = ab_sf_to_json(ablines_dutch, mode_column = "mode_godutch")
+#' ab_list = ab_sf_to_json(dutch, mode_column = "mode_godutch")
 #' ab_list$scenario
 #' ab_list$people$trips[[9]]
 ab_sf_to_json = function(desire_lines_out, mode_column = "mode_base", time_fun = ab_time_normal, ...) {
@@ -221,6 +222,7 @@ ab_save = function(x, f) {
 #' @param hr Number representing the hour of day of departure (on average).
 #'   8.5, for example represents 08:30.
 #' @param sd The standard deviation in hours of the distribution
+#' @param n The number of numbers representing times to return
 #'
 #' @export
 #' @examples
@@ -232,8 +234,8 @@ ab_save = function(x, f) {
 #' as.POSIXct(trunc(Sys.time(), units="days") + time_morning)
 #' time_afternoon = ab_time_normal(hr = 17, sd = 0.75)
 #' as.POSIXct(trunc(Sys.time(), units="days") + time_afternoon)
-ab_time_normal = function(hr = 8.5, sd = 0.5) {
-  round(stats::rnorm(n = 1, mean = hr * 60^2, sd = sd * 60^2))
+ab_time_normal = function(hr = 8.5, sd = 0.5, n = 1) {
+  round(stats::rnorm(n = n, mean = hr * 60^2, sd = sd * 60^2))
 }
 
 # cnames = names(leeds_desire_lines)

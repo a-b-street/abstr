@@ -52,7 +52,7 @@ ablines = ab_scenario(
   leeds_zones,
   output_format = "sf"
 )
-ablines_dutch = ab_scenario(
+dutch = ab_scenario(
   leeds_houses,
   leeds_buildings,
   leeds_desire_lines,
@@ -63,9 +63,10 @@ ablines_dutch = ab_scenario(
 plot(ablines, key.pos = 1, reset = FALSE)
 plot(leeds_site_area$geometry, add = TRUE)
 plot(leeds_buildings$geometry, add = TRUE)
-plot(ablines_dutch, key.pos = 1, reset = FALSE)
+plot(dutch, key.pos = 1, reset = FALSE)
 plot(leeds_site_area$geometry, add = TRUE)
 plot(leeds_buildings$geometry, add = TRUE)
+dutch$departure = ab_time_normal(hr = 8, sd = 0.5, n = nrow(dutch))
 ab_evening_dutch = ab_scenario(
   leeds_houses,
   leeds_buildings,

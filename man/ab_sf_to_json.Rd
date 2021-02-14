@@ -41,7 +41,7 @@ ablines = ab_scenario(
 ab_list = ab_sf_to_json(ablines, mode_column = "mode_base")
 ab_list$scenario
 ab_list$people$trips[[1]]
-ablines_dutch = ab_scenario(
+dutch = ab_scenario(
   leeds_houses,
   leeds_buildings,
   leeds_desire_lines,
@@ -49,7 +49,7 @@ ablines_dutch = ab_scenario(
   scenario = "godutch",
   output_format = "sf"
 )
-ab_list = ab_sf_to_json(ablines_dutch, mode_column = "mode_godutch")
+ab_list = ab_sf_to_json(dutch, mode_column = "mode_godutch")
 ab_list$scenario
 ab_list$people$trips[[9]]
 }

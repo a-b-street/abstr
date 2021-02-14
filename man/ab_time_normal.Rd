@@ -4,13 +4,15 @@
 \alias{ab_time_normal}
 \title{Generate times for A/B scenarios}
 \usage{
-ab_time_normal(hr = 8.5, sd = 0.5)
+ab_time_normal(hr = 8.5, sd = 0.5, n = 1)
 }
 \arguments{
 \item{hr}{Number representing the hour of day of departure (on average).
 8.5, for example represents 08:30.}
 
 \item{sd}{The standard deviation in hours of the distribution}
+
+\item{n}{The number of numbers representing times to return}
 }
 \value{
 An integer representing the time since midnight in seconds
