@@ -56,14 +56,14 @@ mapview::mapview(osm_polygons_resi_site) +
   buildings_in_zones
 
 # # sanity check scenario data
-class(desire_lines)
+summary(desire_lines)
 sum(desire_lines$trimode_base)
 sum(desire_lines$walk_base, desire_lines$cycle_base, desire_lines$drive_base)
 sum(desire_lines$walk_godutch, desire_lines$cycle_godutch, desire_lines$drive_godutch)
 
 leeds_desire_lines = desire_lines %>%
   select(geo_code1, geo_code2, all_base = trimode_base, walk_base:drive_godutch) %>%
-  slice(1:5)
+  slice(1:3)
 leeds_houses = osm_polygons_resi_site
 leeds_buildings = buildings_in_zones
 leeds_zones = zones_of_interest
@@ -80,12 +80,25 @@ ablines = ab_scenario(
   buildings = leeds_buildings,
   desire_lines = leeds_desire_lines,
   zones = leeds_zones,
+  scenario = "base",
   output_format = "sf"
 )
-plot(dslines$geometry, lwd = dslines[[3]] / 30)
+plot(ablines)
+plot(leeds_desire_lines$geometry, lwd = leeds_desire_lines[[3]] / 5)
 plot(leeds_site_area$geometry, add = TRUE)
 plot(leeds_buildings$geometry, add = TRUE)
-plot(ablines$geometry, col = "blue", add = TRUE)
+plot(ablines, add = TRUE)
+
+ablines = ab_scenario(
+  houses = leeds_houses,
+  buildings = leeds_buildings,
+  desire_lines = leeds_desire_lines,
+  zones = leeds_zones,
+  scenario = "godutch",
+  output_format = "sf"
+)
+plot(ablines)
+
 
 mapview::mapview(leeds_desire_lines)
 

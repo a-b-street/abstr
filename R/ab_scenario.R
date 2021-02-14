@@ -30,12 +30,12 @@
 #'   scenario = "dutch",
 #'   output_format = "sf"
 #' )
-#' library(sf)
-#' plot(ablines["mode_base"], key.pos = 1, reset = FALSE)
-#' plot(leeds_desire_lines$geometry, lwd = leeds_desire_lines[[3]] / 30, add = TRUE)
+#' plot(ablines, key.pos = 1, reset = FALSE)
 #' plot(leeds_site_area$geometry, add = TRUE)
 #' plot(leeds_buildings$geometry, add = TRUE)
-#' plot(ablines_dutch["mode_dutch"], key.pos = 1)
+#' plot(ablines_dutch, key.pos = 1, reset = FALSE)
+#' plot(leeds_site_area$geometry, add = TRUE)
+#' plot(leeds_buildings$geometry, add = TRUE)
 ab_scenario = function(houses,
                        buildings,
                        desire_lines,
