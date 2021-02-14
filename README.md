@@ -30,7 +30,7 @@ remotes::install_github("a-b-street/abstr")
 
 ``` r
 library(abstr)
-
+library(tmap) # for map making
 ablines = ab_scenario(
  houses = leeds_houses,
  buildings = leeds_buildings,
@@ -38,10 +38,11 @@ ablines = ab_scenario(
  zones = leeds_zones,
  output_format = "sf"
 )
-plot(leeds_desire_lines$geometry, lwd = leeds_desire_lines[[3]] / 30)
-plot(leeds_site_area$geometry, add = TRUE)
-plot(leeds_buildings$geometry, add = TRUE)
-plot(ablines, add = TRUE)
+tmap_mode("view")
+bb = tmaptools::bb(leeds_houses, 3)
+tm_shape(leeds_buildings, bbox = bb) + tm_polygons() +
+  tm_shape(leeds_houses) + tm_polygons(col = "blue") +
+  tm_shape(ablines) + tm_lines(col = "mode_base") 
 ```
 
 <img src="man/figures/README-output-sf-1.png" width="100%" />
@@ -49,6 +50,8 @@ plot(ablines, add = TRUE)
 Each line in the plot above represents a single trip, color representing
 mode. Each trip has an associated departure time, that can be
 represented in A/B Street.
+
+<!-- todo: add time to df -->
 
 You can output the result as a list object that can be saved as a JSON
 file as follows, taking only one of the desire lines (desire line 7,
