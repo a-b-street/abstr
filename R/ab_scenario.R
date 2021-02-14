@@ -46,7 +46,6 @@ ab_scenario = function(houses,
                        ) {
 
   requireNamespace("sf", quietly = TRUE)
-
   # loop over each desire line
   i = 1
   for(i in seq(nrow(desire_lines))) {

@@ -38,22 +38,22 @@ remotes::install_github("a-b-street/abstr")
 
 ```{r output-sf, message=FALSE, warning=FALSE}
 library(abstr)
-leeds_desire_lines # origin destination data with aggregate travel data
-plot(leeds_desire_lines)
+
 ablines = ab_scenario(
- leeds_houses,
- leeds_buildings,
- dslines,
- leeds_zones,
+ houses = leeds_houses,
+ buildings = leeds_buildings,
+ desire_lines = leeds_desire_lines,
+ zones = leeds_zones,
  output_format = "sf"
 )
-plot(dslines$geometry, lwd = dslines[[3]] / 30)
+plot(leeds_desire_lines$geometry, lwd = leeds_desire_lines[[3]] / 30)
 plot(leeds_site_area$geometry, add = TRUE)
 plot(leeds_buildings$geometry, add = TRUE)
-plot(ablines$geometry, col = "blue", add = TRUE)
+plot(ablines, add = TRUE)
 ```
 
-Each blue line in the plot above represents a single trip, with an associated depature time, that can be represented in A/B Street.
+Each line in the plot above represents a single trip, color representing mode.
+Each trip has an associated departure time, that can be represented in A/B Street.
 
 You can output the result as a list object that can be saved as a JSON file as follows, taking only one of the desire lines (desire line 7, which has only 9 trips for ease of viewing the results) as an example:
 
@@ -63,7 +63,7 @@ library(abstr)
 ab_scenario_list = ab_scenario(
  leeds_houses,
  leeds_buildings,
- leeds_desire_lines[7, ],
+ leeds_desire_lines,
  leeds_zones,
  output_format = "json_list"
 )
@@ -77,30 +77,30 @@ Let's see what is in the file:
 file.edit("ab_scenario.json")
 ```
 
-It should look something like this, matching [A/B Street's schema](https://a-b-street.github.io/docs/dev/formats/scenarios.html#example).
+The first trip schedule should look something like this, matching [A/B Street's schema](https://a-b-street.github.io/docs/dev/formats/scenarios.html#example).
 
 ```json
 {
-  "scenario_name": "baseline",
+  "scenario_name": "base",
   "people": [
     {
       "origin": {
         "Position": {
-          "longitude": -1.518,
-          "latitude": 53.7896
+          "longitude": -1.5278,
+          "latitude": 53.7888
         }
       },
       "trips": [
         {
-          "departure": 27967,
+          "departure": 28236,
           "destination": {
             "Position": {
-              "longitude": -1.5435,
-              "latitude": 53.7793
+              "longitude": -1.5717,
+              "latitude": 53.8039
             }
           },
-          "mode": "other"
+          "mode": "Walk"
         }
       ]
-    },
+    }
 ```
