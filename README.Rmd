@@ -36,9 +36,24 @@ remotes::install_github("a-b-street/abstr")
 
 ## Example
 
-```{r output-sf, message=FALSE, warning=FALSE}
+The example below shows how `abstr` can be used.
+The input datasets include `sf` objects representing houses, buildings, origin-destination (OD) data represented as desire lines and administrative zones representing the areas within which trips in the desire lines start and end.
+With the exception of OD data, each of the input datasets is readily available for most cities.
+The input datasets are illustrated in the plots below, which so a small example dataset taken from the city of Leeds, UK.
+
+```{r input, fig.cap="Example data that can be used as an input by functions in abstr to generate trip-level scenarios that can be imported by A/B Street."}
 library(abstr)
 library(tmap) # for map making
+tm_shape(leeds_zones) + tm_polygons(col = "grey") +
+  tm_shape(leeds_site_area) + tm_polygons(col = "red") +
+  tm_shape(leeds_houses) + tm_polygons(col = "yellow") +
+  tm_shape(leeds_buildings) + tm_polygons(col = "blue") +
+  tm_shape(leeds_desire_lines) + tm_lines(lwd = "all_base", scale = 3)
+```
+
+
+
+```{r output-sf, message=FALSE, warning=FALSE}
 ablines = ab_scenario(
  houses = leeds_houses,
  buildings = leeds_buildings,
@@ -47,7 +62,7 @@ ablines = ab_scenario(
  output_format = "sf"
 )
 tmap_mode("view")
-bb = tmaptools::bb(leeds_houses, 3)
+bb = tmaptools::bb(leeds_houses, 10)
 tm_shape(leeds_buildings, bbox = bb) + tm_polygons() +
   tm_shape(leeds_houses) + tm_polygons(col = "blue") +
   tm_shape(ablines) + tm_lines(col = "mode_base") 
@@ -55,6 +70,32 @@ tm_shape(leeds_buildings, bbox = bb) + tm_polygons() +
 
 Each line in the plot above represents a single trip, color representing mode.
 Each trip has an associated departure time, that can be represented in A/B Street.
+
+Under a different scenario, the Go Dutch scenario of active travel uptake represented in the columns containing `godutch` for example, the travel patterns would be substantially different.
+In the aggregated desire lines, the differences between the two scenarios are substantial, as shown in the table below:
+
+```{r scentable}
+desire_line_data = sf::st_drop_geometry(leeds_desire_lines)
+nms = names(desire_line_data)
+nms
+nms_scenarios = nms[grepl(pattern = "base|dutch", x = nms)]
+knitr::kable(desire_line_data[nms_scenarios])
+```
+
+The Go Dutch scenario can be disaggregated so that trips start and begin in buildings, as shown below.
+
+```{r abdutch}
+ablines_dutch = ab_scenario(
+ houses = leeds_houses,
+ buildings = leeds_buildings,
+ desire_lines = leeds_desire_lines,
+ zones = leeds_zones,
+ output_format = "sf"
+)
+tm_shape(leeds_buildings, bbox = bb) + tm_polygons() +
+  tm_shape(leeds_houses) + tm_polygons(col = "blue") +
+  tm_shape(ablines_dutch) + tm_lines(col = "mode_base") 
+```
 
 <!-- todo: add time to df -->
 
