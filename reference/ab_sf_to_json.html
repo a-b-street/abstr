@@ -119,7 +119,12 @@ can be saved as a JSON file for import into A/B Street." />
 can be saved as a JSON file for import into A/B Street.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ab_sf_to_json</span><span class='op'>(</span><span class='va'>desire_lines_out</span>, mode_column <span class='op'>=</span> <span class='st'>"mode_base"</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>ab_sf_to_json</span><span class='op'>(</span>
+  <span class='va'>desire_lines_out</span>,
+  mode_column <span class='op'>=</span> <span class='st'>"mode_base"</span>,
+  time_fun <span class='op'>=</span> <span class='va'>ab_time_normal</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -133,6 +138,15 @@ can be saved as a JSON file for import into A/B Street.</p>
       <th>mode_column</th>
       <td><p>The column name in the desire lines data that contains
 the mode of transport. `"mode_baseline"` by default.</p></td>
+    </tr>
+    <tr>
+      <th>time_fun</th>
+      <td><p>The function used to calculate departure times.
+`ab_time_normal()` by default.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional arguments to pass to `time_fun`</p></td>
     </tr>
     </table>
 
@@ -154,7 +168,7 @@ the mode of transport. `"mode_baseline"` by default.</p></td>
 </div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 1 x 3</span><span>
 #&gt;   departure destination$Position$longitude $$latitude mode 
 #&gt;       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>                          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span>     </span><span style='text-decoration: underline;'>28</span><span>918                          -</span><span style='color: #BB0000;'>1.57</span><span>       53.8 Drive</div><div class='input'><span class='va'>ablines_dutch</span> <span class='op'>=</span> <span class='fu'><a href='ab_scenario.html'>ab_scenario</a></span><span class='op'>(</span>
+#&gt; </span><span style='color: #555555;'>1</span><span>     </span><span style='text-decoration: underline;'>31</span><span>286                          -</span><span style='color: #BB0000;'>1.56</span><span>       53.8 Bike </div><div class='input'><span class='va'>ablines_dutch</span> <span class='op'>=</span> <span class='fu'><a href='ab_scenario.html'>ab_scenario</a></span><span class='op'>(</span>
   <span class='va'>leeds_houses</span>,
   <span class='va'>leeds_buildings</span>,
   <span class='va'>leeds_desire_lines</span>,
@@ -168,7 +182,7 @@ the mode of transport. `"mode_baseline"` by default.</p></td>
 </div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 3</span><span>
 #&gt;   departure destination$Position$longitude $$latitude mode 
 #&gt;       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>                          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span>     </span><span style='text-decoration: underline;'>29</span><span>023                          -</span><span style='color: #BB0000;'>1.56</span><span>       53.8 Walk </div></span></pre>
+#&gt; </span><span style='color: #555555;'>1</span><span>     </span><span style='text-decoration: underline;'>33</span><span>536                          -</span><span style='color: #BB0000;'>1.56</span><span>       53.8 Bike </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
