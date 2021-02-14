@@ -8,10 +8,13 @@
 #' @param zones Zones with IDs that match the desire lines and class `sf`
 #' @param scenario The name of the scenario, used to match column names.
 #'   `"base"` by default.
+#' @param time_fun The function used to calculate departure times.
+#'   `ab_time_normal()` by default.
 #' @param output_format Which output format? `"sf"` (default) or `"json_list"`?
 #' @param op The binary predicate used to assign `buildings` to `zones`.
 #' See online documentation on binary predicates for further details, e.g.
 #' [Spatial Data Science](https://keen-swartz-3146c4.netlify.app/geommanip.html)
+#' @param ... Additional arguments to pass to `time_fun`
 #'
 #' @export
 #' @examples
@@ -36,13 +39,29 @@
 #' plot(ablines_dutch, key.pos = 1, reset = FALSE)
 #' plot(leeds_site_area$geometry, add = TRUE)
 #' plot(leeds_buildings$geometry, add = TRUE)
+#' ab_evening_dutch = ab_scenario(
+#'   leeds_houses,
+#'   leeds_buildings,
+#'   leeds_desire_lines,
+#'   leeds_zones,
+#'   scenario = "dutch",
+#'   output_format = "json_list",
+#'   hr = 20, # representing 8 pm
+#'   sd = 0
+#' )
+#' f = tempfile(fileext = ".json")
+#' ab_save(ab_evening_dutch, f)
+#' readLines(f)[13]
+#' 20 * 60^2
 ab_scenario = function(houses,
                        buildings,
                        desire_lines,
                        zones,
                        scenario = "base",
+                       time_fun = ab_time_normal,
                        output_format = "sf",
-                       op = sf::st_intersects
+                       op = sf::st_intersects,
+                       ...
                        ) {
 
   requireNamespace("sf", quietly = TRUE)
@@ -112,7 +131,7 @@ ab_scenario = function(houses,
   if(output_format == "sf") {
     return(desire_lines_out)
   } else {
-    return(ab_sf_to_json(desire_lines_out, mode_column = mode_cname))
+    return(ab_sf_to_json(desire_lines_out, mode_column = mode_cname, time_fun = time_fun, ...))
   }
 }
 
@@ -125,6 +144,7 @@ ab_scenario = function(houses,
 #'   [ab_scenario()].
 #' @param mode_column The column name in the desire lines data that contains
 #'   the mode of transport. `"mode_baseline"` by default.
+#' @inheritParams ab_scenario
 #'
 #' @return A list that can be saved as a JSON file with [ab_save()]
 #' @export
@@ -151,7 +171,7 @@ ab_scenario = function(houses,
 #' ab_list = ab_sf_to_json(ablines_dutch, mode_column = "mode_godutch")
 #' ab_list$scenario
 #' ab_list$people$trips[[9]]
-ab_sf_to_json = function(desire_lines_out, mode_column = "mode_base") {
+ab_sf_to_json = function(desire_lines_out, mode_column = "mode_base", time_fun = ab_time_normal, ...) {
   n = nrow(desire_lines_out)
 
   start_points = lwgeom::st_startpoint(desire_lines_out) %>% sf::st_coordinates()
@@ -169,7 +189,7 @@ ab_sf_to_json = function(desire_lines_out, mode_column = "mode_base") {
     )
     destination = tibble::tibble(Position = Position)
     tibble::tibble(
-      departure = round(stats::rnorm(n = 1, mean = 8 * 60^2, sd = 0.5 * 60^2)),
+      departure = time_fun(...),
       destination = destination,
       mode = desire_lines_out[[mode_column]][i]
     )
@@ -192,6 +212,28 @@ ab_sf_to_json = function(desire_lines_out, mode_column = "mode_base") {
 #' @export
 ab_save = function(x, f) {
   jsonlite::write_json(x, f, pretty = TRUE, auto_unbox = TRUE)
+}
+
+#' Generate times for A/B scenarios
+#'
+#' @return An integer representing the time since midnight in seconds
+#'
+#' @param hr Number representing the hour of day of departure (on average).
+#'   8.5, for example represents 08:30.
+#' @param sd The standard deviation in hours of the distribution
+#'
+#' @export
+#' @examples
+#' time_lunch = ab_time_normal(hr = 12.5, sd = 0.25)
+#' time_lunch
+#' # Back to a formal time class
+#' as.POSIXct(trunc(Sys.time(), units="days") + time_lunch)
+#' time_morning = ab_time_normal(hr = 8.5, sd = 0.5)
+#' as.POSIXct(trunc(Sys.time(), units="days") + time_morning)
+#' time_afternoon = ab_time_normal(hr = 17, sd = 0.75)
+#' as.POSIXct(trunc(Sys.time(), units="days") + time_afternoon)
+ab_time_normal = function(hr = 8.5, sd = 0.5) {
+  round(stats::rnorm(n = 1, mean = hr * 60^2, sd = sd * 60^2))
 }
 
 # cnames = names(leeds_desire_lines)

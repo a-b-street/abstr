@@ -4,7 +4,12 @@
 \alias{ab_sf_to_json}
 \title{Convert geographic ('sf') representation of OD data to 'JSON list' structure}
 \usage{
-ab_sf_to_json(desire_lines_out, mode_column = "mode_base")
+ab_sf_to_json(
+  desire_lines_out,
+  mode_column = "mode_base",
+  time_fun = ab_time_normal,
+  ...
+)
 }
 \arguments{
 \item{desire_lines_out}{OD data represented as geographic lines created by
@@ -12,6 +17,11 @@ ab_sf_to_json(desire_lines_out, mode_column = "mode_base")
 
 \item{mode_column}{The column name in the desire lines data that contains
 the mode of transport. `"mode_baseline"` by default.}
+
+\item{time_fun}{The function used to calculate departure times.
+`ab_time_normal()` by default.}
+
+\item{...}{Additional arguments to pass to `time_fun`}
 }
 \value{
 A list that can be saved as a JSON file with [ab_save()]
