@@ -8,6 +8,7 @@ ab_sf_to_json(
   desire_lines_out,
   mode_column = "mode_base",
   time_fun = ab_time_normal,
+  scenario_name = NULL,
   ...
 )
 }
@@ -20,6 +21,8 @@ the mode of transport. `"mode_baseline"` by default.}
 
 \item{time_fun}{The function used to calculate departure times.
 `ab_time_normal()` by default.}
+
+\item{scenario_name}{The name of the scenario to appear in A/B Street}
 
 \item{...}{Additional arguments to pass to `time_fun`}
 }

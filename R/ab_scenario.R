@@ -145,6 +145,7 @@ ab_scenario = function(houses,
 #'   [ab_scenario()].
 #' @param mode_column The column name in the desire lines data that contains
 #'   the mode of transport. `"mode_baseline"` by default.
+#' @param scenario_name The name of the scenario to appear in A/B Street
 #' @inheritParams ab_scenario
 #'
 #' @return A list that can be saved as a JSON file with [ab_save()]
@@ -179,7 +180,13 @@ ab_scenario = function(houses,
 #' ab_save(ab_list_times, f)
 #' readLines(f)[13]
 #' 60^2
-ab_sf_to_json = function(desire_lines_out, mode_column = "mode_base", time_fun = ab_time_normal, ...) {
+ab_sf_to_json = function(
+  desire_lines_out,
+  mode_column = "mode_base",
+  time_fun = ab_time_normal,
+  scenario_name = NULL,
+  ...
+  ) {
   n = nrow(desire_lines_out)
 
   if(is.null(desire_lines_out$departure)) {
@@ -209,9 +216,11 @@ ab_sf_to_json = function(desire_lines_out, mode_column = "mode_base", time_fun =
 
   people = tibble::tibble(origin = origin, trips)
 
-  scenario_name = gsub(pattern = "mode_", replacement = "", x = mode_column)
-  json_r = list(scenario_name = scenario_name, people = people)
+  if(is.null(scenario_name)) {
+    scenario_name = gsub(pattern = "mode_", replacement = "", x = mode_column)
+  }
 
+  json_r = list(scenario_name = scenario_name, people = people)
   json_r
 }
 
