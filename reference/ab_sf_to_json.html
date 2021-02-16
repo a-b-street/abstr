@@ -123,6 +123,7 @@ can be saved as a JSON file for import into A/B Street.</p>
   <span class='va'>desire_lines_out</span>,
   mode_column <span class='op'>=</span> <span class='st'>"mode_base"</span>,
   time_fun <span class='op'>=</span> <span class='va'>ab_time_normal</span>,
+  scenario_name <span class='op'>=</span> <span class='cn'>NULL</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
@@ -143,6 +144,10 @@ the mode of transport. `"mode_baseline"` by default.</p></td>
       <th>time_fun</th>
       <td><p>The function used to calculate departure times.
 `ab_time_normal()` by default.</p></td>
+    </tr>
+    <tr>
+      <th>scenario_name</th>
+      <td><p>The name of the scenario to appear in A/B Street</p></td>
     </tr>
     <tr>
       <th>...</th>
