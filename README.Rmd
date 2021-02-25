@@ -142,7 +142,8 @@ The first trip schedule should look something like this, matching [A/B Street's 
               "latitude": 53.8039
             }
           },
-          "mode": "Walk"
+          "mode": "Walk",
+          "purpose": "Shopping"
         }
       ]
     }

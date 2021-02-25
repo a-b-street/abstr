@@ -187,7 +187,8 @@ schema](https://a-b-street.github.io/docs/dev/formats/scenarios.html#example).
               "latitude": 53.8039
             }
           },
-          "mode": "Walk"
+          "mode": "Walk",
+          "purpose": "Shopping"
         }
       ]
     }
