@@ -210,7 +210,11 @@ ab_sf_to_json = function(
     tibble::tibble(
       departure = desire_lines_out$departure[i],
       destination = destination,
-      mode = desire_lines_out[[mode_column]][i]
+      mode = desire_lines_out[[mode_column]][i],
+      # Other values at
+      # https://a-b-street.github.io/abstreet/rustdoc/sim/enum.TripPurpose.html.
+      # The simulation doesn't make use of this yet.
+      purpose = "Shopping"
     )
   })
 
