@@ -6,7 +6,7 @@
 \usage{
 ab_sf_to_json(
   desire_lines_out,
-  mode_column = "mode_base",
+  mode_column = NULL,
   time_fun = ab_time_normal,
   scenario_name = NULL,
   ...
@@ -54,12 +54,13 @@ dutch = ab_scenario(
 )
 ab_list = ab_sf_to_json(dutch, mode_column = "mode_godutch")
 ab_list$scenario
-ab_list$people$trips[[9]]
+str(ab_list$people$trips[[9]])
 # add times
 dutch$departure = ab_time_normal(hr = 1, sd = 0, n = nrow(dutch))
 ab_list_times = ab_sf_to_json(dutch)
+str(ab_list_times$people$trips[[9]])
 f = tempfile(fileext = ".json")
 ab_save(ab_list_times, f)
-readLines(f)[13]
+readLines(f)[1:30]
 60^2
 }
