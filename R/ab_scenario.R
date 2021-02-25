@@ -132,7 +132,7 @@ ab_scenario = function(houses,
   if(output_format == "sf") {
     return(desire_lines_out)
   } else {
-    return(ab_sf_to_json(desire_lines_out, mode_column = mode_cname, time_fun = time_fun, ...))
+    return(ab_json(desire_lines_out, mode_column = mode_cname, time_fun = time_fun, ...))
   }
 }
 
@@ -159,7 +159,7 @@ ab_scenario = function(houses,
 #'   leeds_zones,
 #'   output_format = "sf"
 #' )
-#' ab_list = ab_sf_to_json(ablines, mode_column = "mode_base")
+#' ab_list = ab_json(ablines, mode_column = "mode_base")
 #' ab_list$scenario
 #' ab_list$people$trips[[1]]
 #' dutch = ab_scenario(
@@ -170,18 +170,18 @@ ab_scenario = function(houses,
 #'   scenario = "godutch",
 #'   output_format = "sf"
 #' )
-#' ab_list = ab_sf_to_json(dutch, mode_column = "mode_godutch")
+#' ab_list = ab_json(dutch, mode_column = "mode_godutch")
 #' ab_list$scenario
 #' str(ab_list$people$trips[[9]])
 #' # add times
 #' dutch$departure = ab_time_normal(hr = 1, sd = 0, n = nrow(dutch))
-#' ab_list_times = ab_sf_to_json(dutch)
+#' ab_list_times = ab_json(dutch)
 #' str(ab_list_times$people$trips[[9]])
 #' f = tempfile(fileext = ".json")
 #' ab_save(ab_list_times, f)
 #' readLines(f)[1:30]
 #' 60^2
-ab_sf_to_json = function(
+ab_json = function(
   desire_lines_out,
   mode_column = NULL,
   time_fun = ab_time_normal,
