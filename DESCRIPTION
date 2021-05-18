@@ -19,7 +19,6 @@ BugReports: https://github.com/a-b-street/abstr/issues
 Depends: 
     R (>= 4.0.0)
 Imports: 
-    dplyr (>= 1.0.4),
     jsonlite (>= 1.7.2),
     lwgeom (>= 0.2.5),
     magrittr (>= 2.0.1),

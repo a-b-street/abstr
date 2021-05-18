@@ -77,10 +77,10 @@ ab_scenario = function(houses,
     # supressing messages associated with GEOS ops on unprojected data
     suppressWarnings({
       suppressMessages({
-        origins = houses %>% dplyr::sample_n(size = pop, replace = TRUE)
-        destination_zone = zones %>% dplyr::filter(geo_code == desire_lines$geo_code2[i])
+        origins = houses[sample(nrow(houses), size = pop, replace = TRUE), ]
+        destination_zone = zones %>% subset(geo_code == desire_lines$geo_code2[i])
         destination_buildings = buildings[destination_zone, , op = op]
-        destinations = destination_buildings %>% dplyr::sample_n(size = pop, replace = TRUE)
+        destinations = destination_buildings[sample(nrow(destination_buildings), size = pop, replace = TRUE), ]
         origin_coords = origins %>% sf::st_centroid() %>% sf::st_coordinates()
         destination_coords = destinations %>% sf::st_centroid() %>% sf::st_coordinates()
         desire_lines_disag = od::odc_to_sf(odc = cbind(origin_coords, destination_coords))
