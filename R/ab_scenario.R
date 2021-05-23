@@ -5,6 +5,7 @@
 #' @param desire_lines Origin-Destination data represented as `sf`
 #'   objects with `LINESTRING` geometries with 2 vertices, start point and
 #'   end point.
+#' @param pop_var The variable containing the total population of each desire line.
 #' @param zones Zones with IDs that match the desire lines and class `sf`
 #' @param scenario The name of the scenario, used to match column names.
 #'   `"base"` by default.
@@ -57,6 +58,7 @@
 ab_scenario = function(houses,
                        buildings,
                        desire_lines,
+                       pop_var = 3,
                        zones,
                        scenario = "base",
                        time_fun = ab_time_normal,
@@ -65,12 +67,13 @@ ab_scenario = function(houses,
                        ...
                        ) {
 
+
+  browser()
   requireNamespace("sf", quietly = TRUE)
   # loop over each desire line
   i = 1
   for(i in seq(nrow(desire_lines))) {
-    # todo: allow the user to choose the 'pop var' or document (RL 2020-02-10)
-    pop = desire_lines$all_base[i]
+    pop = desire_lines[[pop_var]][i]
     cnames = names(desire_lines)
 
     # todo: split out the lines to odc_to_sf as function? (RL 2020-02-10)
@@ -135,6 +138,101 @@ ab_scenario = function(houses,
     return(ab_json(desire_lines_out, mode_column = mode_cname, time_fun = time_fun, ...))
   }
 }
+
+
+ab_scenario2 = function(
+  desire_lines,
+  pop_var = 3,
+  zones,
+  buildings = NULL,
+  time_fun = ab_time_normal,
+  output_format = "sf",
+  op = sf::st_intersects,
+  ...
+) {
+
+
+  modes = names(desire_lines)[4:(ncol(desire_lines) - 1)]
+  desire_lines = leeds_desire_lines
+  desire_lines = desire_lines[1:6]
+  names(desire_lines) = c("o", "d", "All", "Walk", "Bike", "Drive", "geometry")
+  zones = leeds_zones
+  desire_lines_disag = od::od_disaggregate(od = desire_lines, z = zones, population_per_od = 1)
+  od_long = tidyr::pivot_longer(sf::st_drop_geometry(desire_lines[c("o", "d", modes)]), cols = modes)
+  repeat_indices = rep(seq(nrow(od_long)), od_long$value)
+  od_longer = od_long[repeat_indices, ]
+  sum(desire_lines$All)
+
+
+  # loop over each desire line
+  i = 1
+  for(i in seq(nrow(desire_lines))) {
+    pop = desire_lines[[pop_var]][i]
+    cnames = names(desire_lines)
+
+    # todo: split out the lines to odc_to_sf as function? (RL 2020-02-10)
+    # supressing messages associated with GEOS ops on unprojected data
+    suppressWarnings({
+      suppressMessages({
+        origins = houses[sample(nrow(houses), size = pop, replace = TRUE), ]
+        destination_zone = zones %>% subset(geo_code == desire_lines$geo_code2[i])
+        destination_buildings = buildings[destination_zone, , op = op]
+        destinations = destination_buildings[sample(nrow(destination_buildings), size = pop, replace = TRUE), ]
+        origin_coords = origins %>% sf::st_centroid() %>% sf::st_coordinates()
+        destination_coords = destinations %>% sf::st_centroid() %>% sf::st_coordinates()
+        desire_lines_disag = od::odc_to_sf(odc = cbind(origin_coords, destination_coords))
+      })
+    })
+    # todo: Allow multiple scenarios to be calculated here? (RL 2020-02-10)
+    mode_cname = paste0("mode_", scenario)
+    desire_lines_disag[[mode_cname]] = NA
+    n_walk = desire_lines[[match_scenario_mode(cnames, scenario, mode = "Walk")]][i]
+    n_bike = desire_lines[[match_scenario_mode(cnames, scenario, mode = "Bike|cycle")]][i]
+    n_drive = desire_lines[[match_scenario_mode(cnames, scenario, mode = "car_d|drive")]][i]
+    if(any(grepl(pattern = "transit|bus|rail", x = cnames))) {
+      n_transit = desire_lines[[match_scenario_mode(cnames, scenario, mode = "transit|bus|rail")]][i]
+    } else {
+      n_transit = 0
+    }
+    corrent_n = n_walk + n_bike + n_transit + n_drive == pop
+
+    # fix edge cases where n. people travelling by modes do not match population
+    # todo: update input data (RL)
+    n_mismatch = nrow(desire_lines_disag) -  sum(n_walk, n_bike, n_drive, n_transit)
+    if(n_mismatch != 0) {
+      warning("Mismatch between n. trips and population. Check your data")
+      n_walk = n_walk + n_mismatch
+    }
+
+    # todo: update this next line? (RL)
+    if(n_walk > 0) {
+      desire_lines_disag[[mode_cname]][sample(nrow(desire_lines_disag), size = n_walk)] = "Walk"
+    }
+    no_mode = which(is.na(desire_lines_disag[[mode_cname]]))
+    if(length(no_mode) > 0) {
+      desire_lines_disag[[mode_cname]][sample(no_mode, size = n_bike)] = "Bike"
+    }
+    no_mode = which(is.na(desire_lines_disag[[mode_cname]]))
+    if(length(no_mode) > 0) {
+      desire_lines_disag[[mode_cname]][sample(no_mode, size = n_drive)] = "Drive"
+    }
+    # Other modes include taking public transit and being a passenger in a car. A/B Street doesn't
+    # model the latter, so for now map all of these to transit. Also note that bus routes are mostly
+    # not imported yet, so transit trips will wind up walking.
+    desire_lines_disag[[mode_cname]][is.na(desire_lines_disag[[mode_cname]])] = "Transit"
+    if(i == 1) {
+      desire_lines_out = desire_lines_disag
+    } else {
+      desire_lines_out = rbind(desire_lines_out, desire_lines_disag)
+    }
+  }
+  if(output_format == "sf") {
+    return(desire_lines_out)
+  } else {
+    return(ab_json(desire_lines_out, mode_column = mode_cname, time_fun = time_fun, ...))
+  }
+}
+
 
 #' Convert geographic ('sf') representation of OD data to 'JSON list' structure
 #'
