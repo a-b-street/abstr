@@ -11,8 +11,8 @@ buffer_distance_m = 500 # buffer to catch residential buildings
 
 # input data: we should probably have naming conventions for these
 site_area = sf::read_sf(file.path(path, "site.geojson"))
-desire_lines = sf::read_sf(file.path(path, "desire-lines-few.geojson"))
-study_area = sf::read_sf(file.path(path, "small-study-area.geojson"))
+desire_lines = sf::read_sf(file.path(path, "desire-lines-few.geojson"))	# TODO or many?
+study_area = sf::read_sf(file.path(path, "small-study-area.geojson"))	# TODO or large?
 # buildings = osmextract::oe_get(study_area, layer = "multipolygons")
 osm_polygons = osmextract::oe_get(sf::st_centroid(study_area), layer = "multipolygons")
 
@@ -62,19 +62,27 @@ sum(desire_lines$walk_base, desire_lines$cycle_base, desire_lines$drive_base)
 sum(desire_lines$walk_godutch, desire_lines$cycle_godutch, desire_lines$drive_godutch)
 
 leeds_desire_lines = desire_lines %>%
-  select(geo_code1, geo_code2, All = trimode_base, Walk = walk_base, Bike = cycle_base, Drive = drive_godutch) %>%
+  select(geo_code1, geo_code2, all_base = trimode_base, walk_base:drive_godutch) %>%
   slice(1:3)
+
+leeds_od = desire_lines %>%
+  sf::st_drop_geometry() %>%
+  select(geo_code1, geo_code2, All = trimode_base, Walk = walk_base, Bike = cycle_base, Drive = drive_godutch) %>%
+  mutate(Transit = All - Walk - Bike - Drive) %>%
+  slice(1:3)
+
+
 leeds_houses = osm_polygons_resi_site
 leeds_buildings = buildings_in_zones
 leeds_zones = zones_of_interest
 leeds_site_area = site_area
-
 
 usethis::use_data(leeds_houses, overwrite = TRUE)
 usethis::use_data(leeds_buildings, overwrite = TRUE)
 usethis::use_data(leeds_desire_lines, overwrite = TRUE)
 usethis::use_data(leeds_zones, overwrite = TRUE)
 usethis::use_data(leeds_site_area, overwrite = TRUE)
+usethis::use_data(leeds_od, overwrite = TRUE)
 
 ablines = ab_scenario(
   houses = leeds_houses,
