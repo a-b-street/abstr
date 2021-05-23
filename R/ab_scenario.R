@@ -68,7 +68,6 @@ ab_scenario = function(houses,
                        ) {
 
 
-  browser()
   requireNamespace("sf", quietly = TRUE)
   # loop over each desire line
   i = 1
@@ -140,97 +139,65 @@ ab_scenario = function(houses,
 }
 
 
+#' Generate disaggregated desire lines for use in A/B Street
+#'
+#' @param od Origin destination data
+#' @inheritParams ab_scenario
+#' @export
+#' @examples
+#' desire_lines = leeds_desire_lines
+#' od = sf::st_drop_geometry(desire_lines[1:6])
+#' names(od) = c("o", "d", "All", "Walk", "Bike", "Drive")
+#' zones = leeds_zones
+#' ablines2 = ab_scenario2(od, zones = zones)
+#' plot(ablines2)
+#' plot(desire_lines)
+#' table(ablines2$name)
+#' colSums(sf::st_drop_geometry(desire_lines[3:6])) # 0.17 vs 0.05 for ab_scenario
+#' ablines_json = ab_json(ablines2)
 ab_scenario2 = function(
-  desire_lines,
+  od,
   pop_var = 3,
   zones,
   buildings = NULL,
   time_fun = ab_time_normal,
   output_format = "sf",
   op = sf::st_intersects,
+  modes = c("Walk", "Bike", "Drive"),
   ...
 ) {
 
-
-  modes = names(desire_lines)[4:(ncol(desire_lines) - 1)]
-  desire_lines = leeds_desire_lines
-  desire_lines = desire_lines[1:6]
-  names(desire_lines) = c("o", "d", "All", "Walk", "Bike", "Drive", "geometry")
-  zones = leeds_zones
-  desire_lines_disag = od::od_disaggregate(od = desire_lines, z = zones, population_per_od = 1)
-  od_long = tidyr::pivot_longer(sf::st_drop_geometry(desire_lines[c("o", "d", modes)]), cols = modes)
+  # desire_lines_disag = od::od_disaggregate(od = desire_lines, z = zones, population_per_od = 1)
+  # desire_lines_disag = desire_lines_disag[c("o_agg", "d_agg")]
+  if(methods::is(od, class2 = "sf")) {
+    od = sf::st_drop_geometry(od)
+  }
+  # minimise n. columns:
+  od = od[c(names(od)[1:2], modes)]
+  od_long = tidyr::pivot_longer(od, cols = modes, names_to = "mode")
   repeat_indices = rep(seq(nrow(od_long)), od_long$value)
-  od_longer = od_long[repeat_indices, ]
-  sum(desire_lines$All)
+  od_longer = od_long[repeat_indices, 1:3]
+  od::od_jitter(od = od_longer, z = zones)
 
+  # nrow(od_longer) == nrow(od_disag)
+  # table(od_longer$o)
+  # table(od_disag$o)
+  # table(od_longer$d)
+  # table(od_disag$d)
+  # od_disag$d == od_longer$d
 
-  # loop over each desire line
-  i = 1
-  for(i in seq(nrow(desire_lines))) {
-    pop = desire_lines[[pop_var]][i]
-    cnames = names(desire_lines)
+  # od_out_df = merge(all.y = FALSE,
+  #   od_longer[1:3],
+  #   sf::st_drop_geometry(od_disag)
+  #   )
 
-    # todo: split out the lines to odc_to_sf as function? (RL 2020-02-10)
-    # supressing messages associated with GEOS ops on unprojected data
-    suppressWarnings({
-      suppressMessages({
-        origins = houses[sample(nrow(houses), size = pop, replace = TRUE), ]
-        destination_zone = zones %>% subset(geo_code == desire_lines$geo_code2[i])
-        destination_buildings = buildings[destination_zone, , op = op]
-        destinations = destination_buildings[sample(nrow(destination_buildings), size = pop, replace = TRUE), ]
-        origin_coords = origins %>% sf::st_centroid() %>% sf::st_coordinates()
-        destination_coords = destinations %>% sf::st_centroid() %>% sf::st_coordinates()
-        desire_lines_disag = od::odc_to_sf(odc = cbind(origin_coords, destination_coords))
-      })
-    })
-    # todo: Allow multiple scenarios to be calculated here? (RL 2020-02-10)
-    mode_cname = paste0("mode_", scenario)
-    desire_lines_disag[[mode_cname]] = NA
-    n_walk = desire_lines[[match_scenario_mode(cnames, scenario, mode = "Walk")]][i]
-    n_bike = desire_lines[[match_scenario_mode(cnames, scenario, mode = "Bike|cycle")]][i]
-    n_drive = desire_lines[[match_scenario_mode(cnames, scenario, mode = "car_d|drive")]][i]
-    if(any(grepl(pattern = "transit|bus|rail", x = cnames))) {
-      n_transit = desire_lines[[match_scenario_mode(cnames, scenario, mode = "transit|bus|rail")]][i]
-    } else {
-      n_transit = 0
-    }
-    corrent_n = n_walk + n_bike + n_transit + n_drive == pop
+  # table(od_out_df$name)
+  # sum(od$Walk)
+  # sum(od$Bike)
+  # sum(od$Drive)
 
-    # fix edge cases where n. people travelling by modes do not match population
-    # todo: update input data (RL)
-    n_mismatch = nrow(desire_lines_disag) -  sum(n_walk, n_bike, n_drive, n_transit)
-    if(n_mismatch != 0) {
-      warning("Mismatch between n. trips and population. Check your data")
-      n_walk = n_walk + n_mismatch
-    }
+  # sf::st_sf(od_longer[3], geometry = od_disag$geometry)
 
-    # todo: update this next line? (RL)
-    if(n_walk > 0) {
-      desire_lines_disag[[mode_cname]][sample(nrow(desire_lines_disag), size = n_walk)] = "Walk"
-    }
-    no_mode = which(is.na(desire_lines_disag[[mode_cname]]))
-    if(length(no_mode) > 0) {
-      desire_lines_disag[[mode_cname]][sample(no_mode, size = n_bike)] = "Bike"
-    }
-    no_mode = which(is.na(desire_lines_disag[[mode_cname]]))
-    if(length(no_mode) > 0) {
-      desire_lines_disag[[mode_cname]][sample(no_mode, size = n_drive)] = "Drive"
-    }
-    # Other modes include taking public transit and being a passenger in a car. A/B Street doesn't
-    # model the latter, so for now map all of these to transit. Also note that bus routes are mostly
-    # not imported yet, so transit trips will wind up walking.
-    desire_lines_disag[[mode_cname]][is.na(desire_lines_disag[[mode_cname]])] = "Transit"
-    if(i == 1) {
-      desire_lines_out = desire_lines_disag
-    } else {
-      desire_lines_out = rbind(desire_lines_out, desire_lines_disag)
-    }
-  }
-  if(output_format == "sf") {
-    return(desire_lines_out)
-  } else {
-    return(ab_json(desire_lines_out, mode_column = mode_cname, time_fun = time_fun, ...))
-  }
 }
 
 

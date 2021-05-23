@@ -8,6 +8,7 @@ ab_scenario(
   houses,
   buildings,
   desire_lines,
+  pop_var = 3,
   zones,
   scenario = "base",
   time_fun = ab_time_normal,
@@ -24,6 +25,8 @@ ab_scenario(
 \item{desire_lines}{Origin-Destination data represented as `sf`
 objects with `LINESTRING` geometries with 2 vertices, start point and
 end point.}
+
+\item{pop_var}{The variable containing the total population of each desire line.}
 
 \item{zones}{Zones with IDs that match the desire lines and class `sf`}
 
