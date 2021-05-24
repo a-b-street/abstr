@@ -5,33 +5,26 @@
 \title{Generate A/B Street Scenario files/objects}
 \usage{
 ab_scenario(
-  houses,
-  buildings,
-  desire_lines,
-  pop_var = 3,
+  od,
   zones,
-  scenario = "base",
+  zones_d = NULL,
+  origins = NULL,
+  destinations1 = NULL,
+  destinations2 = NULL,
+  pop_var = 3,
   time_fun = ab_time_normal,
   output_format = "sf",
   op = sf::st_intersects,
+  modes = c("Walk", "Bike", "Drive", "Transit"),
   ...
 )
 }
 \arguments{
-\item{houses}{Polygons where trips will originate (`sf` object)}
-
-\item{buildings}{Buildings where trips will end represented as `sf` object}
-
-\item{desire_lines}{Origin-Destination data represented as `sf`
-objects with `LINESTRING` geometries with 2 vertices, start point and
-end point.}
-
-\item{pop_var}{The variable containing the total population of each desire line.}
+\item{od}{Origin destination data}
 
 \item{zones}{Zones with IDs that match the desire lines and class `sf`}
 
-\item{scenario}{The name of the scenario, used to match column names.
-`"base"` by default.}
+\item{pop_var}{The variable containing the total population of each desire line.}
 
 \item{time_fun}{The function used to calculate departure times.
 `ab_time_normal()` by default.}
@@ -43,45 +36,70 @@ See online documentation on binary predicates for further details, e.g.
 [Spatial Data Science](https://keen-swartz-3146c4.netlify.app/geommanip.html)}
 
 \item{...}{Additional arguments to pass to `time_fun`}
+
+\item{houses}{Polygons where trips will originate (`sf` object)}
+
+\item{buildings}{Buildings where trips will end represented as `sf` object}
+
+\item{desire_lines}{Origin-Destination data represented as `sf`
+objects with `LINESTRING` geometries with 2 vertices, start point and
+end point.}
+
+\item{scenario}{The name of the scenario, used to match column names.
+`"base"` by default.}
 }
 \description{
 Generate A/B Street Scenario files/objects
 }
 \examples{
-ablines = ab_scenario(
-  leeds_houses,
-  leeds_buildings,
-  leeds_desire_lines,
-  leeds_zones,
-  output_format = "sf"
-)
-dutch = ab_scenario(
-  leeds_houses,
-  leeds_buildings,
-  leeds_desire_lines,
-  leeds_zones,
-  scenario = "dutch",
-  output_format = "sf"
-)
-plot(ablines, key.pos = 1, reset = FALSE)
-plot(leeds_site_area$geometry, add = TRUE)
+od = leeds_od
+zones = leeds_zones
+zones_d = leeds_zones
+od[[1]] = c("E02006876")
+ablines = ab_scenario(od, zones = zones)
+plot(ablines)
+table(ablines$mode)
+colSums(od[3:7]) # 0.17 vs 0.05 for ab_scenario
+origins = sf::st_centroid(leeds_buildings)
+ablines = ab_scenario(od, zones = zones, origins = origins)
+plot(leeds_zones$geometry)
 plot(leeds_buildings$geometry, add = TRUE)
-plot(dutch, key.pos = 1, reset = FALSE)
-plot(leeds_site_area$geometry, add = TRUE)
-plot(leeds_buildings$geometry, add = TRUE)
-dutch$departure = ab_time_normal(hr = 8, sd = 0.5, n = nrow(dutch))
-ab_evening_dutch = ab_scenario(
-  leeds_houses,
-  leeds_buildings,
-  leeds_desire_lines,
-  leeds_zones,
-  scenario = "dutch",
-  output_format = "json_list",
-  hr = 20, # representing 8 pm
-  sd = 0
-)
-f = tempfile(fileext = ".json")
-ab_save(ab_evening_dutch, f)
-readLines(f)[13]
-20 * 60^2
+plot(ablines["mode"], add = TRUE)
+ablines_json = ab_json(ablines)
+# ablines = ab_scenario(
+#   leeds_houses,
+#   leeds_buildings,
+#   leeds_desire_lines,
+#   leeds_zones,
+#   output_format = "sf"
+# )
+# dutch = ab_scenario(
+#   leeds_houses,
+#   leeds_buildings,
+#   leeds_desire_lines,
+#   leeds_zones,
+#   scenario = "dutch",
+#   output_format = "sf"
+# )
+# plot(ablines, key.pos = 1, reset = FALSE)
+# plot(leeds_site_area$geometry, add = TRUE)
+# plot(leeds_buildings$geometry, add = TRUE)
+# plot(dutch, key.pos = 1, reset = FALSE)
+# plot(leeds_site_area$geometry, add = TRUE)
+# plot(leeds_buildings$geometry, add = TRUE)
+# dutch$departure = ab_time_normal(hr = 8, sd = 0.5, n = nrow(dutch))
+# ab_evening_dutch = ab_scenario(
+#   leeds_houses,
+#   leeds_buildings,
+#   leeds_desire_lines,
+#   leeds_zones,
+#   scenario = "dutch",
+#   output_format = "json_list",
+#   hr = 20, # representing 8 pm
+#   sd = 0
+# )
+# f = tempfile(fileext = ".json")
+# ab_save(ab_evening_dutch, f)
+# readLines(f)[13]
+# 20 * 60^2
 }

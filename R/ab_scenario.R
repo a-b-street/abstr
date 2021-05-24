@@ -1,5 +1,6 @@
 #' Generate A/B Street Scenario files/objects
 #'
+#' @param od Origin destination data
 #' @param houses Polygons where trips will originate (`sf` object)
 #' @param buildings Buildings where trips will end represented as `sf` object
 #' @param desire_lines Origin-Destination data represented as `sf`
@@ -19,156 +20,70 @@
 #'
 #' @export
 #' @examples
-#' ablines = ab_scenario(
-#'   leeds_houses,
-#'   leeds_buildings,
-#'   leeds_desire_lines,
-#'   leeds_zones,
-#'   output_format = "sf"
-#' )
-#' dutch = ab_scenario(
-#'   leeds_houses,
-#'   leeds_buildings,
-#'   leeds_desire_lines,
-#'   leeds_zones,
-#'   scenario = "dutch",
-#'   output_format = "sf"
-#' )
-#' plot(ablines, key.pos = 1, reset = FALSE)
-#' plot(leeds_site_area$geometry, add = TRUE)
-#' plot(leeds_buildings$geometry, add = TRUE)
-#' plot(dutch, key.pos = 1, reset = FALSE)
-#' plot(leeds_site_area$geometry, add = TRUE)
-#' plot(leeds_buildings$geometry, add = TRUE)
-#' dutch$departure = ab_time_normal(hr = 8, sd = 0.5, n = nrow(dutch))
-#' ab_evening_dutch = ab_scenario(
-#'   leeds_houses,
-#'   leeds_buildings,
-#'   leeds_desire_lines,
-#'   leeds_zones,
-#'   scenario = "dutch",
-#'   output_format = "json_list",
-#'   hr = 20, # representing 8 pm
-#'   sd = 0
-#' )
-#' f = tempfile(fileext = ".json")
-#' ab_save(ab_evening_dutch, f)
-#' readLines(f)[13]
-#' 20 * 60^2
-ab_scenario = function(houses,
-                       buildings,
-                       desire_lines,
-                       pop_var = 3,
-                       zones,
-                       scenario = "base",
-                       time_fun = ab_time_normal,
-                       output_format = "sf",
-                       op = sf::st_intersects,
-                       ...
-                       ) {
-
-
-  requireNamespace("sf", quietly = TRUE)
-  # loop over each desire line
-  i = 1
-  for(i in seq(nrow(desire_lines))) {
-    pop = desire_lines[[pop_var]][i]
-    cnames = names(desire_lines)
-
-    # todo: split out the lines to odc_to_sf as function? (RL 2020-02-10)
-    # supressing messages associated with GEOS ops on unprojected data
-    suppressWarnings({
-      suppressMessages({
-        origins = houses[sample(nrow(houses), size = pop, replace = TRUE), ]
-        destination_zone = zones %>% subset(geo_code == desire_lines$geo_code2[i])
-        destination_buildings = buildings[destination_zone, , op = op]
-        destinations = destination_buildings[sample(nrow(destination_buildings), size = pop, replace = TRUE), ]
-        origin_coords = origins %>% sf::st_centroid() %>% sf::st_coordinates()
-        destination_coords = destinations %>% sf::st_centroid() %>% sf::st_coordinates()
-        desire_lines_disag = od::odc_to_sf(odc = cbind(origin_coords, destination_coords))
-      })
-    })
-    # todo: Allow multiple scenarios to be calculated here? (RL 2020-02-10)
-    mode_cname = paste0("mode_", scenario)
-    desire_lines_disag[[mode_cname]] = NA
-    n_walk = desire_lines[[match_scenario_mode(cnames, scenario, mode = "Walk")]][i]
-    n_bike = desire_lines[[match_scenario_mode(cnames, scenario, mode = "Bike|cycle")]][i]
-    n_drive = desire_lines[[match_scenario_mode(cnames, scenario, mode = "car_d|drive")]][i]
-    if(any(grepl(pattern = "transit|bus|rail", x = cnames))) {
-      n_transit = desire_lines[[match_scenario_mode(cnames, scenario, mode = "transit|bus|rail")]][i]
-    } else {
-      n_transit = 0
-    }
-    corrent_n = n_walk + n_bike + n_transit + n_drive == pop
-
-    # fix edge cases where n. people travelling by modes do not match population
-    # todo: update input data (RL)
-    n_mismatch = nrow(desire_lines_disag) -  sum(n_walk, n_bike, n_drive, n_transit)
-    if(n_mismatch != 0) {
-      warning("Mismatch between n. trips and population. Check your data")
-      n_walk = n_walk + n_mismatch
-    }
-
-    # todo: update this next line? (RL)
-    if(n_walk > 0) {
-      desire_lines_disag[[mode_cname]][sample(nrow(desire_lines_disag), size = n_walk)] = "Walk"
-    }
-    no_mode = which(is.na(desire_lines_disag[[mode_cname]]))
-    if(length(no_mode) > 0) {
-      desire_lines_disag[[mode_cname]][sample(no_mode, size = n_bike)] = "Bike"
-    }
-    no_mode = which(is.na(desire_lines_disag[[mode_cname]]))
-    if(length(no_mode) > 0) {
-      desire_lines_disag[[mode_cname]][sample(no_mode, size = n_drive)] = "Drive"
-    }
-    # Other modes include taking public transit and being a passenger in a car. A/B Street doesn't
-    # model the latter, so for now map all of these to transit. Also note that bus routes are mostly
-    # not imported yet, so transit trips will wind up walking.
-    desire_lines_disag[[mode_cname]][is.na(desire_lines_disag[[mode_cname]])] = "Transit"
-    if(i == 1) {
-      desire_lines_out = desire_lines_disag
-    } else {
-      desire_lines_out = rbind(desire_lines_out, desire_lines_disag)
-    }
-  }
-  if(output_format == "sf") {
-    return(desire_lines_out)
-  } else {
-    return(ab_json(desire_lines_out, mode_column = mode_cname, time_fun = time_fun, ...))
-  }
-}
-
-
-#' Generate disaggregated desire lines for use in A/B Street
-#'
-#' @param od Origin destination data
-#' @inheritParams ab_scenario
-#' @export
-#' @examples
-#' desire_lines = leeds_desire_lines
-#' od = sf::st_drop_geometry(desire_lines[1:6])
-#' names(od) = c("o", "d", "All", "Walk", "Bike", "Drive")
+#' od = leeds_od
 #' zones = leeds_zones
-#' ablines2 = ab_scenario2(od, zones = zones)
-#' plot(ablines2)
-#' plot(desire_lines)
-#' table(ablines2$name)
-#' colSums(sf::st_drop_geometry(desire_lines[3:6])) # 0.17 vs 0.05 for ab_scenario
-#' ablines_json = ab_json(ablines2)
-ab_scenario2 = function(
+#' zones_d = leeds_zones
+#' od[[1]] = c("E02006876")
+#' ablines = ab_scenario(od, zones = zones)
+#' plot(ablines)
+#' table(ablines$mode)
+#' colSums(od[3:7]) # 0.17 vs 0.05 for ab_scenario
+#' origins = sf::st_centroid(leeds_buildings)
+#' ablines = ab_scenario(od, zones = zones, origins = origins)
+#' plot(leeds_zones$geometry)
+#' plot(leeds_buildings$geometry, add = TRUE)
+#' plot(ablines["mode"], add = TRUE)
+#' ablines_json = ab_json(ablines)
+#' # ablines = ab_scenario(
+#' #   leeds_houses,
+#' #   leeds_buildings,
+#' #   leeds_desire_lines,
+#' #   leeds_zones,
+#' #   output_format = "sf"
+#' # )
+#' # dutch = ab_scenario(
+#' #   leeds_houses,
+#' #   leeds_buildings,
+#' #   leeds_desire_lines,
+#' #   leeds_zones,
+#' #   scenario = "dutch",
+#' #   output_format = "sf"
+#' # )
+#' # plot(ablines, key.pos = 1, reset = FALSE)
+#' # plot(leeds_site_area$geometry, add = TRUE)
+#' # plot(leeds_buildings$geometry, add = TRUE)
+#' # plot(dutch, key.pos = 1, reset = FALSE)
+#' # plot(leeds_site_area$geometry, add = TRUE)
+#' # plot(leeds_buildings$geometry, add = TRUE)
+#' # dutch$departure = ab_time_normal(hr = 8, sd = 0.5, n = nrow(dutch))
+#' # ab_evening_dutch = ab_scenario(
+#' #   leeds_houses,
+#' #   leeds_buildings,
+#' #   leeds_desire_lines,
+#' #   leeds_zones,
+#' #   scenario = "dutch",
+#' #   output_format = "json_list",
+#' #   hr = 20, # representing 8 pm
+#' #   sd = 0
+#' # )
+#' # f = tempfile(fileext = ".json")
+#' # ab_save(ab_evening_dutch, f)
+#' # readLines(f)[13]
+#' # 20 * 60^2
+ab_scenario = function(
   od,
-  pop_var = 3,
   zones,
-  buildings = NULL,
+  zones_d = NULL,
+  origins = NULL,
+  destinations1 = NULL,
+  destinations2 = NULL,
+  pop_var = 3,
   time_fun = ab_time_normal,
   output_format = "sf",
   op = sf::st_intersects,
-  modes = c("Walk", "Bike", "Drive"),
+  modes = c("Walk", "Bike", "Drive", "Transit"),
   ...
 ) {
-
-  # desire_lines_disag = od::od_disaggregate(od = desire_lines, z = zones, population_per_od = 1)
-  # desire_lines_disag = desire_lines_disag[c("o_agg", "d_agg")]
   if(methods::is(od, class2 = "sf")) {
     od = sf::st_drop_geometry(od)
   }
@@ -177,29 +92,10 @@ ab_scenario2 = function(
   od_long = tidyr::pivot_longer(od, cols = modes, names_to = "mode")
   repeat_indices = rep(seq(nrow(od_long)), od_long$value)
   od_longer = od_long[repeat_indices, 1:3]
-  od::od_jitter(od = od_longer, z = zones)
-
-  # nrow(od_longer) == nrow(od_disag)
-  # table(od_longer$o)
-  # table(od_disag$o)
-  # table(od_longer$d)
-  # table(od_disag$d)
-  # od_disag$d == od_longer$d
-
-  # od_out_df = merge(all.y = FALSE,
-  #   od_longer[1:3],
-  #   sf::st_drop_geometry(od_disag)
-  #   )
-
-  # table(od_out_df$name)
-  # sum(od$Walk)
-  # sum(od$Bike)
-  # sum(od$Drive)
-
-  # sf::st_sf(od_longer[3], geometry = od_disag$geometry)
+  # summary(od_longer$geo_code1 %in% zones$geo_code)
+  od::od_jitter(od = od_longer, z = zones, subpoints = origins, subpoints_d = destinations1)
 
 }
-
 
 #' Convert geographic ('sf') representation of OD data to 'JSON list' structure
 #'
