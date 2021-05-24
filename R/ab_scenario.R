@@ -1,21 +1,32 @@
-#' Generate A/B Street Scenario files/objects
+#' Generate A/B Street Scenario objects by disaggregating aggregate OD data
 #'
-#' @param od Origin destination data
-#' @param zones Zones with IDs that match the desire lines and class `sf`
-#' @param subpoints Polygons where trips will originate (`sf` object)
-#' @param buildings Buildings where trips will end represented as `sf` object
-#' @param desire_lines Origin-Destination data represented as `sf`
-#'   objects with `LINESTRING` geometries with 2 vertices, start point and
-#'   end point.
+#' This function takes a data frame representing origin-destination trip data
+#' in 'long' form, zones and, optionally, buildings from where trips can
+#' start and end as inputs.
+#'
+#' It returns an `sf` object by default representing individual trips
+#' between randomly selected points (or buildings when available)
+#' between the zones represented in the OD data.
+#'
+#' @param od Origin destination data with the first 2 columns containing
+#'   zone code of origin and zone code of destination. Subsequent
+#'   columns should be mode names such as All and Walk, Bike, Transit, Drive,
+#'   representing the number of trips made by each mode of transport
+#'   for use in A/B Street.
+#' @param zones Zones with IDs that match the desire lines. Class: `sf`.
+#' @param zones_d Optional destination zones with IDs
+#'   that match the second column of the `od` data frame
+#' @param origin_buildings Polygons where trips will originate (`sf` object)
+#' @param destination_buildings Polygons where trips can end, represented as `sf` object
 #' @param pop_var The variable containing the total population of each desire line.
-#' @param scenario The name of the scenario, used to match column names.
-#'   `"base"` by default.
 #' @param time_fun The function used to calculate departure times.
 #'   `ab_time_normal()` by default.
-#' @param output_format Which output format? `"sf"` (default) or `"json_list"`?
-#' @param op The binary predicate used to assign `buildings` to `zones`.
-#' See online documentation on binary predicates for further details, e.g.
-#' [Spatial Data Science](https://keen-swartz-3146c4.netlify.app/geommanip.html)
+#' @param output Which output format?
+#'   `"sf"` (default) and `"json_list"` return R objects.
+#'   A file name such as `"baseline.json"` will save the resulting scenario
+#'   to a file.
+#' @param modes The modes of travel to include,
+#'   `c("Walk", "Bike", "Drive", "Transit")` by default.
 #' @param ... Additional arguments to pass to `time_fun`
 #'
 #' @export
@@ -27,8 +38,7 @@
 #' plot(ablines)
 #' table(ablines$mode)
 #' colSums(od[3:7]) # 0.17 vs 0.05 for ab_scenario
-#' subpoints = sf::st_centroid(leeds_buildings)
-#' ablines = ab_scenario(od, zones = zones, subpoints = subpoints)
+#' ablines = ab_scenario(od, zones = zones, origin_buildings = leeds_buildings)
 #' plot(leeds_zones$geometry)
 #' plot(leeds_buildings$geometry, add = TRUE)
 #' plot(ablines["mode"], add = TRUE)
@@ -38,48 +48,22 @@
 #' #   leeds_buildings,
 #' #   leeds_desire_lines,
 #' #   leeds_zones,
-#' #   output_format = "sf"
-#' # )
-#' # dutch = ab_scenario(
-#' #   leeds_houses,
-#' #   leeds_buildings,
-#' #   leeds_desire_lines,
-#' #   leeds_zones,
-#' #   scenario = "dutch",
-#' #   output_format = "sf"
+#' #   output = "sf"
 #' # )
 #' # plot(ablines, key.pos = 1, reset = FALSE)
 #' # plot(leeds_site_area$geometry, add = TRUE)
 #' # plot(leeds_buildings$geometry, add = TRUE)
 #' # plot(dutch, key.pos = 1, reset = FALSE)
-#' # plot(leeds_site_area$geometry, add = TRUE)
-#' # plot(leeds_buildings$geometry, add = TRUE)
-#' # dutch$departure = ab_time_normal(hr = 8, sd = 0.5, n = nrow(dutch))
-#' # ab_evening_dutch = ab_scenario(
-#' #   leeds_houses,
-#' #   leeds_buildings,
-#' #   leeds_desire_lines,
-#' #   leeds_zones,
-#' #   scenario = "dutch",
-#' #   output_format = "json_list",
-#' #   hr = 20, # representing 8 pm
-#' #   sd = 0
-#' # )
-#' # f = tempfile(fileext = ".json")
-#' # ab_save(ab_evening_dutch, f)
-#' # readLines(f)[13]
-#' # 20 * 60^2
 ab_scenario = function(
   od,
   zones,
   zones_d = NULL,
-  subpoints = NULL,
-  subpoints_d = NULL,
+  origin_buildings = NULL,
+  destination_buildings = NULL,
   # destinations2 = NULL,
   pop_var = 3,
   time_fun = ab_time_normal,
-  output_format = "sf",
-  op = sf::st_intersects,
+  output = "sf",
   modes = c("Walk", "Bike", "Drive", "Transit"),
   ...
 ) {
@@ -92,17 +76,17 @@ ab_scenario = function(
   repeat_indices = rep(seq(nrow(od_long)), od_long$value)
   od_longer = od_long[repeat_indices, 1:3]
   # summary(od_longer$geo_code1 %in% zones$geo_code)
-  if(!is.null(subpoints)) {
+  if(!is.null(origin_buildings)) {
     suppressMessages({
-      subpoints = sf::st_centroid(subpoints)
+      origin_buildings = sf::st_centroid(origin_buildings)
     })
   }
-  if(!is.null(subpoints_d)) {
+  if(!is.null(destination_buildings)) {
     suppressMessages({
-      subpoints_d = sf::st_centroid(subpoints_d)
+      destination_buildings = sf::st_centroid(destination_buildings)
     })
   }
-  od::od_jitter(od = od_longer, z = zones, subpoints = subpoints, subpoints_d = subpoints_d)
+  od::od_jitter(od = od_longer, z = zones, subpoints = origin_buildings, subpoints_d = destination_buildings)
 
 }
 
@@ -138,7 +122,7 @@ ab_scenario = function(
 #' #   leeds_desire_lines,
 #' #   leeds_zones,
 #' #   scenario = "godutch",
-#' #   output_format = "sf"
+#' #   output = "sf"
 #' # )
 #' # ab_list = ab_json(dutch, mode_column = "mode_godutch")
 #' # ab_list$scenario

@@ -50,7 +50,7 @@ readLines(f)[1:30]
 #   leeds_desire_lines,
 #   leeds_zones,
 #   scenario = "godutch",
-#   output_format = "sf"
+#   output = "sf"
 # )
 # ab_list = ab_json(dutch, mode_column = "mode_godutch")
 # ab_list$scenario

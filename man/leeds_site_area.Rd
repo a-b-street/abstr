@@ -6,6 +6,7 @@
 \alias{leeds_buildings}
 \alias{leeds_desire_lines}
 \alias{leeds_zones}
+\alias{leeds_od}
 \title{Datasets from Leeds}
 \description{
 These datasets represent data from the case study city of Leeds.

@@ -2,53 +2,61 @@
 % Please edit documentation in R/ab_scenario.R
 \name{ab_scenario}
 \alias{ab_scenario}
-\title{Generate A/B Street Scenario files/objects}
+\title{Generate A/B Street Scenario objects by disaggregating aggregate OD data}
 \usage{
 ab_scenario(
   od,
   zones,
   zones_d = NULL,
-  subpoints = NULL,
-  subpoints_d = NULL,
+  origin_buildings = NULL,
+  destination_buildings = NULL,
   pop_var = 3,
   time_fun = ab_time_normal,
-  output_format = "sf",
-  op = sf::st_intersects,
+  output = "sf",
   modes = c("Walk", "Bike", "Drive", "Transit"),
   ...
 )
 }
 \arguments{
-\item{od}{Origin destination data}
+\item{od}{Origin destination data with the first 2 columns containing
+zone code of origin and zone code of destination. Subsequent
+columns should be mode names such as All and Walk, Bike, Transit, Drive,
+representing the number of trips made by each mode of transport
+for use in A/B Street.}
 
-\item{zones}{Zones with IDs that match the desire lines and class `sf`}
+\item{zones}{Zones with IDs that match the desire lines. Class: `sf`.}
 
-\item{subpoints}{Polygons where trips will originate (`sf` object)}
+\item{zones_d}{Optional destination zones with IDs
+that match the second column of the `od` data frame}
+
+\item{origin_buildings}{Polygons where trips will originate (`sf` object)}
+
+\item{destination_buildings}{Polygons where trips can end, represented as `sf` object}
 
 \item{pop_var}{The variable containing the total population of each desire line.}
 
 \item{time_fun}{The function used to calculate departure times.
 `ab_time_normal()` by default.}
 
-\item{output_format}{Which output format? `"sf"` (default) or `"json_list"`?}
+\item{output}{Which output format?
+`"sf"` (default) and `"json_list"` return R objects.
+A file name such as `"baseline.json"` will save the resulting scenario
+to a file.}
 
-\item{op}{The binary predicate used to assign `buildings` to `zones`.
-See online documentation on binary predicates for further details, e.g.
-[Spatial Data Science](https://keen-swartz-3146c4.netlify.app/geommanip.html)}
+\item{modes}{The modes of travel to include,
+`c("Walk", "Bike", "Drive", "Transit")` by default.}
 
 \item{...}{Additional arguments to pass to `time_fun`}
-
-\item{buildings}{Buildings where trips will end represented as `sf` object}
-
-\item{desire_lines}{Origin-Destination data represented as `sf`
-objects with `LINESTRING` geometries with 2 vertices, start point and
-end point.}
-
-\item{scenario}{The name of the scenario, used to match column names.
-`"base"` by default.}
 }
 \description{
-Generate A/B Street Scenario files/objects
+This function takes a data frame representing origin-destination trip data
+in 'long' form, zones and, optionally, buildings from where trips can
+start and end as inputs.
+}
+\details{
+It returns an `sf` object by default representing individual trips
+between randomly selected points (or buildings when available)
+between the zones represented in the OD data.
 }
 \examples{
 od = leeds_od
@@ -58,8 +66,7 @@ ablines = ab_scenario(od, zones = zones)
 plot(ablines)
 table(ablines$mode)
 colSums(od[3:7]) # 0.17 vs 0.05 for ab_scenario
-subpoints = sf::st_centroid(leeds_buildings)
-ablines = ab_scenario(od, zones = zones, subpoints = subpoints)
+ablines = ab_scenario(od, zones = zones, origin_buildings = leeds_buildings)
 plot(leeds_zones$geometry)
 plot(leeds_buildings$geometry, add = TRUE)
 plot(ablines["mode"], add = TRUE)
@@ -69,35 +76,10 @@ ablines_json = ab_json(ablines)
 #   leeds_buildings,
 #   leeds_desire_lines,
 #   leeds_zones,
-#   output_format = "sf"
-# )
-# dutch = ab_scenario(
-#   leeds_houses,
-#   leeds_buildings,
-#   leeds_desire_lines,
-#   leeds_zones,
-#   scenario = "dutch",
-#   output_format = "sf"
+#   output = "sf"
 # )
 # plot(ablines, key.pos = 1, reset = FALSE)
 # plot(leeds_site_area$geometry, add = TRUE)
 # plot(leeds_buildings$geometry, add = TRUE)
 # plot(dutch, key.pos = 1, reset = FALSE)
-# plot(leeds_site_area$geometry, add = TRUE)
-# plot(leeds_buildings$geometry, add = TRUE)
-# dutch$departure = ab_time_normal(hr = 8, sd = 0.5, n = nrow(dutch))
-# ab_evening_dutch = ab_scenario(
-#   leeds_houses,
-#   leeds_buildings,
-#   leeds_desire_lines,
-#   leeds_zones,
-#   scenario = "dutch",
-#   output_format = "json_list",
-#   hr = 20, # representing 8 pm
-#   sd = 0
-# )
-# f = tempfile(fileext = ".json")
-# ab_save(ab_evening_dutch, f)
-# readLines(f)[13]
-# 20 * 60^2
 }
