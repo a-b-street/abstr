@@ -34,33 +34,32 @@ This function takes outputs from [ab_scenario()] and returns a list that
 can be saved as a JSON file for import into A/B Street.
 }
 \examples{
-ablines = ab_scenario(
-  leeds_houses,
-  leeds_buildings,
-  leeds_desire_lines,
-  leeds_zones,
-  output_format = "sf"
-)
+od = leeds_od
+od[[1]] = c("E02006876")
+zones = leeds_zones
+ablines = ab_scenario(od, zones = zones)
 ab_list = ab_json(ablines, mode_column = "mode_base")
 ab_list$scenario
-ab_list$people$trips[[1]]
-dutch = ab_scenario(
-  leeds_houses,
-  leeds_buildings,
-  leeds_desire_lines,
-  leeds_zones,
-  scenario = "godutch",
-  output_format = "sf"
-)
-ab_list = ab_json(dutch, mode_column = "mode_godutch")
-ab_list$scenario
-str(ab_list$people$trips[[9]])
-# add times
-dutch$departure = ab_time_normal(hr = 1, sd = 0, n = nrow(dutch))
-ab_list_times = ab_json(dutch)
-str(ab_list_times$people$trips[[9]])
 f = tempfile(fileext = ".json")
-ab_save(ab_list_times, f)
+ab_save(ab_list, f)
 readLines(f)[1:30]
-60^2
+# ab_list$people$trips[[1]]
+# dutch = ab_scenario(
+#   leeds_houses,
+#   leeds_buildings,
+#   leeds_desire_lines,
+#   leeds_zones,
+#   scenario = "godutch",
+#   output_format = "sf"
+# )
+# ab_list = ab_json(dutch, mode_column = "mode_godutch")
+# ab_list$scenario
+# str(ab_list$people$trips[[9]])
+# # add times
+# dutch$departure = ab_time_normal(hr = 1, sd = 0, n = nrow(dutch))
+# ab_list_times = ab_json(dutch)
+# str(ab_list_times$people$trips[[9]])
+# ab_save(ab_list_times, f)
+# readLines(f)[1:30]
+# 60^2
 }

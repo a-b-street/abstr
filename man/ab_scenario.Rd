@@ -8,9 +8,8 @@ ab_scenario(
   od,
   zones,
   zones_d = NULL,
-  origins = NULL,
-  destinations1 = NULL,
-  destinations2 = NULL,
+  subpoints = NULL,
+  subpoints_d = NULL,
   pop_var = 3,
   time_fun = ab_time_normal,
   output_format = "sf",
@@ -24,6 +23,8 @@ ab_scenario(
 
 \item{zones}{Zones with IDs that match the desire lines and class `sf`}
 
+\item{subpoints}{Polygons where trips will originate (`sf` object)}
+
 \item{pop_var}{The variable containing the total population of each desire line.}
 
 \item{time_fun}{The function used to calculate departure times.
@@ -36,8 +37,6 @@ See online documentation on binary predicates for further details, e.g.
 [Spatial Data Science](https://keen-swartz-3146c4.netlify.app/geommanip.html)}
 
 \item{...}{Additional arguments to pass to `time_fun`}
-
-\item{houses}{Polygons where trips will originate (`sf` object)}
 
 \item{buildings}{Buildings where trips will end represented as `sf` object}
 
@@ -54,14 +53,13 @@ Generate A/B Street Scenario files/objects
 \examples{
 od = leeds_od
 zones = leeds_zones
-zones_d = leeds_zones
 od[[1]] = c("E02006876")
 ablines = ab_scenario(od, zones = zones)
 plot(ablines)
 table(ablines$mode)
 colSums(od[3:7]) # 0.17 vs 0.05 for ab_scenario
-origins = sf::st_centroid(leeds_buildings)
-ablines = ab_scenario(od, zones = zones, origins = origins)
+subpoints = sf::st_centroid(leeds_buildings)
+ablines = ab_scenario(od, zones = zones, subpoints = subpoints)
 plot(leeds_zones$geometry)
 plot(leeds_buildings$geometry, add = TRUE)
 plot(ablines["mode"], add = TRUE)

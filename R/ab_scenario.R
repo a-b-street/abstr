@@ -1,13 +1,13 @@
 #' Generate A/B Street Scenario files/objects
 #'
 #' @param od Origin destination data
-#' @param houses Polygons where trips will originate (`sf` object)
+#' @param zones Zones with IDs that match the desire lines and class `sf`
+#' @param subpoints Polygons where trips will originate (`sf` object)
 #' @param buildings Buildings where trips will end represented as `sf` object
 #' @param desire_lines Origin-Destination data represented as `sf`
 #'   objects with `LINESTRING` geometries with 2 vertices, start point and
 #'   end point.
 #' @param pop_var The variable containing the total population of each desire line.
-#' @param zones Zones with IDs that match the desire lines and class `sf`
 #' @param scenario The name of the scenario, used to match column names.
 #'   `"base"` by default.
 #' @param time_fun The function used to calculate departure times.
@@ -22,14 +22,13 @@
 #' @examples
 #' od = leeds_od
 #' zones = leeds_zones
-#' zones_d = leeds_zones
 #' od[[1]] = c("E02006876")
 #' ablines = ab_scenario(od, zones = zones)
 #' plot(ablines)
 #' table(ablines$mode)
 #' colSums(od[3:7]) # 0.17 vs 0.05 for ab_scenario
-#' origins = sf::st_centroid(leeds_buildings)
-#' ablines = ab_scenario(od, zones = zones, origins = origins)
+#' subpoints = sf::st_centroid(leeds_buildings)
+#' ablines = ab_scenario(od, zones = zones, subpoints = subpoints)
 #' plot(leeds_zones$geometry)
 #' plot(leeds_buildings$geometry, add = TRUE)
 #' plot(ablines["mode"], add = TRUE)
@@ -74,9 +73,9 @@ ab_scenario = function(
   od,
   zones,
   zones_d = NULL,
-  origins = NULL,
-  destinations1 = NULL,
-  destinations2 = NULL,
+  subpoints = NULL,
+  subpoints_d = NULL,
+  # destinations2 = NULL,
   pop_var = 3,
   time_fun = ab_time_normal,
   output_format = "sf",
@@ -93,7 +92,17 @@ ab_scenario = function(
   repeat_indices = rep(seq(nrow(od_long)), od_long$value)
   od_longer = od_long[repeat_indices, 1:3]
   # summary(od_longer$geo_code1 %in% zones$geo_code)
-  od::od_jitter(od = od_longer, z = zones, subpoints = origins, subpoints_d = destinations1)
+  if(!is.null(subpoints)) {
+    suppressMessages({
+      subpoints = sf::st_centroid(subpoints)
+    })
+  }
+  if(!is.null(subpoints_d)) {
+    suppressMessages({
+      subpoints_d = sf::st_centroid(subpoints_d)
+    })
+  }
+  od::od_jitter(od = od_longer, z = zones, subpoints = subpoints, subpoints_d = subpoints_d)
 
 }
 
@@ -113,35 +122,34 @@ ab_scenario = function(
 #' @export
 #'
 #' @examples
-#' ablines = ab_scenario(
-#'   leeds_houses,
-#'   leeds_buildings,
-#'   leeds_desire_lines,
-#'   leeds_zones,
-#'   output_format = "sf"
-#' )
+#' od = leeds_od
+#' od[[1]] = c("E02006876")
+#' zones = leeds_zones
+#' ablines = ab_scenario(od, zones = zones)
 #' ab_list = ab_json(ablines, mode_column = "mode_base")
 #' ab_list$scenario
-#' ab_list$people$trips[[1]]
-#' dutch = ab_scenario(
-#'   leeds_houses,
-#'   leeds_buildings,
-#'   leeds_desire_lines,
-#'   leeds_zones,
-#'   scenario = "godutch",
-#'   output_format = "sf"
-#' )
-#' ab_list = ab_json(dutch, mode_column = "mode_godutch")
-#' ab_list$scenario
-#' str(ab_list$people$trips[[9]])
-#' # add times
-#' dutch$departure = ab_time_normal(hr = 1, sd = 0, n = nrow(dutch))
-#' ab_list_times = ab_json(dutch)
-#' str(ab_list_times$people$trips[[9]])
 #' f = tempfile(fileext = ".json")
-#' ab_save(ab_list_times, f)
+#' ab_save(ab_list, f)
 #' readLines(f)[1:30]
-#' 60^2
+#' # ab_list$people$trips[[1]]
+#' # dutch = ab_scenario(
+#' #   leeds_houses,
+#' #   leeds_buildings,
+#' #   leeds_desire_lines,
+#' #   leeds_zones,
+#' #   scenario = "godutch",
+#' #   output_format = "sf"
+#' # )
+#' # ab_list = ab_json(dutch, mode_column = "mode_godutch")
+#' # ab_list$scenario
+#' # str(ab_list$people$trips[[9]])
+#' # # add times
+#' # dutch$departure = ab_time_normal(hr = 1, sd = 0, n = nrow(dutch))
+#' # ab_list_times = ab_json(dutch)
+#' # str(ab_list_times$people$trips[[9]])
+#' # ab_save(ab_list_times, f)
+#' # readLines(f)[1:30]
+#' # 60^2
 ab_json = function(
   desire_lines_out,
   mode_column = NULL,
