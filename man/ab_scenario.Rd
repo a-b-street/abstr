@@ -24,29 +24,29 @@ columns should be mode names such as All and Walk, Bike, Transit, Drive,
 representing the number of trips made by each mode of transport
 for use in A/B Street.}
 
-\item{zones}{Zones with IDs that match the desire lines. Class: `sf`.}
+\item{zones}{Zones with IDs that match the desire lines. Class: \code{sf}.}
 
 \item{zones_d}{Optional destination zones with IDs
-that match the second column of the `od` data frame}
+that match the second column of the \code{od} data frame}
 
-\item{origin_buildings}{Polygons where trips will originate (`sf` object)}
+\item{origin_buildings}{Polygons where trips will originate (\code{sf} object)}
 
-\item{destination_buildings}{Polygons where trips can end, represented as `sf` object}
+\item{destination_buildings}{Polygons where trips can end, represented as \code{sf} object}
 
 \item{pop_var}{The variable containing the total population of each desire line.}
 
 \item{time_fun}{The function used to calculate departure times.
-`ab_time_normal()` by default.}
+\code{ab_time_normal()} by default.}
 
 \item{output}{Which output format?
-`"sf"` (default) and `"json_list"` return R objects.
-A file name such as `"baseline.json"` will save the resulting scenario
+\code{"sf"} (default) and \code{"json_list"} return R objects.
+A file name such as \code{"baseline.json"} will save the resulting scenario
 to a file.}
 
 \item{modes}{The modes of travel to include,
-`c("Walk", "Bike", "Drive", "Transit")` by default.}
+\code{c("Walk", "Bike", "Drive", "Transit")} by default.}
 
-\item{...}{Additional arguments to pass to `time_fun`}
+\item{...}{Additional arguments to pass to \code{\link[=ab_json]{ab_json()}}}
 }
 \description{
 This function takes a data frame representing origin-destination trip data
@@ -54,7 +54,7 @@ in 'long' form, zones and, optionally, buildings from where trips can
 start and end as inputs.
 }
 \details{
-It returns an `sf` object by default representing individual trips
+It returns an \code{sf} object by default representing individual trips
 between randomly selected points (or buildings when available)
 between the zones represented in the OD data.
 }

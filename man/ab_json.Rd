@@ -14,23 +14,23 @@ ab_json(
 }
 \arguments{
 \item{desire_lines_out}{OD data represented as geographic lines created by
-[ab_scenario()].}
+\code{\link[=ab_scenario]{ab_scenario()}}.}
 
 \item{mode_column}{The column name in the desire lines data that contains
-the mode of transport. `"mode_baseline"` by default.}
+the mode of transport. \code{"mode_baseline"} by default.}
 
 \item{time_fun}{The function used to calculate departure times.
-`ab_time_normal()` by default.}
+\code{ab_time_normal()} by default.}
 
 \item{scenario_name}{The name of the scenario to appear in A/B Street}
 
-\item{...}{Additional arguments to pass to `time_fun`}
+\item{...}{Additional arguments to pass to \code{\link[=ab_json]{ab_json()}}}
 }
 \value{
-A list that can be saved as a JSON file with [ab_save()]
+A list that can be saved as a JSON file with \code{\link[=ab_save]{ab_save()}}
 }
 \description{
-This function takes outputs from [ab_scenario()] and returns a list that
+This function takes outputs from \code{\link[=ab_scenario]{ab_scenario()}} and returns a list that
 can be saved as a JSON file for import into A/B Street.
 }
 \examples{

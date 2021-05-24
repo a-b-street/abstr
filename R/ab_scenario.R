@@ -27,7 +27,7 @@
 #'   to a file.
 #' @param modes The modes of travel to include,
 #'   `c("Walk", "Bike", "Drive", "Transit")` by default.
-#' @param ... Additional arguments to pass to `time_fun`
+#' @param ... Additional arguments to pass to [ab_json()]
 #'
 #' @export
 #' @examples
@@ -86,7 +86,20 @@ ab_scenario = function(
       destination_buildings = sf::st_centroid(destination_buildings)
     })
   }
-  od::od_jitter(od = od_longer, z = zones, subpoints = origin_buildings, subpoints_d = destination_buildings)
+  res = od::od_jitter(
+    od = od_longer,
+    z = zones,
+    subpoints = origin_buildings,
+    subpoints_d = destination_buildings
+  )
+
+  if(output == "sf") {
+    return(res)
+  } else if(output == "json_list") {
+    return(ab_json(res, time_fun = time_fun, ...))
+  } else {
+    ab_save(ab_json(res, time_fun = time_fun, ...), f = output)
+  }
 
 }
 
