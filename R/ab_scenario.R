@@ -15,7 +15,7 @@
 #'   for use in A/B Street.
 #' @param zones Zones with IDs that match the desire lines. Class: `sf`.
 #' @param zones_d Optional destination zones with IDs
-#'   that match the second column of the `od` data frame
+#'   that match the second column of the `od` data frame (work in progress)
 #' @param origin_buildings Polygons where trips will originate (`sf` object)
 #' @param destination_buildings Polygons where trips can end, represented as `sf` object
 #' @param pop_var The variable containing the total population of each desire line.

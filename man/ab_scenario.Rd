@@ -27,7 +27,7 @@ for use in A/B Street.}
 \item{zones}{Zones with IDs that match the desire lines. Class: \code{sf}.}
 
 \item{zones_d}{Optional destination zones with IDs
-that match the second column of the \code{od} data frame}
+that match the second column of the \code{od} data frame (work in progress)}
 
 \item{origin_buildings}{Polygons where trips will originate (\code{sf} object)}
 
