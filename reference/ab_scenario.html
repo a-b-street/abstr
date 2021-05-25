@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Generate A/B Street Scenario files/objects — ab_scenario • abstr</title>
+<title>Generate A/B Street Scenario objects by disaggregating aggregate OD data — ab_scenario • abstr</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,10 @@
 
 
 
-<meta property="og:title" content="Generate A/B Street Scenario files/objects — ab_scenario" />
-<meta property="og:description" content="Generate A/B Street Scenario files/objects" />
+<meta property="og:title" content="Generate A/B Street Scenario objects by disaggregating aggregate OD data — ab_scenario" />
+<meta property="og:description" content="This function takes a data frame representing origin-destination trip data
+in 'long' form, zones and, optionally, buildings from where trips can
+start and end as inputs." />
 
 
 
@@ -72,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">abstr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -108,24 +110,27 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Generate A/B Street Scenario files/objects</h1>
+    <h1>Generate A/B Street Scenario objects by disaggregating aggregate OD data</h1>
     <small class="dont-index">Source: <a href='https://github.com/a-b-street/abstr/blob/master/R/ab_scenario.R'><code>R/ab_scenario.R</code></a></small>
     <div class="hidden name"><code>ab_scenario.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Generate A/B Street Scenario files/objects</p>
+    <p>This function takes a data frame representing origin-destination trip data
+in 'long' form, zones and, optionally, buildings from where trips can
+start and end as inputs.</p>
     </div>
 
     <pre class="usage"><span class='fu'>ab_scenario</span><span class='op'>(</span>
-  <span class='va'>houses</span>,
-  <span class='va'>buildings</span>,
-  <span class='va'>desire_lines</span>,
+  <span class='va'>od</span>,
   <span class='va'>zones</span>,
-  scenario <span class='op'>=</span> <span class='st'>"base"</span>,
+  zones_d <span class='op'>=</span> <span class='cn'>NULL</span>,
+  origin_buildings <span class='op'>=</span> <span class='cn'>NULL</span>,
+  destination_buildings <span class='op'>=</span> <span class='cn'>NULL</span>,
+  pop_var <span class='op'>=</span> <span class='fl'>3</span>,
   time_fun <span class='op'>=</span> <span class='va'>ab_time_normal</span>,
-  output_format <span class='op'>=</span> <span class='st'>"sf"</span>,
-  op <span class='op'>=</span> <span class='fu'>sf</span><span class='fu'>::</span><span class='va'><a href='https://r-spatial.github.io/sf/reference/geos_binary_pred.html'>st_intersects</a></span>,
+  output <span class='op'>=</span> <span class='st'>"sf"</span>,
+  modes <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Walk"</span>, <span class='st'>"Bike"</span>, <span class='st'>"Drive"</span>, <span class='st'>"Transit"</span><span class='op'>)</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
@@ -133,88 +138,91 @@
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>houses</th>
-      <td><p>Polygons where trips will originate (`sf` object)</p></td>
-    </tr>
-    <tr>
-      <th>buildings</th>
-      <td><p>Buildings where trips will end represented as `sf` object</p></td>
-    </tr>
-    <tr>
-      <th>desire_lines</th>
-      <td><p>Origin-Destination data represented as `sf`
-objects with `LINESTRING` geometries with 2 vertices, start point and
-end point.</p></td>
+      <th>od</th>
+      <td><p>Origin destination data with the first 2 columns containing
+zone code of origin and zone code of destination. Subsequent
+columns should be mode names such as All and Walk, Bike, Transit, Drive,
+representing the number of trips made by each mode of transport
+for use in A/B Street.</p></td>
     </tr>
     <tr>
       <th>zones</th>
-      <td><p>Zones with IDs that match the desire lines and class `sf`</p></td>
+      <td><p>Zones with IDs that match the desire lines. Class: <code>sf</code>.</p></td>
     </tr>
     <tr>
-      <th>scenario</th>
-      <td><p>The name of the scenario, used to match column names.
-`"base"` by default.</p></td>
+      <th>zones_d</th>
+      <td><p>Optional destination zones with IDs
+that match the second column of the <code>od</code> data frame (work in progress)</p></td>
+    </tr>
+    <tr>
+      <th>origin_buildings</th>
+      <td><p>Polygons where trips will originate (<code>sf</code> object)</p></td>
+    </tr>
+    <tr>
+      <th>destination_buildings</th>
+      <td><p>Polygons where trips can end, represented as <code>sf</code> object</p></td>
+    </tr>
+    <tr>
+      <th>pop_var</th>
+      <td><p>The variable containing the total population of each desire line.</p></td>
     </tr>
     <tr>
       <th>time_fun</th>
       <td><p>The function used to calculate departure times.
-`ab_time_normal()` by default.</p></td>
+<code><a href='ab_time_normal.html'>ab_time_normal()</a></code> by default.</p></td>
     </tr>
     <tr>
-      <th>output_format</th>
-      <td><p>Which output format? `"sf"` (default) or `"json_list"`?</p></td>
+      <th>output</th>
+      <td><p>Which output format?
+<code>"sf"</code> (default) and <code>"json_list"</code> return R objects.
+A file name such as <code>"baseline.json"</code> will save the resulting scenario
+to a file.</p></td>
     </tr>
     <tr>
-      <th>op</th>
-      <td><p>The binary predicate used to assign `buildings` to `zones`.
-See online documentation on binary predicates for further details, e.g.
-[Spatial Data Science](https://keen-swartz-3146c4.netlify.app/geommanip.html)</p></td>
+      <th>modes</th>
+      <td><p>The modes of travel to include,
+<code><a href='https://rdrr.io/r/base/c.html'>c("Walk", "Bike", "Drive", "Transit")</a></code> by default.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Additional arguments to pass to `time_fun`</p></td>
+      <td><p>Additional arguments to pass to <code><a href='ab_json.html'>ab_json()</a></code></p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>It returns an <code>sf</code> object by default representing individual trips
+between randomly selected points (or buildings when available)
+between the zones represented in the OD data.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>ablines</span> <span class='op'>=</span> <span class='fu'>ab_scenario</span><span class='op'>(</span>
-  <span class='va'>leeds_houses</span>,
-  <span class='va'>leeds_buildings</span>,
-  <span class='va'>leeds_desire_lines</span>,
-  <span class='va'>leeds_zones</span>,
-  output_format <span class='op'>=</span> <span class='st'>"sf"</span>
-<span class='op'>)</span>
-<span class='va'>dutch</span> <span class='op'>=</span> <span class='fu'>ab_scenario</span><span class='op'>(</span>
-  <span class='va'>leeds_houses</span>,
-  <span class='va'>leeds_buildings</span>,
-  <span class='va'>leeds_desire_lines</span>,
-  <span class='va'>leeds_zones</span>,
-  scenario <span class='op'>=</span> <span class='st'>"dutch"</span>,
-  output_format <span class='op'>=</span> <span class='st'>"sf"</span>
-<span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>ablines</span>, key.pos <span class='op'>=</span> <span class='fl'>1</span>, reset <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>leeds_site_area</span><span class='op'>$</span><span class='va'>geometry</span>, add <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='va'>od</span> <span class='op'>=</span> <span class='va'>leeds_od</span>
+<span class='va'>zones</span> <span class='op'>=</span> <span class='va'>leeds_zones</span>
+<span class='va'>od</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"E02006876"</span><span class='op'>)</span>
+<span class='va'>ablines</span> <span class='op'>=</span> <span class='fu'>ab_scenario</span><span class='op'>(</span><span class='va'>od</span>, zones <span class='op'>=</span> <span class='va'>zones</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>0 origins with no match in zone ids</span></div><div class='output co'>#&gt; <span class='message'>0 destinations with no match in zone ids</span></div><div class='output co'>#&gt; <span class='message'> points not in od data removed.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>ablines</span><span class='op'>)</span>
+</div><div class='img'><img src='ab_scenario-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>ablines</span><span class='op'>$</span><span class='va'>mode</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
+#&gt;    Bike   Drive Transit    Walk 
+#&gt;       1       2       3      15 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/colSums.html'>colSums</a></span><span class='op'>(</span><span class='va'>od</span><span class='op'>[</span><span class='fl'>3</span><span class='op'>:</span><span class='fl'>7</span><span class='op'>]</span><span class='op'>)</span> <span class='co'># 0.17 vs 0.05 for ab_scenario</span>
+</div><div class='output co'>#&gt;     All    Walk    Bike   Drive Transit 
+#&gt;      21      15       1       2       3 </div><div class='input'><span class='va'>ablines</span> <span class='op'>=</span> <span class='fu'>ab_scenario</span><span class='op'>(</span><span class='va'>od</span>, zones <span class='op'>=</span> <span class='va'>zones</span>, origin_buildings <span class='op'>=</span> <span class='va'>leeds_buildings</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: st_centroid assumes attributes are constant over geometries of x</span></div><div class='output co'>#&gt; <span class='warning'>Warning: st_centroid does not give correct centroids for longitude/latitude data</span></div><div class='output co'>#&gt; <span class='message'>0 origins with no match in zone ids</span></div><div class='output co'>#&gt; <span class='message'>0 destinations with no match in zone ids</span></div><div class='output co'>#&gt; <span class='message'> points not in od data removed.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>leeds_zones</span><span class='op'>$</span><span class='va'>geometry</span><span class='op'>)</span>
 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>leeds_buildings</span><span class='op'>$</span><span class='va'>geometry</span>, add <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='img'><img src='ab_scenario-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>dutch</span>, key.pos <span class='op'>=</span> <span class='fl'>1</span>, reset <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>leeds_site_area</span><span class='op'>$</span><span class='va'>geometry</span>, add <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>leeds_buildings</span><span class='op'>$</span><span class='va'>geometry</span>, add <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='img'><img src='ab_scenario-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='va'>dutch</span><span class='op'>$</span><span class='va'>departure</span> <span class='op'>=</span> <span class='fu'><a href='ab_time_normal.html'>ab_time_normal</a></span><span class='op'>(</span>hr <span class='op'>=</span> <span class='fl'>8</span>, sd <span class='op'>=</span> <span class='fl'>0.5</span>, n <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>dutch</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>ab_evening_dutch</span> <span class='op'>=</span> <span class='fu'>ab_scenario</span><span class='op'>(</span>
-  <span class='va'>leeds_houses</span>,
-  <span class='va'>leeds_buildings</span>,
-  <span class='va'>leeds_desire_lines</span>,
-  <span class='va'>leeds_zones</span>,
-  scenario <span class='op'>=</span> <span class='st'>"dutch"</span>,
-  output_format <span class='op'>=</span> <span class='st'>"json_list"</span>,
-  hr <span class='op'>=</span> <span class='fl'>20</span>, <span class='co'># representing 8 pm</span>
-  sd <span class='op'>=</span> <span class='fl'>0</span>
-<span class='op'>)</span>
-<span class='va'>f</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span><span class='op'>(</span>fileext <span class='op'>=</span> <span class='st'>".json"</span><span class='op'>)</span>
-<span class='fu'><a href='ab_save.html'>ab_save</a></span><span class='op'>(</span><span class='va'>ab_evening_dutch</span>, <span class='va'>f</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/readLines.html'>readLines</a></span><span class='op'>(</span><span class='va'>f</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>13</span><span class='op'>]</span>
-</div><div class='output co'>#&gt; [1] "          \"departure\": 72000,"</div><div class='input'><span class='fl'>20</span> <span class='op'>*</span> <span class='fl'>60</span><span class='op'>^</span><span class='fl'>2</span>
-</div><div class='output co'>#&gt; [1] 72000</div></pre>
+</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>ablines</span><span class='op'>[</span><span class='st'>"mode"</span><span class='op'>]</span>, add <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='img'><img src='ab_scenario-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='va'>ablines_json</span> <span class='op'>=</span> <span class='fu'><a href='ab_json.html'>ab_json</a></span><span class='op'>(</span><span class='va'>ablines</span><span class='op'>)</span>
+<span class='co'># ablines = ab_scenario(</span>
+<span class='co'>#   leeds_houses,</span>
+<span class='co'>#   leeds_buildings,</span>
+<span class='co'>#   leeds_desire_lines,</span>
+<span class='co'>#   leeds_zones,</span>
+<span class='co'>#   output = "sf"</span>
+<span class='co'># )</span>
+<span class='co'># plot(ablines, key.pos = 1, reset = FALSE)</span>
+<span class='co'># plot(leeds_site_area$geometry, add = TRUE)</span>
+<span class='co'># plot(leeds_buildings$geometry, add = TRUE)</span>
+<span class='co'># plot(dutch, key.pos = 1, reset = FALSE)</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
