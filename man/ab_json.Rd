@@ -14,53 +14,52 @@ ab_json(
 }
 \arguments{
 \item{desire_lines_out}{OD data represented as geographic lines created by
-[ab_scenario()].}
+\code{\link[=ab_scenario]{ab_scenario()}}.}
 
 \item{mode_column}{The column name in the desire lines data that contains
-the mode of transport. `"mode_baseline"` by default.}
+the mode of transport. \code{"mode_baseline"} by default.}
 
 \item{time_fun}{The function used to calculate departure times.
-`ab_time_normal()` by default.}
+\code{ab_time_normal()} by default.}
 
 \item{scenario_name}{The name of the scenario to appear in A/B Street}
 
-\item{...}{Additional arguments to pass to `time_fun`}
+\item{...}{Additional arguments to pass to \code{\link[=ab_json]{ab_json()}}}
 }
 \value{
-A list that can be saved as a JSON file with [ab_save()]
+A list that can be saved as a JSON file with \code{\link[=ab_save]{ab_save()}}
 }
 \description{
-This function takes outputs from [ab_scenario()] and returns a list that
+This function takes outputs from \code{\link[=ab_scenario]{ab_scenario()}} and returns a list that
 can be saved as a JSON file for import into A/B Street.
 }
 \examples{
-ablines = ab_scenario(
-  leeds_houses,
-  leeds_buildings,
-  leeds_desire_lines,
-  leeds_zones,
-  output_format = "sf"
-)
+od = leeds_od
+od[[1]] = c("E02006876")
+zones = leeds_zones
+ablines = ab_scenario(od, zones = zones)
 ab_list = ab_json(ablines, mode_column = "mode_base")
 ab_list$scenario
-ab_list$people$trips[[1]]
-dutch = ab_scenario(
-  leeds_houses,
-  leeds_buildings,
-  leeds_desire_lines,
-  leeds_zones,
-  scenario = "godutch",
-  output_format = "sf"
-)
-ab_list = ab_json(dutch, mode_column = "mode_godutch")
-ab_list$scenario
-str(ab_list$people$trips[[9]])
-# add times
-dutch$departure = ab_time_normal(hr = 1, sd = 0, n = nrow(dutch))
-ab_list_times = ab_json(dutch)
-str(ab_list_times$people$trips[[9]])
 f = tempfile(fileext = ".json")
-ab_save(ab_list_times, f)
+ab_save(ab_list, f)
 readLines(f)[1:30]
-60^2
+# ab_list$people$trips[[1]]
+# dutch = ab_scenario(
+#   leeds_houses,
+#   leeds_buildings,
+#   leeds_desire_lines,
+#   leeds_zones,
+#   scenario = "godutch",
+#   output = "sf"
+# )
+# ab_list = ab_json(dutch, mode_column = "mode_godutch")
+# ab_list$scenario
+# str(ab_list$people$trips[[9]])
+# # add times
+# dutch$departure = ab_time_normal(hr = 1, sd = 0, n = nrow(dutch))
+# ab_list_times = ab_json(dutch)
+# str(ab_list_times$people$trips[[9]])
+# ab_save(ab_list_times, f)
+# readLines(f)[1:30]
+# 60^2
 }

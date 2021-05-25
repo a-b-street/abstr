@@ -7,9 +7,9 @@
 ab_save(x, f)
 }
 \arguments{
-\item{x}{A list object produced by [ab_scenario()]}
+\item{x}{A list object produced by \code{\link[=ab_scenario]{ab_scenario()}}}
 
-\item{f}{A filename, e.g. `new_scenario.json`}
+\item{f}{A filename, e.g. \code{new_scenario.json}}
 }
 \description{
 Save scenarios with this function

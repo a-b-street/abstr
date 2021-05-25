@@ -64,6 +64,14 @@ sum(desire_lines$walk_godutch, desire_lines$cycle_godutch, desire_lines$drive_go
 leeds_desire_lines = desire_lines %>%
   select(geo_code1, geo_code2, all_base = trimode_base, walk_base:drive_godutch) %>%
   slice(1:3)
+
+leeds_od = desire_lines %>%
+  sf::st_drop_geometry() %>%
+  select(geo_code1, geo_code2, All = trimode_base, Walk = walk_base, Bike = cycle_base, Drive = drive_godutch) %>%
+  mutate(Transit = All - Walk - Bike - Drive) %>%
+  slice(1:3)
+
+
 leeds_houses = osm_polygons_resi_site
 leeds_buildings = buildings_in_zones
 leeds_zones = zones_of_interest
@@ -74,6 +82,7 @@ usethis::use_data(leeds_buildings, overwrite = TRUE)
 usethis::use_data(leeds_desire_lines, overwrite = TRUE)
 usethis::use_data(leeds_zones, overwrite = TRUE)
 usethis::use_data(leeds_site_area, overwrite = TRUE)
+usethis::use_data(leeds_od, overwrite = TRUE)
 
 ablines = ab_scenario(
   houses = leeds_houses,

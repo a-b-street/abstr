@@ -1,7 +1,7 @@
 Type: Package
 Package: abstr
 Title: Create Transport Scenarios for use in the A/B Street Software
-Version: 0.1.1
+Version: 0.2.0
 Authors@R: 
     person(given = "Robin",
            family = "Lovelace",
@@ -25,7 +25,12 @@ Imports:
     od (>= 0.1.0),
     sf (>= 0.9-7),
     stplanr (>= 0.8.1),
-    tibble (>= 3.0.6)
+    tidyr,
+    tibble (>= 3.0.6),
+    methods
+Remotes:
+    itsleeds/od
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1
+Roxygen: list(markdown = TRUE)
