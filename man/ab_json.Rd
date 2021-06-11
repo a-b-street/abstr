@@ -8,7 +8,7 @@ ab_json(
   desire_lines_out,
   mode_column = NULL,
   time_fun = ab_time_normal,
-  scenario_name = NULL,
+  scenario_name,
   ...
 )
 }
@@ -38,11 +38,13 @@ od = leeds_od
 od[[1]] = c("E02006876")
 zones = leeds_zones
 ablines = ab_scenario(od, zones = zones)
-ab_list = ab_json(ablines, mode_column = "mode_base")
+ab_list = ab_json(ablines, mode_column = "mode", scenario_name = "test")
 ab_list$scenario
 f = tempfile(fileext = ".json")
 ab_save(ab_list, f)
 readLines(f)[1:30]
+
+# Legacy code from ActDev project commented out
 # ab_list$people$trips[[1]]
 # dutch = ab_scenario(
 #   leeds_houses,

@@ -42,7 +42,7 @@
 #' plot(leeds_zones$geometry)
 #' plot(leeds_buildings$geometry, add = TRUE)
 #' plot(ablines["mode"], add = TRUE)
-#' ablines_json = ab_json(ablines)
+#' ablines_json = ab_json(ablines, scenario_name = "test")
 #' # ablines = ab_scenario(
 #' #   leeds_houses,
 #' #   leeds_buildings,
@@ -128,6 +128,8 @@ ab_scenario = function(
 #' f = tempfile(fileext = ".json")
 #' ab_save(ab_list, f)
 #' readLines(f)[1:30]
+#'
+#' # Legacy code from ActDev project commented out
 #' # ab_list$people$trips[[1]]
 #' # dutch = ab_scenario(
 #' #   leeds_houses,
