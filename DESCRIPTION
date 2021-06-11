@@ -1,7 +1,7 @@
 Type: Package
 Package: abstr
 Title: Create Transport Scenarios for use in the A/B Street Software
-Version: 0.2.0
+Version: 0.2.0.9000
 Authors@R: 
     person(given = "Robin",
            family = "Lovelace",
