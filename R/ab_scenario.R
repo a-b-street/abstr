@@ -166,20 +166,22 @@ ab_json = function(
 
   start_points = lwgeom::st_startpoint(desire_lines_out) %>% sf::st_coordinates()
   end_points = lwgeom::st_endpoint(desire_lines_out) %>% sf::st_coordinates()
-  Position = data.frame(
-    longitude = start_points[, "X"],
-    latitude = start_points[, "Y"]
-  )
-  origin = tibble::tibble(Position = Position)
 
   trips = lapply(seq(nrow(desire_lines_out)), function(i) {
-    Position = data.frame(
+    origin_position = data.frame(
+      longitude = start_points[i, "X"],
+      latitude = start_points[i, "Y"]
+    )
+    origin = tibble::tibble(Position = origin_position)
+
+    destination_position = data.frame(
       longitude = end_points[i, "X"],
       latitude = end_points[i, "Y"]
     )
-    destination = tibble::tibble(Position = Position)
+    destination = tibble::tibble(Position = destination_position)
     tibble::tibble(
       departure = desire_lines_out$departure[i],
+      origin = origin,
       destination = destination,
       mode = desire_lines_out[[mode_column]][i],
       # Other values at
