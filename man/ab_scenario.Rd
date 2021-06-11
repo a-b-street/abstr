@@ -70,7 +70,7 @@ ablines = ab_scenario(od, zones = zones, origin_buildings = leeds_buildings)
 plot(leeds_zones$geometry)
 plot(leeds_buildings$geometry, add = TRUE)
 plot(ablines["mode"], add = TRUE)
-ablines_json = ab_json(ablines)
+ablines_json = ab_json(ablines, scenario_name = "test")
 # ablines = ab_scenario(
 #   leeds_houses,
 #   leeds_buildings,

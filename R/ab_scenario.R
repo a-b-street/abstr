@@ -42,7 +42,7 @@
 #' plot(leeds_zones$geometry)
 #' plot(leeds_buildings$geometry, add = TRUE)
 #' plot(ablines["mode"], add = TRUE)
-#' ablines_json = ab_json(ablines)
+#' ablines_json = ab_json(ablines, scenario_name = "test")
 #' # ablines = ab_scenario(
 #' #   leeds_houses,
 #' #   leeds_buildings,
@@ -123,11 +123,13 @@ ab_scenario = function(
 #' od[[1]] = c("E02006876")
 #' zones = leeds_zones
 #' ablines = ab_scenario(od, zones = zones)
-#' ab_list = ab_json(ablines, mode_column = "mode_base")
+#' ab_list = ab_json(ablines, mode_column = "mode", scenario_name = "test")
 #' ab_list$scenario
 #' f = tempfile(fileext = ".json")
 #' ab_save(ab_list, f)
 #' readLines(f)[1:30]
+#'
+#' # Legacy code from ActDev project commented out
 #' # ab_list$people$trips[[1]]
 #' # dutch = ab_scenario(
 #' #   leeds_houses,
@@ -151,7 +153,7 @@ ab_json = function(
   desire_lines_out,
   mode_column = NULL,
   time_fun = ab_time_normal,
-  scenario_name = NULL,
+  scenario_name,
   ...
   ) {
 
@@ -166,20 +168,22 @@ ab_json = function(
 
   start_points = lwgeom::st_startpoint(desire_lines_out) %>% sf::st_coordinates()
   end_points = lwgeom::st_endpoint(desire_lines_out) %>% sf::st_coordinates()
-  Position = data.frame(
-    longitude = start_points[, "X"],
-    latitude = start_points[, "Y"]
-  )
-  origin = tibble::tibble(Position = Position)
+
 
   trips = lapply(seq(nrow(desire_lines_out)), function(i) {
-    Position = data.frame(
+    Position_origin = data.frame(
+      longitude = start_points[i, "X"],
+      latitude = start_points[i, "Y"]
+    )
+    Position_destination = data.frame(
       longitude = end_points[i, "X"],
       latitude = end_points[i, "Y"]
     )
-    destination = tibble::tibble(Position = Position)
+    origin = tibble::tibble(Position = Position_origin)
+    destination = tibble::tibble(Position = Position_destination)
     tibble::tibble(
       departure = desire_lines_out$departure[i],
+      origin = origin,
       destination = destination,
       mode = desire_lines_out[[mode_column]][i],
       # Other values at
@@ -189,7 +193,7 @@ ab_json = function(
     )
   })
 
-  people = tibble::tibble(origin = origin, trips)
+  people = tibble::tibble(trips)
 
   if(is.null(scenario_name)) {
     scenario_name = gsub(pattern = "mode_", replacement = "", x = mode_column)
