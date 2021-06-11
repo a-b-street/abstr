@@ -73,7 +73,7 @@ can be saved as a JSON file for import into A/B Street." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">abstr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0.9000</span>
       </span>
     </div>
 
@@ -123,7 +123,7 @@ can be saved as a JSON file for import into A/B Street.</p>
   <span class='va'>desire_lines_out</span>,
   mode_column <span class='op'>=</span> <span class='cn'>NULL</span>,
   time_fun <span class='op'>=</span> <span class='va'>ab_time_normal</span>,
-  scenario_name <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>scenario_name</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
@@ -164,41 +164,43 @@ the mode of transport. <code>"mode_baseline"</code> by default.</p></td>
 <span class='va'>od</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"E02006876"</span><span class='op'>)</span>
 <span class='va'>zones</span> <span class='op'>=</span> <span class='va'>leeds_zones</span>
 <span class='va'>ablines</span> <span class='op'>=</span> <span class='fu'><a href='ab_scenario.html'>ab_scenario</a></span><span class='op'>(</span><span class='va'>od</span>, zones <span class='op'>=</span> <span class='va'>zones</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>0 origins with no match in zone ids</span></div><div class='output co'>#&gt; <span class='message'>0 destinations with no match in zone ids</span></div><div class='output co'>#&gt; <span class='message'> points not in od data removed.</span></div><div class='output co'>#&gt; <span class='message'>Linking to GEOS 3.8.1, GDAL 3.2.1, PROJ 7.2.1</span></div><div class='input'><span class='va'>ab_list</span> <span class='op'>=</span> <span class='fu'>ab_json</span><span class='op'>(</span><span class='va'>ablines</span>, mode_column <span class='op'>=</span> <span class='st'>"mode_base"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>0 origins with no match in zone ids</span></div><div class='output co'>#&gt; <span class='message'>0 destinations with no match in zone ids</span></div><div class='output co'>#&gt; <span class='message'> points not in od data removed.</span></div><div class='output co'>#&gt; <span class='message'>Linking to GEOS 3.8.1, GDAL 3.2.1, PROJ 7.2.1</span></div><div class='input'><span class='va'>ab_list</span> <span class='op'>=</span> <span class='fu'>ab_json</span><span class='op'>(</span><span class='va'>ablines</span>, mode_column <span class='op'>=</span> <span class='st'>"mode"</span>, scenario_name <span class='op'>=</span> <span class='st'>"test"</span><span class='op'>)</span>
 <span class='va'>ab_list</span><span class='op'>$</span><span class='va'>scenario</span>
-</div><div class='output co'>#&gt; [1] "base"</div><div class='input'><span class='va'>f</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span><span class='op'>(</span>fileext <span class='op'>=</span> <span class='st'>".json"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "test"</div><div class='input'><span class='va'>f</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span><span class='op'>(</span>fileext <span class='op'>=</span> <span class='st'>".json"</span><span class='op'>)</span>
 <span class='fu'><a href='ab_save.html'>ab_save</a></span><span class='op'>(</span><span class='va'>ab_list</span>, <span class='va'>f</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/readLines.html'>readLines</a></span><span class='op'>(</span><span class='va'>f</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>30</span><span class='op'>]</span>
 </div><div class='output co'>#&gt;  [1] "{"                                    
-#&gt;  [2] "  \"scenario_name\": \"base\","       
+#&gt;  [2] "  \"scenario_name\": \"test\","       
 #&gt;  [3] "  \"people\": ["                      
 #&gt;  [4] "    {"                                
-#&gt;  [5] "      \"origin\": {"                  
-#&gt;  [6] "        \"Position\": {"              
-#&gt;  [7] "          \"longitude\": -1.5225,"    
-#&gt;  [8] "          \"latitude\": 53.7838"      
-#&gt;  [9] "        }"                            
-#&gt; [10] "      },"                             
-#&gt; [11] "      \"trips\": ["                   
-#&gt; [12] "        {"                            
-#&gt; [13] "          \"departure\": 31526,"      
+#&gt;  [5] "      \"trips\": ["                   
+#&gt;  [6] "        {"                            
+#&gt;  [7] "          \"departure\": 31526,"      
+#&gt;  [8] "          \"origin\": {"              
+#&gt;  [9] "            \"Position\": {"          
+#&gt; [10] "              \"longitude\": -1.5225,"
+#&gt; [11] "              \"latitude\": 53.7838"  
+#&gt; [12] "            }"                        
+#&gt; [13] "          },"                         
 #&gt; [14] "          \"destination\": {"         
 #&gt; [15] "            \"Position\": {"          
 #&gt; [16] "              \"longitude\": -1.5654,"
 #&gt; [17] "              \"latitude\": 53.8061"  
 #&gt; [18] "            }"                        
 #&gt; [19] "          },"                         
-#&gt; [20] "          \"mode\": {},"              
+#&gt; [20] "          \"mode\": \"Walk\","        
 #&gt; [21] "          \"purpose\": \"Shopping\""  
 #&gt; [22] "        }"                            
 #&gt; [23] "      ]"                              
 #&gt; [24] "    },"                               
 #&gt; [25] "    {"                                
-#&gt; [26] "      \"origin\": {"                  
-#&gt; [27] "        \"Position\": {"              
-#&gt; [28] "          \"longitude\": -1.5076,"    
-#&gt; [29] "          \"latitude\": 53.7745"      
-#&gt; [30] "        }"                            </div><div class='input'><span class='co'># ab_list$people$trips[[1]]</span>
+#&gt; [26] "      \"trips\": ["                   
+#&gt; [27] "        {"                            
+#&gt; [28] "          \"departure\": 27884,"      
+#&gt; [29] "          \"origin\": {"              
+#&gt; [30] "            \"Position\": {"          </div><div class='input'>
+<span class='co'># Legacy code from ActDev project commented out</span>
+<span class='co'># ab_list$people$trips[[1]]</span>
 <span class='co'># dutch = ab_scenario(</span>
 <span class='co'>#   leeds_houses,</span>
 <span class='co'>#   leeds_buildings,</span>
