@@ -13,18 +13,14 @@
 #'   columns should be mode names such as All and Walk, Bike, Transit, Drive,
 #'   representing the number of trips made by each mode of transport
 #'   for use in A/B Street.
-#' @param zones Zones with IDs that match the desire lines. Class: `sf`.
-#' @param zones_d Optional destination zones with IDs
-#'   that match the second column of the `od` data frame (work in progress)
-#' @param origin_buildings Polygons where trips will originate (`sf` object)
-#' @param destination_buildings Polygons where trips can end, represented as `sf` object
-#' @param pop_var The variable containing the total population of each desire line.
+#' @param zones Pologons containing an id column that match the `od` data. Class: `sf`.
+#' @param buildings Polygons where trips will originate or end (`sf` object)
+#' @param scenario_name Character describing the scenario being created.
 #' @param time_fun The function used to calculate departure times.
 #'   `ab_time_normal()` by default.
 #' @param output Which output format?
 #'   `"sf"` (default) and `"json_list"` return R objects.
-#'   A file name such as `"baseline.json"` will save the resulting scenario
-#'   to a file.
+#'   `"json_file"` will save a .json file for the scenario based on the `scenario_name`.
 #' @param modes The modes of travel to include,
 #'   `c("Walk", "Bike", "Drive", "Transit")` by default.
 #' @param ... Additional arguments to pass to [ab_json()]
@@ -57,11 +53,8 @@
 ab_scenario = function(
   od,
   zones,
-  zones_d = NULL,
-  origin_buildings = NULL,
-  destination_buildings = NULL,
-  # destinations2 = NULL,
-  pop_var = 3,
+  buildings = NULL,
+  scenario_name,
   time_fun = ab_time_normal,
   output = "sf",
   modes = c("Walk", "Bike", "Drive", "Transit"),
@@ -70,37 +63,65 @@ ab_scenario = function(
   if(methods::is(od, class2 = "sf")) {
     od = sf::st_drop_geometry(od)
   }
-  # minimise n. columns:
+  # minimize n. columns:
   od = od[c(names(od)[1:2], modes)]
-  od_long = tidyr::pivot_longer(od, cols = modes, names_to = "mode")
+  od_long = tidyr::pivot_longer(od, cols = dplyr::all_of(modes), names_to = "mode")
   repeat_indices = rep(seq(nrow(od_long)), od_long$value)
   od_longer = od_long[repeat_indices, 1:3]
   # summary(od_longer$geo_code1 %in% zones$geo_code)
-  if(!is.null(origin_buildings)) {
+  if(!is.null(buildings)) {
     suppressMessages({
-      origin_buildings = sf::st_centroid(origin_buildings)
+      buildings_centroids = sf::st_centroid(buildings)
     })
   }
-  if(!is.null(destination_buildings)) {
-    suppressMessages({
-      destination_buildings = sf::st_centroid(destination_buildings)
+  # if no buildings are provided, jitter within each zone
+  # if buildings are provided then randomly select across buildings in each zone
+  if (is.null(buildings)) {
+    res = od::od_jitter(
+      od = od_longer,
+      z = zones,
+      subpoints = buildings_centroids,
+      subpoints_d = NULL
+    )
+  } else {
+    # group buildings by zone
+    zones_tbl <- dplyr::right_join(zones, tibble::tibble("id" = unique(c(od_longer[[1]], od_longer[[2]]))) , by = "id")
+    zones_tbl[["buildings"]] <- lapply(zones_tbl$geometry, function(x) {
+      buildings_centroids[sf::st_intersects(buildings_centroids, sf::st_sf(geometry = sf::st_sfc(x), crs = sf::st_crs(zones_tbl)), sparse = F),]
     })
+
+    # for each trip pick a random building in the origin and destination zones and record a
+    # desire line between them
+    res <- mapply(function(origin, dest, mode) {
+      origin_tbl <- zones_tbl[match(origin, zones_tbl$id),]$buildings[[1]]
+      dest_tbl <- zones_tbl[match(dest, zones_tbl$id),]$buildings[[1]]
+      if ((nrow(origin_tbl) > 0) & (nrow(dest_tbl) > 0)) {
+        origin_coords <- as.data.frame(sf::st_coordinates(origin_tbl[sample(1:nrow(origin_tbl), 1),]))
+        dest_coords <- as.data.frame(sf::st_coordinates(dest_tbl[sample(1:nrow(dest_tbl), 1),]))
+        return_tbl <- dplyr::bind_rows(sf::st_as_sf(origin_coords, coords = c("X", "Y"), crs = sf::st_crs(zones_tbl)),
+                                       sf::st_as_sf(dest_coords, coords = c("X", "Y"), crs = sf::st_crs(zones_tbl))) %>%
+          dplyr::mutate(group = 1) %>%
+          dplyr::group_by(group) %>%
+          dplyr::summarise() %>%
+          sf::st_cast("LINESTRING") %>%
+          dplyr::select(-group) %>%
+          dplyr::mutate(o_id = origin, d_id = dest, mode = mode)
+      } else {
+        return_tbl <- NULL
+      }
+    }, origin = od_longer$o_id, dest = od_longer$d_id, mode = od_longer$mode, SIMPLIFY = F) %>%
+      dplyr::bind_rows() %>%
+      dplyr::select(o_id, d_id, mode, geometry)
   }
-  res = od::od_jitter(
-    od = od_longer,
-    z = zones,
-    subpoints = origin_buildings,
-    subpoints_d = destination_buildings
-  )
 
   if(output == "sf") {
     return(res)
   } else if(output == "json_list") {
-    return(ab_json(res, time_fun = time_fun, ...))
-  } else {
-    ab_save(ab_json(res, time_fun = time_fun, ...), f = output)
+    return(ab_json(res, time_fun = time_fun, scenario_name = scenario_name, ...))
+  } else if (output == "json_file") {
+    ab_save(ab_json(res, time_fun = time_fun, scenario_name = scenario_name, ...),
+            f = paste0(scenario_name, ".json"))
   }
-
 }
 
 #' Convert geographic ('sf') representation of OD data to 'JSON list' structure
@@ -158,7 +179,7 @@ ab_json = function(
   ) {
 
   if(is.null(mode_column)) {
-    mode_column = names(desire_lines_out)[1]
+    mode_column = "mode"
   }
   n = nrow(desire_lines_out)
 
@@ -194,10 +215,6 @@ ab_json = function(
   })
 
   people = tibble::tibble(trips)
-
-  if(is.null(scenario_name)) {
-    scenario_name = gsub(pattern = "mode_", replacement = "", x = mode_column)
-  }
 
   json_r = list(scenario_name = scenario_name, people = people)
   json_r

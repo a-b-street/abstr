@@ -7,10 +7,8 @@
 ab_scenario(
   od,
   zones,
-  zones_d = NULL,
-  origin_buildings = NULL,
-  destination_buildings = NULL,
-  pop_var = 3,
+  buildings = NULL,
+  scenario_name,
   time_fun = ab_time_normal,
   output = "sf",
   modes = c("Walk", "Bike", "Drive", "Transit"),
@@ -24,24 +22,18 @@ columns should be mode names such as All and Walk, Bike, Transit, Drive,
 representing the number of trips made by each mode of transport
 for use in A/B Street.}
 
-\item{zones}{Zones with IDs that match the desire lines. Class: \code{sf}.}
+\item{zones}{Pologons containing an id column that match the \code{od} data. Class: \code{sf}.}
 
-\item{zones_d}{Optional destination zones with IDs
-that match the second column of the \code{od} data frame (work in progress)}
+\item{buildings}{Polygons where trips will originate or end (\code{sf} object)}
 
-\item{origin_buildings}{Polygons where trips will originate (\code{sf} object)}
-
-\item{destination_buildings}{Polygons where trips can end, represented as \code{sf} object}
-
-\item{pop_var}{The variable containing the total population of each desire line.}
+\item{scenario_name}{Character describing the scenario being created.}
 
 \item{time_fun}{The function used to calculate departure times.
 \code{ab_time_normal()} by default.}
 
 \item{output}{Which output format?
 \code{"sf"} (default) and \code{"json_list"} return R objects.
-A file name such as \code{"baseline.json"} will save the resulting scenario
-to a file.}
+\code{"json_file"} will save a .json file for the scenario based on the \code{scenario_name}.}
 
 \item{modes}{The modes of travel to include,
 \code{c("Walk", "Bike", "Drive", "Transit")} by default.}
