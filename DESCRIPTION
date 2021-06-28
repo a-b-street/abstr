@@ -22,15 +22,15 @@ Imports:
     jsonlite (>= 1.7.2),
     lwgeom (>= 0.2.5),
     magrittr (>= 2.0.1),
+    methods,
     od (>= 0.1.0),
     sf (>= 0.9-7),
     stplanr (>= 0.8.1),
-    tidyr,
     tibble (>= 3.0.6),
-    methods
+    tidyr
 Remotes:
     itsleeds/od
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
