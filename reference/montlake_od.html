@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Generate times for A/B scenarios — ab_time_normal • abstr</title>
+<title>Example OD Table for Montlake — montlake_od • abstr</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,11 @@
 
 
 
-<meta property="og:title" content="Generate times for A/B scenarios — ab_time_normal" />
-<meta property="og:description" content="Generate times for A/B scenarios" />
+<meta property="og:title" content="Example OD Table for Montlake — montlake_od" />
+<meta property="og:description" content="Each row of this table contains a count of how many trips started in
+column o_id and ended in column d_id according to different modes.
+This example table has modes that match what A/B Street currently uses:
+&quot;Drive&quot;, &quot;Transit&quot;, &quot;Bike&quot;, and &quot;Walk&quot;." />
 
 
 
@@ -108,49 +111,37 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Generate times for A/B scenarios</h1>
-    <small class="dont-index">Source: <a href='https://github.com/a-b-street/abstr/blob/master/R/ab_scenario.R'><code>R/ab_scenario.R</code></a></small>
-    <div class="hidden name"><code>ab_time_normal.Rd</code></div>
+    <h1>Example OD Table for Montlake</h1>
+    <small class="dont-index">Source: <a href='https://github.com/a-b-street/abstr/blob/master/R/montlake_od.R'><code>R/montlake_od.R</code></a></small>
+    <div class="hidden name"><code>montlake_od.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Generate times for A/B scenarios</p>
+    <p>Each row of this table contains a count of how many trips started in
+column <code>o_id</code> and ended in column <code>d_id</code> according to different modes.
+This example table has modes that match what A/B Street currently uses:
+"Drive", "Transit", "Bike", and "Walk".</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ab_time_normal</span><span class='op'>(</span>hr <span class='op'>=</span> <span class='fl'>8.5</span>, sd <span class='op'>=</span> <span class='fl'>0.5</span>, n <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='va'>montlake_od</span></pre>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>hr</th>
-      <td><p>Number representing the hour of day of departure (on average).
-8.5, for example represents 08:30.</p></td>
-    </tr>
-    <tr>
-      <th>sd</th>
-      <td><p>The standard deviation in hours of the distribution</p></td>
-    </tr>
-    <tr>
-      <th>n</th>
-      <td><p>The number of numbers representing times to return</p></td>
-    </tr>
-    </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>An integer representing the time since midnight in seconds</p>
+    <p>A data frame with columns:</p><dl>
+<dt>o_id</dt><dd><p>Trip origin zone ID (must match an ID in <code>montlake_zone</code>).</p></dd>
+<dt>d_id</dt><dd><p>Trip destination zone ID (must match an ID in <code>montlake_zone</code>).</p></dd>
+<dt>Drive</dt><dd><p>Count of how many trips were made using cars.</p></dd>
+<dt>Transit</dt><dd><p>Count of how many trips were made using public transit.</p></dd>
+<dt>Bike</dt><dd><p>Count of how many trips were made using bikes.</p></dd>
+<dt>Walk</dt><dd><p>Count of how many trips were made on foot.</p></dd>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>time_lunch</span> <span class='op'>=</span> <span class='fu'>ab_time_normal</span><span class='op'>(</span>hr <span class='op'>=</span> <span class='fl'>12.5</span>, sd <span class='op'>=</span> <span class='fl'>0.25</span><span class='op'>)</span>
-<span class='va'>time_lunch</span>
-</div><div class='output co'>#&gt; [1] 45884</div><div class='input'><span class='co'># Back to a formal time class</span>
-<span class='fu'><a href='https://rdrr.io/r/base/as.POSIXlt.html'>as.POSIXct</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Round.html'>trunc</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.time</a></span><span class='op'>(</span><span class='op'>)</span>, units<span class='op'>=</span><span class='st'>"days"</span><span class='op'>)</span> <span class='op'>+</span> <span class='va'>time_lunch</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "2021-06-28 12:44:44 UTC"</div><div class='input'><span class='va'>time_morning</span> <span class='op'>=</span> <span class='fu'>ab_time_normal</span><span class='op'>(</span>hr <span class='op'>=</span> <span class='fl'>8.5</span>, sd <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/as.POSIXlt.html'>as.POSIXct</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Round.html'>trunc</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.time</a></span><span class='op'>(</span><span class='op'>)</span>, units<span class='op'>=</span><span class='st'>"days"</span><span class='op'>)</span> <span class='op'>+</span> <span class='va'>time_morning</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "2021-06-28 07:38:36 UTC"</div><div class='input'><span class='va'>time_afternoon</span> <span class='op'>=</span> <span class='fu'>ab_time_normal</span><span class='op'>(</span>hr <span class='op'>=</span> <span class='fl'>17</span>, sd <span class='op'>=</span> <span class='fl'>0.75</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/as.POSIXlt.html'>as.POSIXct</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Round.html'>trunc</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.time</a></span><span class='op'>(</span><span class='op'>)</span>, units<span class='op'>=</span><span class='st'>"days"</span><span class='op'>)</span> <span class='op'>+</span> <span class='va'>time_afternoon</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "2021-06-28 16:22:34 UTC"</div></pre>
+</dl>
+
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>See the code used to create this data in "data-raw/montlake-test-data.R"</p>
+
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
