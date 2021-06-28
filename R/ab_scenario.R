@@ -158,7 +158,7 @@ ab_json = function(
   ) {
 
   if(is.null(mode_column)) {
-    mode_column = names(desire_lines_out)[1]
+    mode_column = "mode"
   }
   n = nrow(desire_lines_out)
 
