@@ -3,11 +3,21 @@ Package: abstr
 Title: Create Transport Scenarios for use in the A/B Street Software
 Version: 0.2.0.9000
 Authors@R: 
-    person(given = "Robin",
-           family = "Lovelace",
-           role = c("aut", "cre"),
-           email = "rob00x@gmail.com",
-           comment = c(ORCID = "0000-0001-5679-6536"))
+    c(person(given = "Robin",
+             family = "Lovelace",
+             role = c("aut", "cre"),
+             email = "rob00x@gmail.com",
+             comment = c(ORCID = "0000-0001-5679-6536")),
+      person(given = "Trevor",
+             family = "Nederlof",
+             role = "aut"),
+      person(given = "Nathanael",
+             family = "Sheehan",
+             role = "aut",
+             comment = c(ORCID = "0000-0002-2779-0976")),
+      person(given = "Dustin",
+             family = "Carlino",
+             role = "aut"))
 Description: Provides functions to convert origin-destination data,
     represented as straight 'desire lines' in the 'sf' Simple Features
     class system, into JSON files that can be directly imported into the
