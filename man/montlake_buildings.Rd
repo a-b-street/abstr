@@ -29,4 +29,13 @@ zone in the \code{montlake_zones} table.
 These buildings were retrieved using osmextract::oe_read(). See the code used to
 create this data in "data-raw/montlake-test-data.R"
 }
+\examples{
+library(sf)
+names(montlake_buildings)
+head(montlake_buildings$osm_way_id)
+head(montlake_buildings$name)
+head(montlake_buildings$building)
+nrow(montlake_buildings)
+plot(montlake_buildings)
+}
 \keyword{datasets}

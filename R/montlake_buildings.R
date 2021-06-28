@@ -16,4 +16,12 @@
 #' \item{geometry}{Simple feature collection (sfc) contain multipolygons,
 #'   each representing the boundaries of a building.}
 #' }
+#' @examples
+#' library(sf)
+#' names(montlake_buildings)
+#' head(montlake_buildings$osm_way_id)
+#' head(montlake_buildings$name)
+#' head(montlake_buildings$building)
+#' nrow(montlake_buildings)
+#' plot(montlake_buildings)
 "montlake_buildings"
