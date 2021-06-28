@@ -126,7 +126,7 @@ zone in the <code>montlake_zones</code> table.</p>
 
     <p>A sf dataframe with columns:</p><dl>
 <dt>osm_way_id</dt><dd><p>OSM ID assigned to each building.</p></dd>
-<dt>name</dt><dd><p>OSM name assigned to each building (might by &lt;NA&gt;).</p></dd>
+<dt>name</dt><dd><p>OSM name assigned to each building (might be NA).</p></dd>
 <dt>building</dt><dd><p>OSM building category assigned to each building.</p></dd>
 <dt>geometry</dt><dd><p>Simple feature collection (sfc) contain multipolygons,
 each representing the boundaries of a building.</p></dd>
@@ -135,8 +135,7 @@ each representing the boundaries of a building.</p></dd>
 
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
-    <p>OpenStreetMap,
-&lt;www.openstreetmap.org&gt;</p>
+    <p>OpenStreetMap</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>These buildings were retrieved using osmextract::oe_read(). See the code used to
