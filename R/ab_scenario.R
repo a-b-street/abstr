@@ -234,7 +234,7 @@ ab_save = function(x, f) {
 #' time_afternoon = ab_time_normal(hr = 17, sd = 0.75)
 #' as.POSIXct(trunc(Sys.time(), units="days") + time_afternoon)
 ab_time_normal = function(hr = 8.5, sd = 0.5, n = 1) {
-  round(stats::rnorm(n = n, mean = hr * 60^2, sd = sd * 60^2))
+  round(stats::rnorm(n = n, mean = hr * 60^2, sd = sd * 60^2)) * 10000.0
 }
 
 # cnames = names(leeds_desire_lines)
