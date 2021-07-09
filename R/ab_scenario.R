@@ -66,7 +66,7 @@ ab_scenario = function(
   pop_var = 3,
   time_fun = ab_time_normal,
   output = "sf",
-  modes = c("Walk", "Bike", "Drive", "Transit"),
+  modes = c("Walk", "Bike", "Transit", "Drive"),
   ...
 ) {
 
@@ -74,12 +74,13 @@ ab_scenario = function(
   if(methods::is(od, class2 = "sf")) {
     od = sf::st_drop_geometry(od)
   }
-  if(!all(modes %in% names(od))) {
-    message("Column names expected: ", paste0(modes, collapse = ", "))
+  if(!any(modes %in% names(od))) {
+    message("Column names, at least on of: ", paste0(modes, collapse = ", "))
     message("Column names in od object: ", paste0(names(od), collapse = ", "))
-    stop("Column names do not modes, try renaming columns.")
+    stop("Column names in od data do not match modes. Try renaming od columns")
   }
   # minimise n. columns:
+  modes_in_od = modes[modes %in% names(od)]
   od = od[c(names(od)[1:2], modes)]
   od_long = tidyr::pivot_longer(od, cols = modes, names_to = "mode")
   repeat_indices = rep(seq(nrow(od_long)), od_long$value)
