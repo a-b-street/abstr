@@ -75,8 +75,8 @@ ab_scenario = function(
     od = sf::st_drop_geometry(od)
   }
   if(!all(modes %in% names(od))) {
-    message("Column names expected: ", modes)
-    message("Column names in od object: ", names(od))
+    message("Column names expected: ", paste0(modes, collapse = ", "))
+    message("Column names in od object: ", paste0(names(od), collapse = ", "))
     stop("Column names do not modes, try renaming columns.")
   }
   # minimise n. columns:
