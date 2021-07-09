@@ -180,8 +180,10 @@ to a file.</p></td>
     </tr>
     <tr>
       <th>modes</th>
-      <td><p>The modes of travel to include,
-<code><a href='https://rdrr.io/r/base/c.html'>c("Walk", "Bike", "Drive", "Transit")</a></code> by default.</p></td>
+      <td><p>Character string containing the names of the modes of travel to
+include in the outputs. These must match column names in the <code>od</code> input
+data frame. The default is <code><a href='https://rdrr.io/r/base/c.html'>c("Walk", "Bike", "Drive", "Transit")</a></code>,
+matching the mode names allowed in the A/B Street scenario schema.</p></td>
     </tr>
     <tr>
       <th>...</th>
