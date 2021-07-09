@@ -108,6 +108,9 @@ ab_scenario = function(
 #' This function takes outputs from [ab_scenario()] and returns a list that
 #' can be saved as a JSON file for import into A/B Street.
 #'
+#' Note: the departure time in seconds is multiplied by 10000 on conversion
+#' to a .json list object for compatibility with the A/B Street schema.
+#'
 #' @param desire_lines_out OD data represented as geographic lines created by
 #'   [ab_scenario()].
 #' @param mode_column The column name in the desire lines data that contains
@@ -165,6 +168,7 @@ ab_json = function(
   if(is.null(desire_lines_out$departure)) {
     desire_lines_out$departure = time_fun(n = n, ...)
   }
+  desire_lines_out$departure = desire_lines_out$departure * 10000.0
 
   start_points = lwgeom::st_startpoint(desire_lines_out) %>% sf::st_coordinates()
   end_points = lwgeom::st_endpoint(desire_lines_out) %>% sf::st_coordinates()
@@ -234,7 +238,7 @@ ab_save = function(x, f) {
 #' time_afternoon = ab_time_normal(hr = 17, sd = 0.75)
 #' as.POSIXct(trunc(Sys.time(), units="days") + time_afternoon)
 ab_time_normal = function(hr = 8.5, sd = 0.5, n = 1) {
-  round(stats::rnorm(n = n, mean = hr * 60^2, sd = sd * 60^2)) * 10000.0
+  round(stats::rnorm(n = n, mean = hr * 60^2, sd = sd * 60^2))
 }
 
 # cnames = names(leeds_desire_lines)

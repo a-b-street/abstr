@@ -33,6 +33,10 @@ A list that can be saved as a JSON file with \code{\link[=ab_save]{ab_save()}}
 This function takes outputs from \code{\link[=ab_scenario]{ab_scenario()}} and returns a list that
 can be saved as a JSON file for import into A/B Street.
 }
+\details{
+Note: the departure time in seconds is multiplied by 10000 on conversion
+to a .json list object for compatibility with the A/B Street schema.
+}
 \examples{
 od = leeds_od
 od[[1]] = c("E02006876")
