@@ -13,7 +13,7 @@ ab_scenario(
   pop_var = 3,
   time_fun = ab_time_normal,
   output = "sf",
-  modes = c("Walk", "Bike", "Drive", "Transit"),
+  modes = c("Walk", "Bike", "Transit", "Drive"),
   ...
 )
 }

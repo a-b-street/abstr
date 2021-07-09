@@ -81,8 +81,8 @@ ab_scenario = function(
   }
   # minimise n. columns:
   modes_in_od = modes[modes %in% names(od)]
-  od = od[c(names(od)[1:2], modes)]
-  od_long = tidyr::pivot_longer(od, cols = modes, names_to = "mode")
+  od = od[c(names(od)[1:2], modes_in_od)]
+  od_long = tidyr::pivot_longer(od, cols = modes_in_od, names_to = "mode")
   repeat_indices = rep(seq(nrow(od_long)), od_long$value)
   od_longer = od_long[repeat_indices, 1:3]
   # summary(od_longer$geo_code1 %in% zones$geo_code)
