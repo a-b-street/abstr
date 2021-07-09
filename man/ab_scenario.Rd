@@ -43,8 +43,10 @@ that match the second column of the \code{od} data frame (work in progress)}
 A file name such as \code{"baseline.json"} will save the resulting scenario
 to a file.}
 
-\item{modes}{The modes of travel to include,
-\code{c("Walk", "Bike", "Drive", "Transit")} by default.}
+\item{modes}{Character string containing the names of the modes of travel to
+include in the outputs. These must match column names in the \code{od} input
+data frame. The default is \code{c("Walk", "Bike", "Drive", "Transit")},
+matching the mode names allowed in the A/B Street scenario schema.}
 
 \item{...}{Additional arguments to pass to \code{\link[=ab_json]{ab_json()}}}
 }

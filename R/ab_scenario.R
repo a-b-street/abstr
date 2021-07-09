@@ -25,8 +25,10 @@
 #'   `"sf"` (default) and `"json_list"` return R objects.
 #'   A file name such as `"baseline.json"` will save the resulting scenario
 #'   to a file.
-#' @param modes The modes of travel to include,
-#'   `c("Walk", "Bike", "Drive", "Transit")` by default.
+#' @param modes Character string containing the names of the modes of travel to
+#'   include in the outputs. These must match column names in the `od` input
+#'   data frame. The default is `c("Walk", "Bike", "Drive", "Transit")`,
+#'   matching the mode names allowed in the A/B Street scenario schema.
 #' @param ... Additional arguments to pass to [ab_json()]
 #'
 #' @export
@@ -67,8 +69,15 @@ ab_scenario = function(
   modes = c("Walk", "Bike", "Drive", "Transit"),
   ...
 ) {
+
+  # Checks: defensive programming
   if(methods::is(od, class2 = "sf")) {
     od = sf::st_drop_geometry(od)
+  }
+  if(!all(modes %in% names(od))) {
+    message("Column names expected: ", modes)
+    message("Column names in od object: ", names(od))
+    stop("Column names do not modes, try renaming columns.")
   }
   # minimise n. columns:
   od = od[c(names(od)[1:2], modes)]
