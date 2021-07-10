@@ -73,15 +73,18 @@ plot(leeds_zones$geometry)
 plot(leeds_buildings$geometry, add = TRUE)
 plot(ablines["mode"], add = TRUE)
 ablines_json = ab_json(ablines, scenario_name = "test")
-# ablines = ab_scenario(
-#   leeds_houses,
-#   leeds_buildings,
-#   leeds_desire_lines,
-#   leeds_zones,
-#   output = "sf"
-# )
-# plot(ablines, key.pos = 1, reset = FALSE)
-# plot(leeds_site_area$geometry, add = TRUE)
-# plot(leeds_buildings$geometry, add = TRUE)
-# plot(dutch, key.pos = 1, reset = FALSE)
+od = leeds_desire_lines
+names(od)[4:6] = c("Walk", "Bike", "Drive")
+ablines = ab_scenario(
+  od = od,
+  zones = leeds_site_area,
+  zones_d = leeds_zones,
+  origin_buildings = leeds_houses,
+  destination_buildings = leeds_buildings,
+  output = "sf"
+)
+plot(ablines)
+plot(ablines$geometry)
+plot(leeds_site_area$geometry, add = TRUE)
+plot(leeds_buildings$geometry, add = TRUE)
 }
