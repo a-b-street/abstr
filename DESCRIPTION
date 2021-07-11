@@ -33,13 +33,11 @@ Imports:
     lwgeom (>= 0.2.5),
     magrittr (>= 2.0.1),
     methods,
-    od (>= 0.3.0),
+    od (>= 0.3.1),
     sf (>= 1.0.1),
     stplanr (>= 0.8.1),
     tibble (>= 3.0.6),
     tidyr (>= 1.1.3)
-Remotes:
-    itsleeds/od
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
