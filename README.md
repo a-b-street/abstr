@@ -82,9 +82,10 @@ In this example, the first two columns correspond to the origin and
 destination zones in Montlake, with the subsequent columns representing
 the transport mode share between these zones.
 
-By combining all of the elements above, the `abstr` package provides a
-tidy dataframe, which can be further transformed to match [A/B Street’s
-schema](https://a-b-street.github.io/docs/tech/dev/formats/scenarios.html)
+Let’s combine each of the elements outlined above, the zone, building
+and OD data. We do this using the `ab_scenario()` function in the
+`abstr` package, which generates a data frame representing tavel between
+the `montlake_buildings`:
 
 ``` r
 output_sf = ab_scenario(
@@ -98,12 +99,20 @@ output_sf = ab_scenario(
   output = "sf",
   modes = c("Walk", "Bike", "Drive", "Transit")
 )
-# plot output
+```
+
+The `output_sf` object created above can be further transformed to match
+[A/B Street’s
+schema](https://a-b-street.github.io/docs/tech/dev/formats/scenarios.html)
+and visualised in A/B Street, or visualised in R (using the `tmap`
+package in the code chunk below):
+
+``` r
 tmap::tm_shape(output_sf) + tmap::tm_lines(col = "mode") +
   tmap::tm_shape(montlake_zones) + tmap::tm_borders()
 ```
 
-<img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
+<img src="man/figures/README-outputplot-1.png" width="100%" />
 
 Each line in the plot above represents a single trip, with the color
 representing each transport mode. Moreover, each trip is configured with
