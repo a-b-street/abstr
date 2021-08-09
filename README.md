@@ -40,20 +40,11 @@ U.S.
 ``` r
 library(abstr)
 library(tmap) # for map making
-#> Warning: package 'tmap' was built under R version 4.0.5
 tm_shape(montlake_zones) + tm_polygons(col = "grey") +
   tm_shape(montlake_buildings) + tm_polygons(col = "blue")
 ```
 
-<div class="figure">
-
-<img src="man/figures/README-input-1.png" alt="Example data that can be used as an input by functions in abstr to generate trip-level scenarios that can be imported by A/B Street." width="100%" />
-<p class="caption">
-Example data that can be used as an input by functions in abstr to
-generate trip-level scenarios that can be imported by A/B Street.
-</p>
-
-</div>
+<img src="man/figures/README-input-1.png" title="Example data that can be used as an input by functions in abstr to generate trip-level scenarios that can be imported by A/B Street." alt="Example data that can be used as an input by functions in abstr to generate trip-level scenarios that can be imported by A/B Street." width="100%" />
 
 The map above is a graphical representation of the Montlake residential
 neighborhood in central Seattle, Washington. Here, `montlake_zones`
@@ -67,7 +58,7 @@ The final piece of the `abstr` puzzle is OD data.
 
 ``` r
 head(montlake_od)
-#> # A tibble: 6 x 6
+#> # A tibble: 6 × 6
 #>    o_id  d_id Drive Transit  Bike  Walk
 #>   <dbl> <dbl> <int>   <int> <int> <int>
 #> 1   281   361    23       1     2    14
@@ -82,9 +73,10 @@ In this example, the first two columns correspond to the origin and
 destination zones in Montlake, with the subsequent columns representing
 the transport mode share between these zones.
 
-By combining all of the elements above, the `abstr` package provides a
-tidy dataframe, which can be further transformed to match [A/B Street’s
-schema](https://a-b-street.github.io/docs/tech/dev/formats/scenarios.html)
+Let’s combine each of the elements outlined above, the zone, building
+and OD data. We do this using the `ab_scenario()` function in the
+`abstr` package, which generates a data frame representing tavel between
+the `montlake_buildings`:
 
 ``` r
 output_sf = ab_scenario(
@@ -98,12 +90,20 @@ output_sf = ab_scenario(
   output = "sf",
   modes = c("Walk", "Bike", "Drive", "Transit")
 )
-# plot output
+```
+
+The `output_sf` object created above can be further transformed to match
+[A/B Street’s
+schema](https://a-b-street.github.io/docs/tech/dev/formats/scenarios.html)
+and visualised in A/B Street, or visualised in R (using the `tmap`
+package in the code chunk below):
+
+``` r
 tmap::tm_shape(output_sf) + tmap::tm_lines(col = "mode") +
   tmap::tm_shape(montlake_zones) + tmap::tm_borders()
 ```
 
-<img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
+<img src="man/figures/README-outputplot-1.png" width="100%" />
 
 Each line in the plot above represents a single trip, with the color
 representing each transport mode. Moreover, each trip is configured with
@@ -159,5 +159,7 @@ schema](https://a-b-street.github.io/docs/dev/formats/scenarios.html#example).
 ## Next steps
 
 For a more comprehensive guide in the art of collecting, transforming
-and saving data for A/B Street, check out the numerous `abstr`
-[vignette’s](https://a-b-street.github.io/abstr/).
+and saving data for A/B Street, check out the `abstr`
+[documentation](https://a-b-street.github.io/abstr/).
+
+Todo: add link to ‘getting started’ and delete this message when done.
