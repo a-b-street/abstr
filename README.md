@@ -107,8 +107,8 @@ and visualised in A/B Street, or visualised in R (using the `tmap`
 package in the code chunk below):
 
 ``` r
-tmap::tm_shape(output_sf) + tmap::tm_lines(col = "mode") +
-  tmap::tm_shape(montlake_zones) + tmap::tm_borders()
+tm_shape(output_sf) + tmap::tm_lines(col = "mode") +
+  tm_shape(montlake_zones) + tmap::tm_borders()
 ```
 
 <img src="man/figures/README-outputplot-1.png" width="100%" />

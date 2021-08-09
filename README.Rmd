@@ -80,8 +80,8 @@ output_sf = ab_scenario(
 The `output_sf` object created above can be further transformed to match [A/B Street's schema](https://a-b-street.github.io/docs/tech/dev/formats/scenarios.html) and visualised in A/B Street, or visualised in R (using the `tmap` package in the code chunk below):
 
 ```{r outputplot}
-tmap::tm_shape(output_sf) + tmap::tm_lines(col = "mode") +
-  tmap::tm_shape(montlake_zones) + tmap::tm_borders()
+tm_shape(output_sf) + tmap::tm_lines(col = "mode") +
+  tm_shape(montlake_zones) + tmap::tm_borders()
 ```
 
 Each line in the plot above represents a single trip, with the color representing each transport mode. Moreover, each trip is configured with an associated departure time, that can be represented in A/B Street.
