@@ -3,7 +3,6 @@
 
 # abstr
 
-
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/a-b-street/abstr/workflows/R-CMD-check/badge.svg)](https://github.com/a-b-street/abstr/actions)
@@ -30,23 +29,20 @@ remotes::install_github("a-b-street/abstr")
 ## Example
 
 The example below shows how `abstr` can be used. The input datasets
-include `sf` objects representing houses, buildings, origin-destination
-(OD) data represented as desire lines and administrative zones
-representing the areas within which trips in the desire lines start and
-end. With the exception of OD data, each of the input datasets is
-readily available for most cities. The input datasets are illustrated in
-the plots below, which show example data shipped in the package, taken
-from the city of Leeds, UK.
+include `sf` objects representing buildings, origin-destination (OD)
+data represented as desire lines and administrative zones representing
+the areas within which trips in the desire lines start and end. With the
+exception of OD data, each of the input datasets is readily available
+for most cities. The input datasets are illustrated in the plots below,
+which show example data shipped in the package, taken from the Seattle,
+U.S.
 
 ``` r
 library(abstr)
 library(tmap) # for map making
-tm_shape(leeds_zones) + tm_polygons(col = "grey") +
-  tm_shape(leeds_site_area) + tm_polygons(col = "red") +
-  tm_shape(leeds_houses) + tm_polygons(col = "yellow") +
-  tm_shape(leeds_buildings) + tm_polygons(col = "blue") +
-  tm_shape(leeds_desire_lines) + tm_lines(lwd = "all_base", scale = 3)
-#> Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 7.0.0
+#> Warning: package 'tmap' was built under R version 4.0.5
+tm_shape(montlake_zones) + tm_polygons(col = "grey") +
+  tm_shape(montlake_buildings) + tm_polygons(col = "blue")
 ```
 
 <div class="figure">
@@ -59,103 +55,68 @@ generate trip-level scenarios that can be imported by A/B Street.
 
 </div>
 
+The map above is a graphical representation of the Montlake residential
+neighborhood in central Seattle, Washington. Here, `montlake_zones`
+represents neighborhood residential zones declared by Seattle local
+government and `montlake_buildings` being the accumulation of buildings
+listed in
+<a link href="https://www.openstreetmap.org/#map=5/54.910/-3.432">
+OpenStreetMap</a>
+
+The final piece of the `abstr` puzzle is OD data.
+
 ``` r
-ablines = ab_scenario(
- houses = leeds_houses,
- buildings = leeds_buildings,
- desire_lines = leeds_desire_lines,
- zones = leeds_zones,
- output_format = "sf"
-)
-tmap_mode("view")
-bb = tmaptools::bb(leeds_houses, 10)
-tm_shape(leeds_buildings, bbox = bb) + tm_polygons() +
-  tm_shape(leeds_houses) + tm_polygons(col = "blue") +
-  tm_shape(ablines) + tm_lines(col = "mode_base") 
+head(montlake_od)
+#> # A tibble: 6 x 6
+#>    o_id  d_id Drive Transit  Bike  Walk
+#>   <dbl> <dbl> <int>   <int> <int> <int>
+#> 1   281   361    23       1     2    14
+#> 2   282   361    37       4     0    11
+#> 3   282   369    14       3     0     8
+#> 4   301   361    27       4     3    15
+#> 5   301   368     6       2     1    16
+#> 6   301   369    14       2     0    13
 ```
 
-<img src="man/figures/README-output-sf-1.png" width="100%" />
+In this example, the first two columns correspond to the origin and
+destination zones in Montlake, with the subsequent columns representing
+the transport mode share between these zones.
 
-Each line in the plot above represents a single trip, color representing
-mode. Each trip has an associated departure time, that can be
-represented in A/B Street.
-
-Under a different scenario, the Go Dutch scenario of active travel
-uptake represented in the columns containing `godutch` for example, the
-travel patterns would be substantially different. In the aggregated
-desire lines, the differences between the two scenarios are substantial,
-as shown in the table below:
+By combining all of the elements above, the `abstr` package provides a
+tidy dataframe, which can be further transformed to match [A/B Street’s
+schema](https://a-b-street.github.io/docs/tech/dev/formats/scenarios.html)
 
 ``` r
-desire_line_data = sf::st_drop_geometry(leeds_desire_lines)
-nms = names(desire_line_data)
-nms
-#>  [1] "geo_code1"     "geo_code2"     "all_base"      "walk_base"    
-#>  [5] "cycle_base"    "drive_base"    "length"        "walk_godutch" 
-#>  [9] "cycle_godutch" "drive_godutch"
-nms_scenarios = nms[grepl(pattern = "base|dutch", x = nms)]
-knitr::kable(desire_line_data[nms_scenarios])
+output_sf = ab_scenario(
+  od = montlake_od,
+  zones = montlake_zones,
+  zones_d = NULL,
+  origin_buildings = montlake_buildings,
+  destination_buildings = montlake_buildings,
+  pop_var = 3,
+  time_fun = ab_time_normal,
+  output = "sf",
+  modes = c("Walk", "Bike", "Drive", "Transit")
+)
+# plot output
+tmap::tm_shape(output_sf) + tmap::tm_lines(col = "mode") +
+  tmap::tm_shape(montlake_zones) + tmap::tm_borders()
 ```
 
-| all\_base | walk\_base | cycle\_base | drive\_base | walk\_godutch | cycle\_godutch | drive\_godutch |
-|----------:|-----------:|------------:|------------:|--------------:|---------------:|---------------:|
-|        16 |         12 |           1 |           3 |            13 |              3 |              0 |
-|        11 |          6 |           0 |           5 |             8 |              3 |              0 |
-|        10 |          5 |           1 |           4 |             6 |              3 |              1 |
+<img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
 
-The Go Dutch scenario can be disaggregated so that trips start and begin
-in buildings, as shown below.
+Each line in the plot above represents a single trip, with the color
+representing each transport mode. Moreover, each trip is configured with
+an associated departure time, that can be represented in A/B Street.
 
-``` r
-ablines_dutch = ab_scenario(
- houses = leeds_houses,
- buildings = leeds_buildings,
- desire_lines = leeds_desire_lines,
- zones = leeds_zones,
- output_format = "sf"
-)
-tm_shape(leeds_buildings, bbox = bb) + tm_polygons() +
-  tm_shape(leeds_houses) + tm_polygons(col = "blue") +
-  tm_shape(ablines_dutch) + tm_lines(col = "mode_base") 
-```
-
-<img src="man/figures/README-abdutch-1.png" width="100%" />
-
-<!-- todo: add time to df -->
-
-You can output the result as a list object that can be saved as a JSON
-file as follows, taking only one of the desire lines (desire line 7,
-which has only 9 trips for ease of viewing the results) as an example:
+The `ab_save` and `ab_json` functions conclude the `abstr` workflow by
+outputting a local JSON file, matching the [A/B Street’s
+schema](https://a-b-street.github.io/docs/tech/dev/formats/scenarios.html).
 
 ``` r
-library(abstr)
-ab_scenario_list = ab_scenario(
- leeds_houses,
- leeds_buildings,
- leeds_desire_lines,
- leeds_zones,
- output_format = "json_list"
-)
-ab_scenario_list
-#> $scenario_name
-#> [1] "base"
-#> 
-#> $people
-#> # A tibble: 37 x 2
-#>    origin$Position$longitude $$latitude trips           
-#>                        <dbl>      <dbl> <list>          
-#>  1                     -1.53       53.8 <tibble [1 × 3]>
-#>  2                     -1.53       53.8 <tibble [1 × 3]>
-#>  3                     -1.53       53.8 <tibble [1 × 3]>
-#>  4                     -1.53       53.8 <tibble [1 × 3]>
-#>  5                     -1.53       53.8 <tibble [1 × 3]>
-#>  6                     -1.53       53.8 <tibble [1 × 3]>
-#>  7                     -1.53       53.8 <tibble [1 × 3]>
-#>  8                     -1.53       53.8 <tibble [1 × 3]>
-#>  9                     -1.53       53.8 <tibble [1 × 3]>
-#> 10                     -1.53       53.8 <tibble [1 × 3]>
-#> # … with 27 more rows
-ab_save(ab_scenario_list, "ab_scenario.json")
+ab_save(ab_json(output_sf, time_fun = ab_time_normal,
+                scenario_name = "Montlake Example"),
+        f = "montlake_scenarios.json")
 ```
 
 Let’s see what is in the file:
@@ -170,22 +131,22 @@ schema](https://a-b-street.github.io/docs/dev/formats/scenarios.html#example).
 
 ``` json
 {
-  "scenario_name": "base",
+  "scenario_name": "Montlake Example",
   "people": [
     {
-      "origin": {
-        "Position": {
-          "longitude": -1.5278,
-          "latitude": 53.7888
-        }
-      },
       "trips": [
         {
-          "departure": 28236,
+          "departure": 317760000,
+          "origin": {
+            "Position": {
+              "longitude": -122.3139,
+              "latitude": 47.667
+            }
+          },
           "destination": {
             "Position": {
-              "longitude": -1.5717,
-              "latitude": 53.8039
+              "longitude": -122.3187,
+              "latitude": 47.6484
             }
           },
           "mode": "Walk",
@@ -194,3 +155,9 @@ schema](https://a-b-street.github.io/docs/dev/formats/scenarios.html#example).
       ]
     }
 ```
+
+## Next steps
+
+For a more comprehensive guide in the art of collecting, transforming
+and saving data for A/B Street, check out the numerous `abstr`
+[vignette’s](https://a-b-street.github.io/abstr/).
