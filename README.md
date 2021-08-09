@@ -13,8 +13,9 @@ Street](https://github.com/a-b-street/abstreet#ab-street) transport
 planning/simulation game. Currently it provides a way to convert
 aggregated origin-destination data, combined with data on buildings
 representing origin and destination locations, into `.json` files that
-can be directly imported into the A/B Street game. See
-<https://a-b-street.github.io/docs/dev/formats/scenarios.html#example>
+can be directly imported into the A/B Street game. See [the formats page
+in the A/B Street
+documentation](https://a-b-street.github.io/docs/tech/dev/formats/scenarios.html)
 for details of the schema that the package outputs.
 
 ## Installation
@@ -125,8 +126,7 @@ file.edit("ab_scenario.json")
 ```
 
 The first trip schedule should look something like this, matching [A/B
-Street’s
-schema](https://a-b-street.github.io/docs/dev/formats/scenarios.html#example).
+Street’s schema](a-b-street.github.io/docs/tech/dev/formats/).
 
 ``` json
 {
