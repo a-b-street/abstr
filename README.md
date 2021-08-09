@@ -77,11 +77,18 @@ the transport mode share between these zones.
 Let’s combine each of the elements outlined above, the zone, building
 and OD data. We do this using the `ab_scenario()` function in the
 `abstr` package, which generates a data frame representing tavel between
-the `montlake_buildings`:
+the `montlake_buildings`. While the OD data contains information on
+origin and destination zone, `ab_scenario()` ‘disaggregates’ the data
+and randomly selects building within each origin and destination zone to
+simulate travel at the individual level, as illustrated in the chunk
+below which uses only a sample of the `montlake_od` data, showing travel
+between three pairs of zones, to illustrate the process:
 
 ``` r
+set.seed(42)
+montlake_od_minimal = montlake_od[sample(nrow(montlake_od), size = 3), ]
 output_sf = ab_scenario(
-  od = montlake_od,
+  od = montlake_od_minimal,
   zones = montlake_zones,
   zones_d = NULL,
   origin_buildings = montlake_buildings,
