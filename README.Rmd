@@ -85,10 +85,9 @@ Each line in the plot above represents a single trip, with the color representin
 
 The `ab_save` and `ab_json` functions conclude the `abstr` workflow by outputting a local JSON file, matching the [A/B Street's schema](https://a-b-street.github.io/docs/tech/dev/formats/scenarios.html).
 
-```{r message=FALSE,warning=FALSE}
-ab_save(ab_json(output_sf, time_fun = ab_time_normal,
-                scenario_name = "Montlake Example"),
-        f = "montlake_scenarios.json")
+```{r message=FALSE, warning=FALSE}
+output_json = ab_json(output_sf, time_fun = ab_time_normal, scenario_name = "Montlake Example")
+ab_save(output_json, f = "montlake_scenarios.json")
 ```
 
 Let's see what is in the file:
@@ -125,6 +124,12 @@ The first trip schedule should look something like this, matching [A/B Street's 
       ]
     }
 ```
+
+```{r, include=FALSE}
+# remove just generated .json file
+file.remove("montlake_scenarios.json")
+```
+
 
 ## Next steps
 

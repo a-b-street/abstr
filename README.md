@@ -114,9 +114,8 @@ outputting a local JSON file, matching the [A/B Street’s
 schema](https://a-b-street.github.io/docs/tech/dev/formats/scenarios.html).
 
 ``` r
-ab_save(ab_json(output_sf, time_fun = ab_time_normal,
-                scenario_name = "Montlake Example"),
-        f = "montlake_scenarios.json")
+output_json = ab_json(output_sf, time_fun = ab_time_normal, scenario_name = "Montlake Example")
+ab_save(output_json, f = "montlake_scenarios.json")
 ```
 
 Let’s see what is in the file:
