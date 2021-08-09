@@ -130,9 +130,8 @@
 <p>Each line in the plot above represents a single trip, with the color representing each transport mode. Moreover, each trip is configured with an associated departure time, that can be represented in A/B Street.</p>
 <p>The <code>ab_save</code> and <code>ab_json</code> functions conclude the <code>abstr</code> workflow by outputting a local JSON file, matching the <a href="https://a-b-street.github.io/docs/tech/dev/formats/scenarios.html">A/B Street’s schema</a>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/ab_save.html">ab_save</a></span><span class="op">(</span><span class="fu"><a href="reference/ab_json.html">ab_json</a></span><span class="op">(</span><span class="va">output_sf</span>, time_fun <span class="op">=</span> <span class="va">ab_time_normal</span>,
-                scenario_name <span class="op">=</span> <span class="st">"Montlake Example"</span><span class="op">)</span>,
-        f <span class="op">=</span> <span class="st">"montlake_scenarios.json"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">output_json</span> <span class="op">=</span> <span class="fu"><a href="reference/ab_json.html">ab_json</a></span><span class="op">(</span><span class="va">output_sf</span>, time_fun <span class="op">=</span> <span class="va">ab_time_normal</span>, scenario_name <span class="op">=</span> <span class="st">"Montlake Example"</span><span class="op">)</span>
+<span class="fu"><a href="reference/ab_save.html">ab_save</a></span><span class="op">(</span><span class="va">output_json</span>, f <span class="op">=</span> <span class="st">"montlake_scenarios.json"</span><span class="op">)</span></code></pre></div>
 <p>Let’s see what is in the file:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/file.edit.html">file.edit</a></span><span class="op">(</span><span class="st">"ab_scenario.json"</span><span class="op">)</span></code></pre></div>
