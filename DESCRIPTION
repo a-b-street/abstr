@@ -1,7 +1,7 @@
 Type: Package
 Package: abstr
 Title: R Interface to the A/B Street Transport System Simulation Software
-Version: 0.2.1
+Version: 0.3.0
 Authors@R: 
     c(person(given = "Nathanael",
              family = "Sheehan",
@@ -40,8 +40,11 @@ Imports:
     tibble (>= 3.0.6),
     tidyr (>= 1.1.3)
 Suggests: 
-    dplyr (>= 1.0.0)
+    knitr,
+    dplyr (>= 1.0.0),
+    rmarkdown
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
+VignetteBuilder: knitr

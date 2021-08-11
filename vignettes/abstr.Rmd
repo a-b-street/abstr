@@ -8,7 +8,6 @@ vignette: >
 author: 
 - "Robin Lovelace, Trevor Nederlof and Nathanael Sheehan"
 ---
-
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -235,6 +234,3 @@ cargo run --bin game -- --dev data/system/us/seattle/maps/montlake.bin
 ```  
 
 Once the game has booted up click on the `scenarios` tab in the top right, it will currently be set as "none". Change this to the first option "Montlake Example" which will be the scenario we have just uploaded. Alternatively, you can skip the first import command and use the GUI to select a scenario file to import.
-
-
-  
