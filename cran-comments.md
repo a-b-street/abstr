@@ -1,3 +1,10 @@
+## Resubmission
+
+This is a resubmission. In this version I have
+
+* Converted the DESCRIPTION URLs to include trailing slashes
+* Converted the README URLs to include protocol
+
 ## Test Environments
 
 * MacOS-latest, R (release)
