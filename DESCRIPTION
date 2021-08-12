@@ -27,7 +27,7 @@ Description: Provides functions to convert origin-destination data,
     <doi:10.1007/s10109-020-00342-2>.
 License: Apache License (>= 2)
 URL: https://github.com/a-b-street/abstr,
-    https://a-b-street.github.io/abstr
+    https://a-b-street.github.io/abstr/
 BugReports: https://github.com/a-b-street/abstr/issues
 Depends: 
     R (>= 4.0.0)

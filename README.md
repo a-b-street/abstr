@@ -41,11 +41,20 @@ U.S.
 ``` r
 library(abstr)
 library(tmap) # for map making
+#> Warning: package 'tmap' was built under R version 4.0.5
 tm_shape(montlake_zones) + tm_polygons(col = "grey") +
   tm_shape(montlake_buildings) + tm_polygons(col = "blue")
 ```
 
-<img src="man/figures/README-input-1.png" title="Example data that can be used as an input by functions in abstr to generate trip-level scenarios that can be imported by A/B Street." alt="Example data that can be used as an input by functions in abstr to generate trip-level scenarios that can be imported by A/B Street." width="100%" />
+<div class="figure">
+
+<img src="man/figures/README-input-1.png" alt="Example data that can be used as an input by functions in abstr to generate trip-level scenarios that can be imported by A/B Street." width="100%" />
+<p class="caption">
+Example data that can be used as an input by functions in abstr to
+generate trip-level scenarios that can be imported by A/B Street.
+</p>
+
+</div>
 
 The map above is a graphical representation of the Montlake residential
 neighborhood in central Seattle, Washington. Here, `montlake_zones`
@@ -59,7 +68,7 @@ The final piece of the `abstr` puzzle is OD data.
 
 ``` r
 head(montlake_od)
-#> # A tibble: 6 × 6
+#> # A tibble: 6 x 6
 #>    o_id  d_id Drive Transit  Bike  Walk
 #>   <dbl> <dbl> <int>   <int> <int> <int>
 #> 1   281   361    23       1     2    14
@@ -133,7 +142,7 @@ file.edit("ab_scenario.json")
 ```
 
 The first trip schedule should look something like this, matching [A/B
-Street’s schema](a-b-street.github.io/docs/tech/dev/formats/).
+Street’s schema](https://a-b-street.github.io/docs/tech/dev/formats/).
 
 ``` json
 {

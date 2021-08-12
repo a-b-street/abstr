@@ -99,7 +99,7 @@ Let's see what is in the file:
 file.edit("ab_scenario.json")
 ```
 
-The first trip schedule should look something like this, matching [A/B Street's schema](a-b-street.github.io/docs/tech/dev/formats/).
+The first trip schedule should look something like this, matching [A/B Street's schema](https://a-b-street.github.io/docs/tech/dev/formats/).
 
 ```json
 {
