@@ -220,7 +220,7 @@ ab_json = function(
 
 #' Save OD data as JSON files for import into A/B Street
 #'
-#' Save scenarios with this function
+#' @return A JSON file containing scenarios from ab_scenario()
 #'
 #' @param x A list object produced by [ab_scenario()]
 #' @param f A filename, e.g. `new_scenario.json`
