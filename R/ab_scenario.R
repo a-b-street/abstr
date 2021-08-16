@@ -145,27 +145,6 @@ ab_scenario = function(
 #' f = tempfile(fileext = ".json")
 #' ab_save(ab_list, f)
 #' readLines(f)[1:30]
-#'
-#' # Legacy code from ActDev project commented out
-#' # ab_list$people$trips[[1]]
-#' # dutch = ab_scenario(
-#' #   leeds_houses,
-#' #   leeds_buildings,
-#' #   leeds_desire_lines,
-#' #   leeds_zones,
-#' #   scenario = "godutch",
-#' #   output = "sf"
-#' # )
-#' # ab_list = ab_json(dutch, mode_column = "mode_godutch")
-#' # ab_list$scenario
-#' # str(ab_list$people$trips[[9]])
-#' # # add times
-#' # dutch$departure = ab_time_normal(hr = 1, sd = 0, n = nrow(dutch))
-#' # ab_list_times = ab_json(dutch)
-#' # str(ab_list_times$people$trips[[9]])
-#' # ab_save(ab_list_times, f)
-#' # readLines(f)[1:30]
-#' # 60^2
 ab_json = function(
   desire_lines_out,
   mode_column = NULL,

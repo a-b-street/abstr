@@ -2,6 +2,7 @@
 
 * New Vignette to reproduce the datasets based on the Montlake area in Seattle
 * Add cran-comments.md file to track cran submissions
+* Remove commented examples (#53)
 * Update maintainer roles
 
 # abstr 0.2.1
