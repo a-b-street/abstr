@@ -204,9 +204,6 @@ ab_json = function(
       origin = origin,
       destination = destination,
       mode = desire_lines_out[[mode_column]][i],
-      # Other values at
-      # https://a-b-street.github.io/abstreet/rustdoc/sim/enum.TripPurpose.html.
-      # The simulation doesn't make use of this yet.
       purpose = "Shopping"
     )
   })
