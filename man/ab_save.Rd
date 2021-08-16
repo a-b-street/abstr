@@ -11,6 +11,9 @@ ab_save(x, f)
 
 \item{f}{A filename, e.g. \code{new_scenario.json}}
 }
+\value{
+A JSON file containing scenarios from ab_scenario()
+}
 \description{
-Save scenarios with this function
+Save OD data as JSON files for import into A/B Street
 }

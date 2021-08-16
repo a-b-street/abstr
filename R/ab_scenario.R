@@ -4,7 +4,7 @@
 #' in 'long' form, zones and, optionally, buildings from where trips can
 #' start and end as inputs.
 #'
-#' It returns an `sf` object by default representing individual trips
+#' @return An `sf` object by default representing individual trips
 #' between randomly selected points (or buildings when available)
 #' between the zones represented in the OD data.
 #'
@@ -145,27 +145,6 @@ ab_scenario = function(
 #' f = tempfile(fileext = ".json")
 #' ab_save(ab_list, f)
 #' readLines(f)[1:30]
-#'
-#' # Legacy code from ActDev project commented out
-#' # ab_list$people$trips[[1]]
-#' # dutch = ab_scenario(
-#' #   leeds_houses,
-#' #   leeds_buildings,
-#' #   leeds_desire_lines,
-#' #   leeds_zones,
-#' #   scenario = "godutch",
-#' #   output = "sf"
-#' # )
-#' # ab_list = ab_json(dutch, mode_column = "mode_godutch")
-#' # ab_list$scenario
-#' # str(ab_list$people$trips[[9]])
-#' # # add times
-#' # dutch$departure = ab_time_normal(hr = 1, sd = 0, n = nrow(dutch))
-#' # ab_list_times = ab_json(dutch)
-#' # str(ab_list_times$people$trips[[9]])
-#' # ab_save(ab_list_times, f)
-#' # readLines(f)[1:30]
-#' # 60^2
 ab_json = function(
   desire_lines_out,
   mode_column = NULL,
@@ -204,9 +183,6 @@ ab_json = function(
       origin = origin,
       destination = destination,
       mode = desire_lines_out[[mode_column]][i],
-      # Other values at
-      # https://a-b-street.github.io/abstreet/rustdoc/sim/enum.TripPurpose.html.
-      # The simulation doesn't make use of this yet.
       purpose = "Shopping"
     )
   })
@@ -223,7 +199,7 @@ ab_json = function(
 
 #' Save OD data as JSON files for import into A/B Street
 #'
-#' Save scenarios with this function
+#' @return A JSON file containing scenarios from ab_scenario()
 #'
 #' @param x A list object produced by [ab_scenario()]
 #' @param f A filename, e.g. `new_scenario.json`
