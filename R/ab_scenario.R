@@ -4,7 +4,7 @@
 #' in 'long' form, zones and, optionally, buildings from where trips can
 #' start and end as inputs.
 #'
-#' It returns an `sf` object by default representing individual trips
+#' @return This function returns an `sf` object by default representing individual trips
 #' between randomly selected points (or buildings when available)
 #' between the zones represented in the OD data.
 #'
