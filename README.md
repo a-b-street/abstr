@@ -176,5 +176,3 @@ Street’s schema](https://a-b-street.github.io/docs/tech/dev/formats/).
 For a more comprehensive guide in the art of collecting, transforming
 and saving data for A/B Street, check out the `abstr`
 [documentation](https://a-b-street.github.io/abstr/).
-
-Todo: add link to ‘getting started’ and delete this message when done.
