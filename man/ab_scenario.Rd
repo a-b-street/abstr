@@ -50,15 +50,15 @@ matching the mode names allowed in the A/B Street scenario schema.}
 
 \item{...}{Additional arguments to pass to \code{\link[=ab_json]{ab_json()}}}
 }
+\value{
+An \code{sf} object by default representing individual trips
+between randomly selected points (or buildings when available)
+between the zones represented in the OD data.
+}
 \description{
 This function takes a data frame representing origin-destination trip data
 in 'long' form, zones and, optionally, buildings from where trips can
 start and end as inputs.
-}
-\details{
-It returns an \code{sf} object by default representing individual trips
-between randomly selected points (or buildings when available)
-between the zones represented in the OD data.
 }
 \examples{
 od = leeds_od
