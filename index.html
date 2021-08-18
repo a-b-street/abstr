@@ -82,7 +82,9 @@
 <a href="#abstr" class="anchor"></a>abstr</h1></div>
 <!-- badges: start -->
 
-<p>The goal of abstr is to provide an R interface to the <a href="https://github.com/a-b-street/abstreet#ab-street">A/B Street</a> transport planning/simulation game. Currently it provides a way to convert aggregated origin-destination data, combined with data on buildings representing origin and destination locations, into <code>.json</code> files that can be directly imported into the A/B Street game. See <a href="https://a-b-street.github.io/docs/tech/dev/formats/scenarios.html">the formats page in the A/B Street documentation</a> for details of the schema that the package outputs.</p>
+<p><img src="https://user-images.githubusercontent.com/22789869/129973263-5fc74ae3-ed17-4155-9a8c-7f382f7796cc.png" align="left" height="164px" width="164px" margin="10%"></p>
+<p><strong>The goal of abstr is to provide an R interface to the <a href="https://github.com/a-b-street/abstreet#ab-street">A/B Street</a> transport planning/simulation game. Currently it provides a way to convert aggregated origin-destination data, combined with data on buildings representing origin and destination locations, into <code>.json</code> files that can be directly imported into the A/B Street city simulation.</strong></p>
+<p>See the formats page in the <a href="https://a-b-street.github.io/docs/tech/dev/formats/scenarios.html">A/B Street documentation</a> for details of the schema that the package outputs.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -172,6 +174,29 @@ Example data that can be used as an input by functions in abstr to generate trip
 <span id="cb8-22"><a href="#cb8-22"></a>        <span class="fu">}</span></span>
 <span id="cb8-23"><a href="#cb8-23"></a>      <span class="ot">]</span></span>
 <span id="cb8-24"><a href="#cb8-24"></a>    <span class="fu">}</span></span></code></pre></div>
+</div>
+<div id="importing-scenario-files-into-ab-street" class="section level2">
+<h2 class="hasAnchor">
+<a href="#importing-scenario-files-into-ab-street" class="anchor"></a>Importing scenario files into A/B Street</h2>
+<p><img src="https://user-images.githubusercontent.com/22789869/128907563-4aa95b30-a98d-4fbc-9275-97e0b30dd227.gif"></p>
+<p>In order to import scenario files into A/B Street, you will need to:</p>
+<ul>
+<li>Install a stable version of <a href="https://www.rust-lang.org/tools/install">Rust</a>
+<ul>
+<li>On Windows, you will also need <a href="https://code.visualstudio.com/">Visual Code Studio</a> and <a href="https://visualstudio.microsoft.com/downloads/">Visual Studio c++ build tools</a> prior to installing Rust.</li>
+</ul>
+</li>
+<li>On Linux, run <code>sudo apt-get install libasound2-dev libxcb-shape0-dev libxcb-xfixes0-dev libpango1.0-dev libgtk-3-dev</code> or the equivalent for your distribution.</li>
+<li>Download the A/B Street repo <code>git clone https://github.com/a-b-street/abstreet.git</code>
+</li>
+<li>Fetch the minimal amount of data needed to get started <code>cargo run --bin updater -- --minimal</code>
+</li>
+</ul>
+<p>Once you have all of this up and running, you will be able to run the scenario import. To start, open up a terminal in Visual Studio or your chosen IDE. Next edit the following command to include the local path of your scenario.json file.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>cargo run <span class="op">--</span>bin import_traffic <span class="op">--</span><span class="st"> </span><span class="op">--</span>map=data<span class="op">/</span>system<span class="op">/</span>us<span class="op">/</span>seattle<span class="op">/</span>maps<span class="op">/</span>montlake.bin <span class="op">--</span>input=<span class="er">/</span>path<span class="op">/</span>to<span class="op">/</span>input.json</span></code></pre></div>
+<p>Given you have correctly set the file path, the scenario should now be imported into your local version of the Montlake map. Next you can run the following command to start the A/B Street simulation in Montlake.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>cargo run <span class="op">--</span>bin game <span class="op">--</span><span class="st"> </span><span class="op">--</span>dev data<span class="op">/</span>system<span class="op">/</span>us<span class="op">/</span>seattle<span class="op">/</span>maps<span class="op">/</span>montlake.bin</span></code></pre></div>
+<p>Once the game has booted up click on the <code>scenarios</code> tab in the top right, it will currently be set as “none”. Change this to the first option “Montlake Example” which will be the scenario we have just uploaded. Alternatively, you can skip the first import command and use the GUI to select a scenario file to import.</p>
 </div>
 <div id="next-steps" class="section level2">
 <h2 class="hasAnchor">
