@@ -8,7 +8,7 @@
 [![R-CMD-check](https://github.com/a-b-street/abstr/workflows/R-CMD-check/badge.svg)](https://github.com/a-b-street/abstr/actions)
 <!-- badges: end -->
 
-<img src="https://user-images.githubusercontent.com/22789869/129973263-5fc74ae3-ed17-4155-9a8c-7f382f7796cc.png" align="left" height="164px" width="164px" margin="10%" />
+## <img src="https://user-images.githubusercontent.com/22789869/129973263-5fc74ae3-ed17-4155-9a8c-7f382f7796cc.png" align="left" height="164px" width="164px" margin="10%" />
 
 **The goal of abstr is to provide an R interface to the [A/B
 Street](https://github.com/a-b-street/abstreet#ab-street) transport
@@ -46,7 +46,8 @@ library(abstr)
 library(tmap) # for map making
 #> Warning: package 'tmap' was built under R version 4.0.5
 tm_shape(montlake_zones) + tm_polygons(col = "grey") +
-  tm_shape(montlake_buildings) + tm_polygons(col = "blue")
+  tm_shape(montlake_buildings) + tm_polygons(col = "blue")  +
+tm_style("classic")
 ```
 
 <div class="figure">
@@ -98,7 +99,7 @@ between three pairs of zones, to illustrate the process:
 
 ``` r
 set.seed(42)
-montlake_od_minimal = montlake_od[sample(nrow(montlake_od), size = 3), ]
+montlake_od_minimal = subset(montlake_od, o_id == "373" |o_id == "402" | o_id == "281" | o_id == "588" | o_id == "301" | o_id == "314")
 output_sf = ab_scenario(
   od = montlake_od_minimal,
   zones = montlake_zones,
@@ -119,8 +120,10 @@ and visualised in A/B Street, or visualised in R (using the `tmap`
 package in the code chunk below):
 
 ``` r
-tm_shape(output_sf) + tmap::tm_lines(col = "mode") +
-  tm_shape(montlake_zones) + tmap::tm_borders()
+tm_shape(output_sf) + tmap::tm_lines(col = "mode", lwd = .8, lwd.legeld.col = "black") +
+  tm_shape(montlake_zones) + tmap::tm_borders(lwd = 1.2, col = "gray") +
+  tm_text("id", size = 0.6) +
+tm_style("cobalt")
 ```
 
 <img src="man/figures/README-outputplot-1.png" width="100%" />
