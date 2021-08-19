@@ -29,14 +29,19 @@ See the formats page in the [A/B Street documentation](https://a-b-street.github
 ## Installation
 
 You can install the released version of abstr from
-<!-- [CRAN](https://CRAN.R-project.org) with: -->
-GitHub as follows:
+[CRAN](https://CRAN.R-project.org) with:
 
-```r
+```{r, eval=FALSE}
+install.packages("abstr")
+```
+
+Install the development version from GitHub as follows:
+
+```{r, eval=FALSE}
 remotes::install_github("a-b-street/abstr")
 ```
 
-## Example
+## Usage
 
 The example below shows how `abstr` can be used.
 The input datasets include `sf` objects representing buildings, origin-destination (OD) data represented as desire lines and administrative zones representing the areas within which trips in the desire lines start and end.

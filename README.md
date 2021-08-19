@@ -24,13 +24,19 @@ for details of the schema that the package outputs.
 ## Installation
 
 You can install the released version of abstr from
-<!-- [CRAN](https://CRAN.R-project.org) with: --> GitHub as follows:
+[CRAN](https://CRAN.R-project.org) with:
+
+``` r
+install.packages("abstr")
+```
+
+Install the development version from GitHub as follows:
 
 ``` r
 remotes::install_github("a-b-street/abstr")
 ```
 
-## Example
+## Usage
 
 The example below shows how `abstr` can be used. The input datasets
 include `sf` objects representing buildings, origin-destination (OD)
