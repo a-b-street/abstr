@@ -20,10 +20,9 @@ knitr::opts_chunk$set(
 <!-- badges: end -->
 
 <img src="https://user-images.githubusercontent.com/22789869/129973263-5fc74ae3-ed17-4155-9a8c-7f382f7796cc.png" align="left" height="164px" width="164px" margin="10%" />
-  
+--  
 **The goal of abstr is to provide an R interface to the [A/B Street](https://github.com/a-b-street/abstreet#ab-street) transport planning/simulation game.
 Currently it provides a way to convert aggregated origin-destination data, combined with data on buildings representing origin and destination locations, into `.json` files that can be directly imported into the A/B Street city simulation.**
-
 
 See the formats page in the [A/B Street documentation](https://a-b-street.github.io/docs/tech/dev/formats/scenarios.html) for details of the schema that the package outputs.
 
@@ -48,7 +47,8 @@ The input datasets are illustrated in the plots below, which show example data s
 library(abstr)
 library(tmap) # for map making
 tm_shape(montlake_zones) + tm_polygons(col = "grey") +
-  tm_shape(montlake_buildings) + tm_polygons(col = "blue")
+  tm_shape(montlake_buildings) + tm_polygons(col = "blue")  +
+tm_style("classic")
 ```
 
 The map above is a graphical representation of the Montlake residential neighborhood in central Seattle, Washington. Here, `montlake_zones` represents neighborhood residential zones declared by Seattle local government and `montlake_buildings` being the accumulation of buildings listed in <a link href="https://www.openstreetmap.org/#map=5/54.910/-3.432"> OpenStreetMap</a>
@@ -67,7 +67,7 @@ While the OD data contains information on origin and destination zone, `ab_scena
 
 ```{r message=FALSE,warning=FALSE}
 set.seed(42)
-montlake_od_minimal = montlake_od[sample(nrow(montlake_od), size = 3), ]
+montlake_od_minimal = subset(montlake_od, o_id == "373" |o_id == "402" | o_id == "281" | o_id == "588" | o_id == "301" | o_id == "314")
 output_sf = ab_scenario(
   od = montlake_od_minimal,
   zones = montlake_zones,
@@ -84,8 +84,10 @@ output_sf = ab_scenario(
 The `output_sf` object created above can be further transformed to match [A/B Street's schema](https://a-b-street.github.io/docs/tech/dev/formats/scenarios.html) and visualised in A/B Street, or visualised in R (using the `tmap` package in the code chunk below):
 
 ```{r outputplot}
-tm_shape(output_sf) + tmap::tm_lines(col = "mode") +
-  tm_shape(montlake_zones) + tmap::tm_borders()
+tm_shape(output_sf) + tmap::tm_lines(col = "mode", lwd = .8, lwd.legeld.col = "black") +
+  tm_shape(montlake_zones) + tmap::tm_borders(lwd = 1.2, col = "gray") +
+  tm_text("id", size = 0.6) +
+tm_style("cobalt")
 ```
 
 Each line in the plot above represents a single trip, with the color representing each transport mode. Moreover, each trip is configured with an associated departure time, that can be represented in A/B Street.
