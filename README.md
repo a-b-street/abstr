@@ -10,10 +10,10 @@
 
 ## <img src="https://user-images.githubusercontent.com/22789869/129973263-5fc74ae3-ed17-4155-9a8c-7f382f7796cc.png" align="left" height="164px" width="164px" margin="10%" />
 
-**The goal of abstr is to provide an R interface to the [A/B
-Street](https://github.com/a-b-street/abstreet#ab-street) transport
-planning/simulation game. Currently it provides a way to convert
-aggregated origin-destination data, combined with data on buildings
+**abstr provide an R interface to the [A/B
+Street](https://github.com/a-b-street/abstreet#ab-street) transport system
+and network editing software. It provides functions for converting
+origin-destination data, combined with data on buildings
 representing origin and destination locations, into `.json` files that
 can be directly imported into the A/B Street city simulation.**
 
