@@ -10,10 +10,10 @@
 
 ## <img src="https://user-images.githubusercontent.com/22789869/129973263-5fc74ae3-ed17-4155-9a8c-7f382f7796cc.png" align="left" height="164px" width="164px" margin="10%" />
 
-**The goal of abstr is to provide an R interface to the [A/B
+**abstr provides an R interface to the [A/B
 Street](https://github.com/a-b-street/abstreet#ab-street) transport
-planning/simulation game. Currently it provides a way to convert
-aggregated origin-destination data, combined with data on buildings
+system simulation and network editing software. It provides functions
+for converting origin-destination data, combined with data on buildings
 representing origin and destination locations, into `.json` files that
 can be directly imported into the A/B Street city simulation.**
 
@@ -24,13 +24,19 @@ for details of the schema that the package outputs.
 ## Installation
 
 You can install the released version of abstr from
-<!-- [CRAN](https://CRAN.R-project.org) with: --> GitHub as follows:
+[CRAN](https://CRAN.R-project.org) with:
+
+``` r
+install.packages("abstr")
+```
+
+Install the development version from GitHub as follows:
 
 ``` r
 remotes::install_github("a-b-street/abstr")
 ```
 
-## Example
+## Usage
 
 The example below shows how `abstr` can be used. The input datasets
 include `sf` objects representing buildings, origin-destination (OD)
@@ -44,7 +50,6 @@ U.S.
 ``` r
 library(abstr)
 library(tmap) # for map making
-#> Warning: package 'tmap' was built under R version 4.0.5
 tm_shape(montlake_zones) + tm_polygons(col = "grey") +
   tm_shape(montlake_buildings) + tm_polygons(col = "blue")  +
 tm_style("classic")
@@ -72,7 +77,7 @@ The final piece of the `abstr` puzzle is OD data.
 
 ``` r
 head(montlake_od)
-#> # A tibble: 6 x 6
+#> # A tibble: 6 × 6
 #>    o_id  d_id Drive Transit  Bike  Walk
 #>   <dbl> <dbl> <int>   <int> <int> <int>
 #> 1   281   361    23       1     2    14

@@ -21,22 +21,27 @@ knitr::opts_chunk$set(
 
 <img src="https://user-images.githubusercontent.com/22789869/129973263-5fc74ae3-ed17-4155-9a8c-7f382f7796cc.png" align="left" height="164px" width="164px" margin="10%" />
 --  
-**The goal of abstr is to provide an R interface to the [A/B Street](https://github.com/a-b-street/abstreet#ab-street) transport planning/simulation game.
-Currently it provides a way to convert aggregated origin-destination data, combined with data on buildings representing origin and destination locations, into `.json` files that can be directly imported into the A/B Street city simulation.**
+
+**abstr provides an R interface to the [A/B Street](https://github.com/a-b-street/abstreet#ab-street) transport system simulation and network editing software. It provides functions for converting origin-destination data, combined with data on buildings representing origin and destination locations, into `.json` files that can be directly imported into the A/B Street city simulation.**
 
 See the formats page in the [A/B Street documentation](https://a-b-street.github.io/docs/tech/dev/formats/scenarios.html) for details of the schema that the package outputs.
 
 ## Installation
 
 You can install the released version of abstr from
-<!-- [CRAN](https://CRAN.R-project.org) with: -->
-GitHub as follows:
+[CRAN](https://CRAN.R-project.org) with:
 
-```r
+```{r, eval=FALSE}
+install.packages("abstr")
+```
+
+Install the development version from GitHub as follows:
+
+```{r, eval=FALSE}
 remotes::install_github("a-b-street/abstr")
 ```
 
-## Example
+## Usage
 
 The example below shows how `abstr` can be used.
 The input datasets include `sf` objects representing buildings, origin-destination (OD) data represented as desire lines and administrative zones representing the areas within which trips in the desire lines start and end.
