@@ -82,9 +82,13 @@
 <a href="#abstr" class="anchor"></a>abstr</h1></div>
 <!-- badges: start -->
 
-<p><img src="https://user-images.githubusercontent.com/22789869/129973263-5fc74ae3-ed17-4155-9a8c-7f382f7796cc.png" align="left" height="164px" width="164px" margin="10%"></p>
+<div id="section" class="section level2">
+<h2 class="hasAnchor">
+<a href="#section" class="anchor"></a><img src="https://user-images.githubusercontent.com/22789869/129973263-5fc74ae3-ed17-4155-9a8c-7f382f7796cc.png" align="left" height="164px" width="164px" margin="10%">
+</h2>
 <p><strong>The goal of abstr is to provide an R interface to the <a href="https://github.com/a-b-street/abstreet#ab-street">A/B Street</a> transport planning/simulation game. Currently it provides a way to convert aggregated origin-destination data, combined with data on buildings representing origin and destination locations, into <code>.json</code> files that can be directly imported into the A/B Street city simulation.</strong></p>
 <p>See the formats page in the <a href="https://a-b-street.github.io/docs/tech/dev/formats/scenarios.html">A/B Street documentation</a> for details of the schema that the package outputs.</p>
+</div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -101,7 +105,8 @@
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">tmap</span><span class="op">)</span> <span class="co"># for map making</span>
 <span class="co">#&gt; Warning: package 'tmap' was built under R version 4.0.5</span>
 <span class="fu">tm_shape</span><span class="op">(</span><span class="va">montlake_zones</span><span class="op">)</span> <span class="op">+</span> <span class="fu">tm_polygons</span><span class="op">(</span>col <span class="op">=</span> <span class="st">"grey"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">tm_shape</span><span class="op">(</span><span class="va">montlake_buildings</span><span class="op">)</span> <span class="op">+</span> <span class="fu">tm_polygons</span><span class="op">(</span>col <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span></code></pre></div>
+  <span class="fu">tm_shape</span><span class="op">(</span><span class="va">montlake_buildings</span><span class="op">)</span> <span class="op">+</span> <span class="fu">tm_polygons</span><span class="op">(</span>col <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span>  <span class="op">+</span>
+<span class="fu">tm_style</span><span class="op">(</span><span class="st">"classic"</span><span class="op">)</span></code></pre></div>
 <div class="figure">
 <img src="reference/figures/README-input-1.png" alt="Example data that can be used as an input by functions in abstr to generate trip-level scenarios that can be imported by A/B Street." width="100%"><p class="caption">
 Example data that can be used as an input by functions in abstr to generate trip-level scenarios that can be imported by A/B Street.
@@ -124,7 +129,7 @@ Example data that can be used as an input by functions in abstr to generate trip
 <p>Let’s combine each of the elements outlined above, the zone, building and OD data. We do this using the <code><a href="reference/ab_scenario.html">ab_scenario()</a></code> function in the <code>abstr</code> package, which generates a data frame representing tavel between the <code>montlake_buildings</code>. While the OD data contains information on origin and destination zone, <code><a href="reference/ab_scenario.html">ab_scenario()</a></code> ‘disaggregates’ the data and randomly selects building within each origin and destination zone to simulate travel at the individual level, as illustrated in the chunk below which uses only a sample of the <code>montlake_od</code> data, showing travel between three pairs of zones, to illustrate the process:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span>
-<span class="va">montlake_od_minimal</span> <span class="op">=</span> <span class="va">montlake_od</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">montlake_od</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>, <span class="op">]</span>
+<span class="va">montlake_od_minimal</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">montlake_od</span>, <span class="va">o_id</span> <span class="op">==</span> <span class="st">"373"</span> <span class="op">|</span><span class="va">o_id</span> <span class="op">==</span> <span class="st">"402"</span> <span class="op">|</span> <span class="va">o_id</span> <span class="op">==</span> <span class="st">"281"</span> <span class="op">|</span> <span class="va">o_id</span> <span class="op">==</span> <span class="st">"588"</span> <span class="op">|</span> <span class="va">o_id</span> <span class="op">==</span> <span class="st">"301"</span> <span class="op">|</span> <span class="va">o_id</span> <span class="op">==</span> <span class="st">"314"</span><span class="op">)</span>
 <span class="va">output_sf</span> <span class="op">=</span> <span class="fu"><a href="reference/ab_scenario.html">ab_scenario</a></span><span class="op">(</span>
   od <span class="op">=</span> <span class="va">montlake_od_minimal</span>,
   zones <span class="op">=</span> <span class="va">montlake_zones</span>,
@@ -138,8 +143,10 @@ Example data that can be used as an input by functions in abstr to generate trip
 <span class="op">)</span></code></pre></div>
 <p>The <code>output_sf</code> object created above can be further transformed to match <a href="https://a-b-street.github.io/docs/tech/dev/formats/scenarios.html">A/B Street’s schema</a> and visualised in A/B Street, or visualised in R (using the <code>tmap</code> package in the code chunk below):</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">tm_shape</span><span class="op">(</span><span class="va">output_sf</span><span class="op">)</span> <span class="op">+</span> <span class="fu">tmap</span><span class="fu">::</span><span class="fu">tm_lines</span><span class="op">(</span>col <span class="op">=</span> <span class="st">"mode"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">tm_shape</span><span class="op">(</span><span class="va">montlake_zones</span><span class="op">)</span> <span class="op">+</span> <span class="fu">tmap</span><span class="fu">::</span><span class="fu">tm_borders</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">tm_shape</span><span class="op">(</span><span class="va">output_sf</span><span class="op">)</span> <span class="op">+</span> <span class="fu">tmap</span><span class="fu">::</span><span class="fu">tm_lines</span><span class="op">(</span>col <span class="op">=</span> <span class="st">"mode"</span>, lwd <span class="op">=</span> <span class="fl">.8</span>, lwd.legeld.col <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">tm_shape</span><span class="op">(</span><span class="va">montlake_zones</span><span class="op">)</span> <span class="op">+</span> <span class="fu">tmap</span><span class="fu">::</span><span class="fu">tm_borders</span><span class="op">(</span>lwd <span class="op">=</span> <span class="fl">1.2</span>, col <span class="op">=</span> <span class="st">"gray"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">tm_text</span><span class="op">(</span><span class="st">"id"</span>, size <span class="op">=</span> <span class="fl">0.6</span><span class="op">)</span> <span class="op">+</span>
+<span class="fu">tm_style</span><span class="op">(</span><span class="st">"cobalt"</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-outputplot-1.png" width="100%"></p>
 <p>Each line in the plot above represents a single trip, with the color representing each transport mode. Moreover, each trip is configured with an associated departure time, that can be represented in A/B Street.</p>
 <p>The <code>ab_save</code> and <code>ab_json</code> functions conclude the <code>abstr</code> workflow by outputting a local JSON file, matching the <a href="https://a-b-street.github.io/docs/tech/dev/formats/scenarios.html">A/B Street’s schema</a>.</p>
