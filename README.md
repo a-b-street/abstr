@@ -3,50 +3,56 @@
 
 # abstr
 
-
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/a-b-street/abstr/workflows/R-CMD-check/badge.svg)](https://github.com/a-b-street/abstr/actions)
 <!-- badges: end -->
 
-The goal of abstr is to provide an R interface to the [A/B
+## <img src="https://user-images.githubusercontent.com/22789869/129973263-5fc74ae3-ed17-4155-9a8c-7f382f7796cc.png" align="left" height="164px" width="164px" margin="10%" />
+
+**abstr provides an R interface to the [A/B
 Street](https://github.com/a-b-street/abstreet#ab-street) transport
-planning/simulation game. Currently it provides a way to convert
-aggregated origin-destination data, combined with data on buildings
+system simulation and network editing software. It provides functions
+for converting origin-destination data, combined with data on buildings
 representing origin and destination locations, into `.json` files that
-can be directly imported into the A/B Street game. See
-<https://a-b-street.github.io/docs/dev/formats/scenarios.html#example>
+can be directly imported into the A/B Street city simulation.**
+
+See the formats page in the [A/B Street
+documentation](https://a-b-street.github.io/docs/tech/dev/formats/scenarios.html)
 for details of the schema that the package outputs.
 
 ## Installation
 
 You can install the released version of abstr from
-<!-- [CRAN](https://CRAN.R-project.org) with: --> GitHub as follows:
+[CRAN](https://CRAN.R-project.org) with:
+
+``` r
+install.packages("abstr")
+```
+
+Install the development version from GitHub as follows:
 
 ``` r
 remotes::install_github("a-b-street/abstr")
 ```
 
-## Example
+## Usage
 
 The example below shows how `abstr` can be used. The input datasets
-include `sf` objects representing houses, buildings, origin-destination
-(OD) data represented as desire lines and administrative zones
-representing the areas within which trips in the desire lines start and
-end. With the exception of OD data, each of the input datasets is
-readily available for most cities. The input datasets are illustrated in
-the plots below, which show example data shipped in the package, taken
-from the city of Leeds, UK.
+include `sf` objects representing buildings, origin-destination (OD)
+data represented as desire lines and administrative zones representing
+the areas within which trips in the desire lines start and end. With the
+exception of OD data, each of the input datasets is readily available
+for most cities. The input datasets are illustrated in the plots below,
+which show example data shipped in the package, taken from the Seattle,
+U.S.
 
 ``` r
 library(abstr)
 library(tmap) # for map making
-tm_shape(leeds_zones) + tm_polygons(col = "grey") +
-  tm_shape(leeds_site_area) + tm_polygons(col = "red") +
-  tm_shape(leeds_houses) + tm_polygons(col = "yellow") +
-  tm_shape(leeds_buildings) + tm_polygons(col = "blue") +
-  tm_shape(leeds_desire_lines) + tm_lines(lwd = "all_base", scale = 3)
-#> Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 7.0.0
+tm_shape(montlake_zones) + tm_polygons(col = "grey") +
+  tm_shape(montlake_buildings) + tm_polygons(col = "blue")  +
+tm_style("classic")
 ```
 
 <div class="figure">
@@ -59,103 +65,85 @@ generate trip-level scenarios that can be imported by A/B Street.
 
 </div>
 
+The map above is a graphical representation of the Montlake residential
+neighborhood in central Seattle, Washington. Here, `montlake_zones`
+represents neighborhood residential zones declared by Seattle local
+government and `montlake_buildings` being the accumulation of buildings
+listed in
+<a link href="https://www.openstreetmap.org/#map=5/54.910/-3.432">
+OpenStreetMap</a>
+
+The final piece of the `abstr` puzzle is OD data.
+
 ``` r
-ablines = ab_scenario(
- houses = leeds_houses,
- buildings = leeds_buildings,
- desire_lines = leeds_desire_lines,
- zones = leeds_zones,
- output_format = "sf"
-)
-tmap_mode("view")
-bb = tmaptools::bb(leeds_houses, 10)
-tm_shape(leeds_buildings, bbox = bb) + tm_polygons() +
-  tm_shape(leeds_houses) + tm_polygons(col = "blue") +
-  tm_shape(ablines) + tm_lines(col = "mode_base") 
+head(montlake_od)
+#> # A tibble: 6 × 6
+#>    o_id  d_id Drive Transit  Bike  Walk
+#>   <dbl> <dbl> <int>   <int> <int> <int>
+#> 1   281   361    23       1     2    14
+#> 2   282   361    37       4     0    11
+#> 3   282   369    14       3     0     8
+#> 4   301   361    27       4     3    15
+#> 5   301   368     6       2     1    16
+#> 6   301   369    14       2     0    13
 ```
 
-<img src="man/figures/README-output-sf-1.png" width="100%" />
+In this example, the first two columns correspond to the origin and
+destination zones in Montlake, with the subsequent columns representing
+the transport mode share between these zones.
 
-Each line in the plot above represents a single trip, color representing
-mode. Each trip has an associated departure time, that can be
-represented in A/B Street.
-
-Under a different scenario, the Go Dutch scenario of active travel
-uptake represented in the columns containing `godutch` for example, the
-travel patterns would be substantially different. In the aggregated
-desire lines, the differences between the two scenarios are substantial,
-as shown in the table below:
+Let’s combine each of the elements outlined above, the zone, building
+and OD data. We do this using the `ab_scenario()` function in the
+`abstr` package, which generates a data frame representing tavel between
+the `montlake_buildings`. While the OD data contains information on
+origin and destination zone, `ab_scenario()` ‘disaggregates’ the data
+and randomly selects building within each origin and destination zone to
+simulate travel at the individual level, as illustrated in the chunk
+below which uses only a sample of the `montlake_od` data, showing travel
+between three pairs of zones, to illustrate the process:
 
 ``` r
-desire_line_data = sf::st_drop_geometry(leeds_desire_lines)
-nms = names(desire_line_data)
-nms
-#>  [1] "geo_code1"     "geo_code2"     "all_base"      "walk_base"    
-#>  [5] "cycle_base"    "drive_base"    "length"        "walk_godutch" 
-#>  [9] "cycle_godutch" "drive_godutch"
-nms_scenarios = nms[grepl(pattern = "base|dutch", x = nms)]
-knitr::kable(desire_line_data[nms_scenarios])
+set.seed(42)
+montlake_od_minimal = subset(montlake_od, o_id == "373" |o_id == "402" | o_id == "281" | o_id == "588" | o_id == "301" | o_id == "314")
+output_sf = ab_scenario(
+  od = montlake_od_minimal,
+  zones = montlake_zones,
+  zones_d = NULL,
+  origin_buildings = montlake_buildings,
+  destination_buildings = montlake_buildings,
+  pop_var = 3,
+  time_fun = ab_time_normal,
+  output = "sf",
+  modes = c("Walk", "Bike", "Drive", "Transit")
+)
 ```
 
-| all\_base | walk\_base | cycle\_base | drive\_base | walk\_godutch | cycle\_godutch | drive\_godutch |
-|----------:|-----------:|------------:|------------:|--------------:|---------------:|---------------:|
-|        16 |         12 |           1 |           3 |            13 |              3 |              0 |
-|        11 |          6 |           0 |           5 |             8 |              3 |              0 |
-|        10 |          5 |           1 |           4 |             6 |              3 |              1 |
-
-The Go Dutch scenario can be disaggregated so that trips start and begin
-in buildings, as shown below.
+The `output_sf` object created above can be further transformed to match
+[A/B Street’s
+schema](https://a-b-street.github.io/docs/tech/dev/formats/scenarios.html)
+and visualised in A/B Street, or visualised in R (using the `tmap`
+package in the code chunk below):
 
 ``` r
-ablines_dutch = ab_scenario(
- houses = leeds_houses,
- buildings = leeds_buildings,
- desire_lines = leeds_desire_lines,
- zones = leeds_zones,
- output_format = "sf"
-)
-tm_shape(leeds_buildings, bbox = bb) + tm_polygons() +
-  tm_shape(leeds_houses) + tm_polygons(col = "blue") +
-  tm_shape(ablines_dutch) + tm_lines(col = "mode_base") 
+tm_shape(output_sf) + tmap::tm_lines(col = "mode", lwd = .8, lwd.legeld.col = "black") +
+  tm_shape(montlake_zones) + tmap::tm_borders(lwd = 1.2, col = "gray") +
+  tm_text("id", size = 0.6) +
+tm_style("cobalt")
 ```
 
-<img src="man/figures/README-abdutch-1.png" width="100%" />
+<img src="man/figures/README-outputplot-1.png" width="100%" />
 
-<!-- todo: add time to df -->
+Each line in the plot above represents a single trip, with the color
+representing each transport mode. Moreover, each trip is configured with
+an associated departure time, that can be represented in A/B Street.
 
-You can output the result as a list object that can be saved as a JSON
-file as follows, taking only one of the desire lines (desire line 7,
-which has only 9 trips for ease of viewing the results) as an example:
+The `ab_save` and `ab_json` functions conclude the `abstr` workflow by
+outputting a local JSON file, matching the [A/B Street’s
+schema](https://a-b-street.github.io/docs/tech/dev/formats/scenarios.html).
 
 ``` r
-library(abstr)
-ab_scenario_list = ab_scenario(
- leeds_houses,
- leeds_buildings,
- leeds_desire_lines,
- leeds_zones,
- output_format = "json_list"
-)
-ab_scenario_list
-#> $scenario_name
-#> [1] "base"
-#> 
-#> $people
-#> # A tibble: 37 x 2
-#>    origin$Position$longitude $$latitude trips           
-#>                        <dbl>      <dbl> <list>          
-#>  1                     -1.53       53.8 <tibble [1 × 3]>
-#>  2                     -1.53       53.8 <tibble [1 × 3]>
-#>  3                     -1.53       53.8 <tibble [1 × 3]>
-#>  4                     -1.53       53.8 <tibble [1 × 3]>
-#>  5                     -1.53       53.8 <tibble [1 × 3]>
-#>  6                     -1.53       53.8 <tibble [1 × 3]>
-#>  7                     -1.53       53.8 <tibble [1 × 3]>
-#>  8                     -1.53       53.8 <tibble [1 × 3]>
-#>  9                     -1.53       53.8 <tibble [1 × 3]>
-#> 10                     -1.53       53.8 <tibble [1 × 3]>
-#> # … with 27 more rows
-ab_save(ab_scenario_list, "ab_scenario.json")
+output_json = ab_json(output_sf, time_fun = ab_time_normal, scenario_name = "Montlake Example")
+ab_save(output_json, f = "montlake_scenarios.json")
 ```
 
 Let’s see what is in the file:
@@ -165,27 +153,26 @@ file.edit("ab_scenario.json")
 ```
 
 The first trip schedule should look something like this, matching [A/B
-Street’s
-schema](https://a-b-street.github.io/docs/dev/formats/scenarios.html#example).
+Street’s schema](https://a-b-street.github.io/docs/tech/dev/formats/).
 
 ``` json
 {
-  "scenario_name": "base",
+  "scenario_name": "Montlake Example",
   "people": [
     {
-      "origin": {
-        "Position": {
-          "longitude": -1.5278,
-          "latitude": 53.7888
-        }
-      },
       "trips": [
         {
-          "departure": 28236,
+          "departure": 317760000,
+          "origin": {
+            "Position": {
+              "longitude": -122.3139,
+              "latitude": 47.667
+            }
+          },
           "destination": {
             "Position": {
-              "longitude": -1.5717,
-              "latitude": 53.8039
+              "longitude": -122.3187,
+              "latitude": 47.6484
             }
           },
           "mode": "Walk",
@@ -194,3 +181,48 @@ schema](https://a-b-street.github.io/docs/dev/formats/scenarios.html#example).
       ]
     }
 ```
+
+## Importing scenario files into A/B Street
+
+![](https://user-images.githubusercontent.com/22789869/128907563-4aa95b30-a98d-4fbc-9275-97e0b30dd227.gif)
+
+In order to import scenario files into A/B Street, you will need to:
+
+-   Install a stable version of
+    [Rust](https://www.rust-lang.org/tools/install)
+    -   On Windows, you will also need [Visual Code
+        Studio](https://code.visualstudio.com/) and [Visual Studio c++
+        build tools](https://visualstudio.microsoft.com/downloads/)
+        prior to installing Rust.
+-   On Linux, run
+    `sudo apt-get install libasound2-dev libxcb-shape0-dev libxcb-xfixes0-dev libpango1.0-dev libgtk-3-dev`
+    or the equivalent for your distribution.
+-   Download the A/B Street repo
+    `git clone https://github.com/a-b-street/abstreet.git`
+-   Fetch the minimal amount of data needed to get started
+    `cargo run --bin updater -- --minimal`
+
+Once you have all of this up and running, you will be able to run the
+scenario import. To start, open up a terminal in Visual Studio or your
+chosen IDE. Next edit the following command to include the local path of
+your scenario.json file.
+
+    cargo run --bin import_traffic -- --map=data/system/us/seattle/maps/montlake.bin --input=/path/to/input.json
+
+Given you have correctly set the file path, the scenario should now be
+imported into your local version of the Montlake map. Next you can run
+the following command to start the A/B Street simulation in Montlake.
+
+    cargo run --bin game -- --dev data/system/us/seattle/maps/montlake.bin
+
+Once the game has booted up click on the `scenarios` tab in the top
+right, it will currently be set as “none”. Change this to the first
+option “Montlake Example” which will be the scenario we have just
+uploaded. Alternatively, you can skip the first import command and use
+the GUI to select a scenario file to import.
+
+## Next steps
+
+For a more comprehensive guide in the art of collecting, transforming
+and saving data for A/B Street, check out the `abstr`
+[documentation](https://a-b-street.github.io/abstr/).
