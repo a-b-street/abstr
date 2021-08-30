@@ -1,0 +1,68 @@
+---
+title: "Multi-trip activity models"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Multi-trip activity models}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(abstr)
+```
+
+
+```{r places}
+places = tibble::tribble(
+  ~name, ~x, ~y,
+  "Home", 5, 0,
+  "Work", 2, 5,
+  "Park", 1, 4,
+  "Cafe", 2, 4
+)
+places_sf = sf::st_as_sf(places, coords = c("x", "y"))
+plot(places_sf, pch = places$name)
+```
+
+```{r lines}
+od = tibble::tribble(
+  ~o, ~d, ~mode, ~departure, ~person,
+  "Home", "Work", "Bike", "08:30", 1,
+  "Work", "Park", "Walk", "11:30", 1,
+  "Park", "Cafe", "Walk", "12:15", 1,
+  "Cafe", "Work", "Walk", "12:45", 1,
+  "Work", "Home", "Bike", "17:00", 1
+)
+od_sf = od::od_to_sf(od, places_sf)
+plot(od_sf["departure"], reset = FALSE, key.pos = 1, lwd = 6:2)
+plot(places_sf$geometry, pch = places$name, add = TRUE, cex =2)
+```
+
+```{r, eval=FALSE}
+od::od_coordinates(od_sf)
+```
+
+
+
+```{r}
+od_sf$departure = round(runif(n = nrow(od_sf), min = 1, max = 1000))
+od_sf$departure = round(runif(n = nrow(od_sf), min = 1, max = 1000))
+abstr::ab_json(desire_lines_out = od_sf, scenario_name = "activity")
+```
+
+```{r}
+ab_json2(desire_lines_out = od_sf, scenario_name = "activity")
+```
+
+
+
+
+
+
