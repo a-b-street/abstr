@@ -91,7 +91,7 @@ The first stage is to install the necessary packages (see the [`abstr`](https://
 
 ### Installing and Loading Packages
 
-To begin with, you need to install and load the nesseccary packages for this vignette.
+To begin with, you need to install and load the necessary packages for this vignette.
 
 ```{r eval=FALSE}
 #### INSTALL PACKAGES ####
