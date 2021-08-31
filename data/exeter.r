@@ -1,7 +1,7 @@
 ####
 ####
 #### AIM: Use PCT data to create scenario of change where commuting cycling levels increase and car journeys decrease which can be imported
-####      into A/B Street city simulation software. This method should be fully reproducible for other pct_regions.
+####      into A/B Street city simulation software. This method should be fully reproducible for all other pct_regions.
 ####
 ####
 
@@ -31,7 +31,6 @@ exeter_commute_od = exeter_commute_od %>%
   mutate(transit_base = bus + train_tube) %>% # bunch of renaming -_-
   mutate(drive_base = car_driver + car_passenger + motorbike + taxi_other) %>%
   mutate(all_base = all) %>%
-  mutate(euclidean_distance = as.numeric(sf::st_length(exeter_commute_od))) %>%
   mutate(
     # create new columns
     pcycle_godutch_uptake = pct::uptake_pct_godutch_2020(distance = rf_dist_km, gradient = rf_avslope_perc),
@@ -122,8 +121,6 @@ exeter_osm_buildings_all_joined = exeter_osm_buildings_all %>%
   sf::st_join(exeter_zones)
 
 set.seed(2021)
-# select 20% of buildings in each zone to reduce file size for this example
-# remove this filter or increase the sampling to include more buildings
 exeter_osm_buildings_sample = exeter_osm_buildings_all_joined %>%
   dplyr::filter(!is.na(osm_way_id))
 
