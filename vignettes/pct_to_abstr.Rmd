@@ -83,7 +83,7 @@ exeter_commute_od = pct::get_pct_lines(region = "devon", geography = "msoa") %>%
 
 ### Data Cleaning and Transformation
 
-Now you have your data, its time to clean and transform it. In fact, you only need to transform the `exeter_commute_od` dataframe as the `exeter_zones` is already in `abstr` format. The first step in cleaning the data requires renaming variables so that we can clearly see the difference between the base scenario and the scenario of change. Next, you calculate the euclidean distance of the origin-destination data which will then be used in the 
+Now you have your data, its time to clean and transform it. In fact, you only need to transform the `exeter_commute_od` dataframe as the `exeter_zones` is already in `abstr` format. The first step in cleaning the data requires renaming variables so that we can clearly see the difference between the base scenario and the scenario of change. Next, you calculate the scenario of change, in this example we use the `uptake_pct_godutch_2020()` function which takes two arguments of `distance` and `gradient` in its model calculation. The results from this PCT function allow you to calculate the mode shift from driving to cycling. Finally, we subset the data to only include the columns which are needed to progress.
 
 ```{r eval=FALSE}
 exeter_commute_od = exeter_commute_od %>%
@@ -119,9 +119,75 @@ exeter_commute_od = exeter_commute_od %>%
   )
 ```
 
+As a quick sanity check we can make sure our model has not generated any new commutes and we still have the same base number of commuters as before. 
+
+```{r eval=FALSE}
+identical(exeter_commute_od$all_base, exeter_commute_od$all_go_dutch) # sanity check: make sure total remains the same (this is not a dynamic model where population change is factored in)
+```
+
+### Download OSM building data
+
+Now, you need to download OSM building data to populate the AB Street simulation map. In this example we use the `osmextract` package to fetch a PBF (protocolbuffer binary format) file hosted on GeoFabrik. You then need to filter the contents of the PBF file to only include the defined building types and subset the data to only include `osm_way_id, name, building` columsn. 
+
+```{r eval=FALSE}
+####    DOWNLOAD OSM BUILDING DATA ####
+osm_polygons = osmextract::oe_read(
+  "https://download.geofabrik.de/europe/great-britain/england/devon-latest.osm.pbf",
+  # download osm buildings for region using geofabrik
+  layer = "multipolygons"
+)
+
+building_types = c(
+  "yes",
+  "house",
+  "detached",
+  "residential",
+  "apartments",
+  "commercial",
+  "retail",
+  "school",
+  "industrial",
+  "semidetached_house",
+  "church",
+  "hangar",
+  "mobile_home",
+  "warehouse",
+  "office",
+  "college",
+  "university",
+  "public",
+  "garages",
+  "cabin",
+  "hospital",
+  "dormitory",
+  "hotel",
+  "service",
+  "parking",
+  "manufactured",
+  "civic",
+  "farm",
+  "manufacturing",
+  "floating_home",
+  "government",
+  "bungalow",
+  "transportation",
+  "motel",
+  "manufacture",
+  "kindergarten",
+  "house_boat",
+  "sports_centre"
+)
+osm_buildings  = osm_polygons %>%
+  dplyr::filter(building %in% building_types) %>%
+  dplyr::select(osm_way_id, name, building)
+
+osm_buildings_valid = osm_buildings[sf::st_is_valid(osm_buildings), ]
+
+exeter_osm_buildings_all = osm_buildings_valid[exeter_zones, ]
+```
+
+
 ### Importing scenario files into A/B Street
-
-
 
 Once you have all of this up and running, you will be able to run the scenario import. To start, open up a terminal in Visual Studio or your chosen IDE. Next edit the following command to include the local path of your scenario.json file.
 ```
