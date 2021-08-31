@@ -105,10 +105,9 @@ devon_zones = get_pct_zones(region = region_name, geography = "msoa") # get zone
 # filter for exeter
 exeter_zones = devon_zones %>% filter(lad_name == lad_name) %>%
   select(geo_code) 
-
-exeter_commute_od = get_pct_lines(region = region_name, geography = "msoa") %>% # get commute od data
-  filter(lad_name1 == lad_name &
-           lad_name2 == lad_name) # filter for exeter
+# get commute od data
+exeter_commute_od = get_pct_lines(region = region_name, geography = "msoa") %>% 
+  filter(lad_name1 == lad_name & lad_name2 == lad_name) # filter for exeter
 ```
 
 # Data Cleaning and Transformation
@@ -157,7 +156,9 @@ exeter_commute_od = exeter_commute_od %>%
 As a quick sanity check we can make sure our model has not generated any new commutes and we still have the same base number of commuters as before.
 
 ```{r eval=FALSE}
-identical(exeter_commute_od$all_base, exeter_commute_od$all_go_dutch) # sanity check: make sure total remains the same (this is not a dynamic model where population change is factored in)
+# sanity check: ensure total remains the same
+# (this is not a dynamic model where population change is factored in)
+identical(exeter_commute_od$all_base, exeter_commute_od$all_go_dutch) 
 ```
 
 # Download OSM building data
