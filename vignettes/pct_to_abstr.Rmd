@@ -1,13 +1,14 @@
 ---
-title: "Using PCT with abstr"
+title: "Visualising cycling potential with A/B Street"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Using PCT with abstr}
+  %\VignetteIndexEntry{Visualising cycling potential with A/B Street}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 author: 
-- "Nathanael Sheehan and Robin"
+- "Nathanael Sheehan and Robin Lovelace"
 ---
+
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -15,30 +16,46 @@ knitr::opts_chunk$set(
 )
 ```
 
-## Introduction 
-The `abstr` package was originally developed as part of the Active Travel Orientated Development paper by Talbolt et al. (2021): this study assessed the active travel prevision of new and proposed housing development sites in England and Wales. The [ActDev]() website, which visualizes all 38 sites used in the study, is fueled by a reproducible R [project](https://github.com/cyipt/actdev/tree/main/code) which was the basis for creation of `abstr`. To understand the methods and motivations behind `abstr`, one must become familiar with the history and ecosystem of open access transport models built in R. The history begins in 2017 with The Propensity to Cycle Tool (PCT), an open source transport planning system for England and Wales. The PCT[package](https://github.com/ITSLeeds/pct) features an open approach to data access, route calculation and scenario of change modeling (not forecasting) at the regional, MSOA and LSOA geographical scales. Moreover, PCT provides a range of deterministic scenarios of change, such as `go_dutch` (where cycling levels matches that of the Netherlands), `gender_eq` (where there is equal levels of cycling among Female and Males) and `gov_target` (where cycling levels reflect that of UK government current targets). An academic [paper](https://www.jtlu.org/index.php/jtlu/article/view/862) on the PCT provides further detail on the motivations for and methods underlying the project. In 2018 the beasty `stplanr` (sustainable transport planning) package and R journal [article](https://journal.r-project.org/archive/2018/RJ-2018-053/RJ-2018-053.pdf) came on the scene, and further provided functions for solving common problems in transport planning and modeling, as well as advocating a transparency in tool usage within the transport planning paradigm. Finally, in 2021 the `od` package was released which provided functions for working with origin-destination data. A central focus in all of the packages and papers mentioned above is to provide open access transport tools which support transparent transport policies. While these packages finish our open access transport model history, several other open access R packages enabled the creation of `abstr`. 
+## Introduction
+
+The `abstr` package was originally developed as part of the Active Travel Orientated Development paper by Talbolt et al. (2021): this study assessed the active travel prevision of new and proposed housing development sites in England and Wales.
+The [ActDev]() website, which visualizes all 38 sites used in the study, is fueled by a reproducible R [project](https://github.com/cyipt/actdev/tree/main/code) which was the basis for creation of `abstr`.
+To understand the methods and motivations behind `abstr`, one must become familiar with the history and ecosystem of open access transport models built in R.
+The history begins in 2017 with The Propensity to Cycle Tool (PCT), an open source transport planning system for England and Wales.
+The PCT[package](https://github.com/ITSLeeds/pct) features an open approach to data access, route calculation and scenario of change modeling (not forecasting) at the regional, MSOA and LSOA geographical scales.
+Moreover, PCT provides a range of deterministic scenarios of change, such as `go_dutch` (where cycling levels matches that of the Netherlands), `gender_eq` (where there is equal levels of cycling among Female and Males) and `gov_target` (where cycling levels reflect that of UK government current targets).
+An academic [paper](https://www.jtlu.org/index.php/jtlu/article/view/862) on the PCT provides further detail on the motivations for and methods underlying the project.
+In 2018 the beasty `stplanr` (sustainable transport planning) package and R journal [article](https://journal.r-project.org/archive/2018/RJ-2018-053/RJ-2018-053.pdf) came on the scene, and further provided functions for solving common problems in transport planning and modeling, as well as advocating a transparency in tool usage within the transport planning paradigm.
+Finally, in 2021 the `od` package was released which provided functions for working with origin-destination data.
+A central focus in all of the packages and papers mentioned above is to provide open access transport tools which support transparent transport policies.
+While these packages finish our open access transport model history, several other open access R packages enabled the creation of `abstr`.
 
 These include:
 
-*    [jsonlite](https://cran.r-project.org/web/packages/jsonlite/index.html) for awesome JSON parsing and generation
-*    [magrittr](https://cran.r-project.org/web/packages/magrittr/index.html) for magic `%>%` pipe-command chaining
-*    [sf](https://cran.r-project.org/web/packages/sf/index.html) for simple feature support
-*    [tibble](https://cran.r-project.org/web/packages/tibble/index.html) for strict data-frame declaration
-*    [tidyr](https://cran.r-project.org/web/packages/tidyr/index.html) for all things data cleaning
-
+-   [jsonlite](https://cran.r-project.org/web/packages/jsonlite/index.html) for awesome JSON parsing and generation
+-   [magrittr](https://cran.r-project.org/web/packages/magrittr/index.html) for magic `%>%` pipe-command chaining
+-   [sf](https://cran.r-project.org/web/packages/sf/index.html) for simple feature support
+-   [tibble](https://cran.r-project.org/web/packages/tibble/index.html) for strict data-frame declaration
+-   [tidyr](https://cran.r-project.org/web/packages/tidyr/index.html) for all things data cleaning
 
 ## Getting started
+
 In order to import scenario files into A/B Street, you will need to:
 
-* Install a stable version of [Rstudio and R](https://www.rstudio.com/products/rstudio/)
-* Install a stable version of [Rust](https://www.rust-lang.org/tools/install)
-  + On Windows, you will also need [Visual Code Studio](https://code.visualstudio.com/) and [Visual Studio c++ build tools](https://visualstudio.microsoft.com/downloads/) prior to installing Rust.
-* On Linux, run `sudo apt-get install libasound2-dev libxcb-shape0-dev libxcb-xfixes0-dev libpango1.0-dev libgtk-3-dev` or the equivalent for your distribution.
-* Download the A/B Street repo `git clone https://github.com/a-b-street/abstreet.git`
-* Fetch the minimal amount of data needed to get started `cargo run --bin updater -- --minimal`
+-   Install a stable version of [Rstudio and R](https://www.rstudio.com/products/rstudio/)
 
+-   Install a stable version of [Rust](https://www.rust-lang.org/tools/install)
 
-Given you have all of the above, you are ready to start transforming data-frames into simulations! So lets set an aim for the vignette
+    -   On Windows, you will also need [Visual Code Studio](https://code.visualstudio.com/) and [Visual Studio c++ build tools](https://visualstudio.microsoft.com/downloads/) prior to installing Rust.
+
+-   On Linux, run `sudo apt-get install libasound2-dev libxcb-shape0-dev libxcb-xfixes0-dev libpango1.0-dev libgtk-3-dev` or the equivalent for your distribution.
+
+-   Download the A/B Street repo `git clone https://github.com/a-b-street/abstreet.git`
+
+-   Fetch the minimal amount of data needed to get started `cargo run --bin updater -- --minimal`
+
+Given you have all of the above, you are ready to start transforming data-frames into simulations!
+So lets set an aim for the vignette
 
 ```{r eval=FALSE}
 ####
@@ -49,7 +66,7 @@ Given you have all of the above, you are ready to start transforming data-frames
 ####
 ```
 
-### Installing and Loading Packages 
+### Installing and Loading Packages
 
 To begin with, you need to install and load the nesseccary packages for this vignette.
 
@@ -65,10 +82,11 @@ library(sf)
 library(tidyverse)
 ```
 
-
 ### Fetching PCT Data
 
-Next you want to fetch two types of PCT data. Firstly, zone data, which is gathered using the `get_pct_zones()` function and is filtered to only include a local authority of choice, in this example we use Exeter. Secondly, commute data, which is gathered using the `get_pct_lines()` function and is also filtered to only include trips within the local authority. 
+Next you want to fetch two types of PCT data.
+Firstly, zone data, which is gathered using the `get_pct_zones()` function and is filtered to only include a local authority of choice, in this example we use Exeter.
+Secondly, commute data, which is gathered using the `get_pct_lines()` function and is also filtered to only include trips within the local authority.
 
 ```{r eval=FALSE}
 ####    READ DATA ####
@@ -80,10 +98,14 @@ exeter_commute_od = pct::get_pct_lines(region = "devon", geography = "msoa") %>%
            lad_name2 == "Exeter") # filter for exeter
 ```
 
-
 ### Data Cleaning and Transformation
 
-Now you have your data, its time to clean and transform it. In fact, you only need to transform the `exeter_commute_od` dataframe as the `exeter_zones` is already in `abstr` format. The first step in cleaning the data requires renaming variables so that we can clearly see the difference between the base scenario and the scenario of change. Next, you calculate the scenario of change, in this example we use the `uptake_pct_godutch_2020()` function which takes two arguments of `distance` and `gradient` in its model calculation. The results from this PCT function allow you to calculate the mode shift from driving to cycling. Finally, we subset the data to only include the columns which are needed to progress.
+Now you have your data, its time to clean and transform it.
+In fact, you only need to transform the `exeter_commute_od` dataframe as the `exeter_zones` is already in `abstr` format.
+The first step in cleaning the data requires renaming variables so that we can clearly see the difference between the base scenario and the scenario of change.
+Next, you calculate the scenario of change, in this example we use the `uptake_pct_godutch_2020()` function which takes two arguments of `distance` and `gradient` in its model calculation.
+The results from this PCT function allow you to calculate the mode shift from driving to cycling.
+Finally, we subset the data to only include the columns which are needed to progress.
 
 ```{r eval=FALSE}
 exeter_commute_od = exeter_commute_od %>%
@@ -119,7 +141,7 @@ exeter_commute_od = exeter_commute_od %>%
   )
 ```
 
-As a quick sanity check we can make sure our model has not generated any new commutes and we still have the same base number of commuters as before. 
+As a quick sanity check we can make sure our model has not generated any new commutes and we still have the same base number of commuters as before.
 
 ```{r eval=FALSE}
 identical(exeter_commute_od$all_base, exeter_commute_od$all_go_dutch) # sanity check: make sure total remains the same (this is not a dynamic model where population change is factored in)
@@ -127,7 +149,10 @@ identical(exeter_commute_od$all_base, exeter_commute_od$all_go_dutch) # sanity c
 
 ### Download OSM building data
 
-Now, you need to download OSM building data to populate the AB Street simulation map. In this example we use the `osmextract` package to fetch a PBF (protocolbuffer binary format) file hosted on GeoFabrik. You then need to filter the contents of the PBF file to only include the defined building types and subset the data to only include `osm_way_id, name, building` columns. Following this, you should ensure you only include valid sf buildings and then aggregate the building data against the zone boundary.
+Now, you need to download OSM building data to populate the AB Street simulation map.
+In this example we use the `osmextract` package to fetch a PBF (protocolbuffer binary format) file hosted on GeoFabrik.
+You then need to filter the contents of the PBF file to only include the defined building types and subset the data to only include `osm_way_id, name, building` columns.
+Following this, you should ensure you only include valid sf buildings and then aggregate the building data against the zone boundary.
 
 ```{r eval=FALSE}
 ####    DOWNLOAD OSM BUILDING DATA ####
@@ -186,7 +211,8 @@ osm_buildings_valid = osm_buildings[sf::st_is_valid(osm_buildings), ]
 exeter_osm_buildings_all = osm_buildings_valid[exeter_zones, ]
 ```
 
-Subsequently, you can join the OSM buildings data with the `exeter_zones` geography in order to create the complete building table. This table is filtered to not include any `NA's` and is aggregated to only include 
+Subsequently, you can join the OSM buildings data with the `exeter_zones` geography in order to create the complete building table.
+This table is filtered to not include any `NA's` and is aggregated to only include
 
 ```{r eval = FALSE}
 ####  JOIN OSM BUILDINGS WITH ZONE DATA ####
@@ -201,10 +227,12 @@ exeter_osm_buildings_tbl = exeter_osm_buildings_all %>%
   dplyr::filter(osm_way_id %in% exeter_osm_buildings_sample$osm_way_id)
 ```
 
-
 ### Using Abstr to Generate Scenarios
 
-You now have everything in place to generate AB Street scenarios for both our base commute rate and our go_active commute rate. However, `abstr` takes a strict column name definition as to adhere to the AB street documentation. This means you need to rename mode columns for scenario generation. In order to make things easy, we can create a simple logic gate that renames our mode columns depending on the boolean value `go_active`.
+You now have everything in place to generate AB Street scenarios for both our base commute rate and our go_active commute rate.
+However, `abstr` takes a strict column name definition as to adhere to the AB street documentation.
+This means you need to rename mode columns for scenario generation.
+In order to make things easy, we can create a simple logic gate that renames our mode columns depending on the boolean value `go_active`.
 
 ```{r eval = FALSE}
 ####  LOGIC GATE ####
@@ -230,7 +258,8 @@ if (go_dutch == TRUE) {
 }
 ```
 
-Voila, you are ready to generate simulation files from your data-frames. Lets start by using the `ab_scenario()` function with our `exeter_od`, `exeter_zones` and `exeter_osm_buildings_tbl` data-frames.  
+Voila, you are ready to generate simulation files from your data-frames.
+Lets start by using the `ab_scenario()` function with our `exeter_od`, `exeter_zones` and `exeter_osm_buildings_tbl` data-frames.
 
 ```{r eval = FALSE}
 ####  GENERATE A/B STREET SCENARIO ####
@@ -247,7 +276,7 @@ output_sf = ab_scenario(
 )
 ```
 
-To conclude you will need to generate a `JSON` format using the `ab_json()` function and then save the json file to your local machine using the `ab_save()` function. 
+To conclude you will need to generate a `JSON` format using the `ab_json()` function and then save the json file to your local machine using the `ab_save()` function.
 
 ```{r eval = FALSE}
 #### SAVE JSON FILE ####
@@ -257,25 +286,28 @@ ab_save(output_json, f = "../../Desktop/exeter.json")
 
 ### Importing scenario files into A/B Street
 
-Given you have all of this up and running, you will be able to run the scenario import. AB Street contains 44 sites in England which appear in the ActDev project. If the local authority you have generated a scenario for is not included, follow the AB Street [documentation](https://a-b-street.github.io/docs/user/new_city.html) to import a new city. Next, fire up a terminal in Visual Studio or your chosen IDE and run the scenario import
+Given you have all of this up and running, you will be able to run the scenario import.
+AB Street contains 44 sites in England which appear in the ActDev project.
+If the local authority you have generated a scenario for is not included, follow the AB Street [documentation](https://a-b-street.github.io/docs/user/new_city.html) to import a new city.
+Next, fire up a terminal in Visual Studio or your chosen IDE and run the scenario import
 
-```
-$ cargo run --bin import_traffic -- --map=PATH/TO/MAP --input=/PATH/TO/JSON.json
-```
+    $ cargo run --bin import_traffic -- --map=PATH/TO/MAP --input=/PATH/TO/JSON.json
 
-Once this is done, you can fire up 
-Fire up the AB street simulation software using the command:
+Once this is done, you can fire up Fire up the AB street simulation software using the command:
 
-```
-$ cargo run --bin game -- --dev PATH/TO/MAP
-```
+    $ cargo run --bin game -- --dev PATH/TO/MAP
 
-Once the game has booted up click on the `scenarios` tab in the top right, it will currently be set as "none". Change this to the first option "Exeter Example" which will be the scenario we have just uploaded. Alternatively, you can skip the first import command and use the GUI to select a scenario file to import. Then let your eyes wonder on the simulation you have created and let your imagination explore the possibilities of transforming your local area into an active travel utopia.
+Once the game has booted up click on the `scenarios` tab in the top right, it will currently be set as "none".
+Change this to the first option "Exeter Example" which will be the scenario we have just uploaded.
+Alternatively, you can skip the first import command and use the GUI to select a scenario file to import.
+Then let your eyes wonder on the simulation you have created and let your imagination explore the possibilities of transforming your local area into an active travel utopia.
 
 ### Conclusions and next steps
 
-This vignette is by no means simple, and if you get stuck please raise an issue in the [Github](https://github.com/a-b-street/abstr/issues). If you succeed in generating a simulation for chosen city please share it on social media so we can see how you have used the methods/data. If you are looking to extend this work presented in this vignette, why not try:
+This vignette is by no means simple, and if you get stuck please raise an issue in the [Github](https://github.com/a-b-street/abstr/issues).
+If you succeed in generating a simulation for chosen city please share it on social media so we can see how you have used the methods/data.
+If you are looking to extend this work presented in this vignette, why not try:
 
-* building a simulation with a different uptake model
-* integrating school commute data from the PCT package
-* build your own uptake model
+-   building a simulation with a different uptake model
+-   integrating school commute data from the PCT package
+-   build your own uptake model
