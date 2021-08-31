@@ -66,25 +66,9 @@ library(sf)
 library(tidyverse)
 ```
 
-# Fetching PCT Data
-
-Next you want to fetch two types of PCT data.
-Firstly, zone data, which is gathered using the `get_pct_zones()` function and is filtered to only include a local authority of choice, in this example we use Exeter.
-Secondly, commute data, which is gathered using the `get_pct_lines()` function and is also filtered to only include trips within the local authority.
-
-```{r eval=FALSE}
-####    READ DATA ####
-devon_zones = pct::get_pct_zones(region = region_name, geography = "msoa") # get zone data
-exeter_zones = devon_zones %>% filter(lad_name == "Exeter") %>% select(geo_code) # filter for exeter
-
-exeter_commute_od = pct::get_pct_lines(region = region_name, geography = "msoa") %>% # get commute od data
-  filter(lad_name1 == "Exeter" &
-           lad_name2 == "Exeter") # filter for exeter
-```
-
 # Choosing a region
 
-Data in the PCT for England and Wales is divided into regions, which can be seen here.
+Data in the PCT for England and Wales is divided into regions, which can be seen below.
 
 ```{r}
 pct::pct_regions$region_name
@@ -96,6 +80,21 @@ To run the example below, replace `devon` with a different region from the list 
 region_name = "devon"
 ```
 
+# Fetching PCT Data
+
+Next you want to fetch two types of PCT data.
+Firstly, zone data, which is gathered using the `get_pct_zones()` function and is filtered to only include a local authority of choice, in this example we use Exeter.
+Secondly, commute data, which is gathered using the `get_pct_lines()` function and is also filtered to only include trips within the local authority.
+
+```{r eval=FALSE}
+####    READ DATA ####
+devon_zones = get_pct_zones(region = region_name, geography = "msoa") # get zone data
+exeter_zones = devon_zones %>% filter(lad_name == "Exeter") %>% select(geo_code) # filter for exeter
+
+exeter_commute_od = get_pct_lines(region = region_name, geography = "msoa") %>% # get commute od data
+  filter(lad_name1 == "Exeter" &
+           lad_name2 == "Exeter") # filter for exeter
+```
 
 # Data Cleaning and Transformation
 
@@ -115,7 +114,7 @@ exeter_commute_od = exeter_commute_od %>%
   mutate(all_base = all) %>%
   mutate(
     # create new columns
-    pcycle_godutch_uptake = pct::uptake_pct_godutch_2020(distance = rf_dist_km, gradient = rf_avslope_perc),
+    pcycle_godutch_uptake = uptake_pct_godutch_2020(distance = rf_dist_km, gradient = rf_avslope_perc),
     cycle_godutch_additional = pcycle_godutch_uptake * drive_base,
     cycle_godutch = cycle_base + cycle_godutch_additional,
     pcycle_godutch = cycle_godutch / all_base,
