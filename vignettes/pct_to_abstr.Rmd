@@ -330,22 +330,42 @@ cargo run --bin import_traffic -- --map=PATH/TO/MAP --input=/PATH/TO/JSON.json
 If you used the Exeter case study and your data is located in the root directory, you can import the traffic as follows:
 
 ```bash
-cargo run --bin import_traffic -- --map=PATH/TO/MAP --input=/PATH/TO/JSON.json
+cargo run --bin import_traffic -- \
+  --map=data/system/gb/exeter_red_cow_village/maps/center.bin \
+  --input=dutch.json
 ```
 
 Once this is done, you can fire up Fire up the AB street simulation software using the command:
 
-    $ cargo run --bin game -- --dev PATH/TO/MAP
+```bash
+cargo run --bin game -- --dev PATH/TO/MAP
+```
+
+which in the case of the Exeter example shown above is
+
+```bash
+cargo run --bin game -- --dev data/system/gb/exeter_red_cow_village/maps/center.bin
+```
 
 Once the game has booted up click on the `scenarios` tab in the top right, it will currently be set as "none".
-Change this to the first option "Exeter Example" which will be the scenario we have just uploaded.
-Alternatively, you can skip the first import command and use the GUI to select a scenario file to import.
+
+![](https://user-images.githubusercontent.com/1825120/131586308-212caee2-3ebe-48f4-8e15-39efacedf3b4.png)
+
+Change this to the first option to "Go Dutch", or whatever you called the scenario you have just uploaded, as shown below.
+
+![](https://user-images.githubusercontent.com/1825120/131586413-c91cb53e-9b19-4d98-8e7b-d46a2f6a5845.png)
+<!-- Alternatively, you can skip the first import command and use the GUI to select a scenario file to import. -->
+<!-- In any case,  -->
+After selecting your scenario, you should see something like this, a Go Dutch scenario of cycling taking place before your eyes, making the OD data frames come to life in a real time simulation!
+
+![](https://user-images.githubusercontent.com/1825120/131586989-6ac002e0-55b0-4124-817e-4fa999421100.gif)
+
 Then let your eyes wonder on the simulation you have created and let your imagination explore the possibilities of transforming your local area into an active travel utopia.
 
 # Conclusions and next steps
 
 This vignette is by no means simple, and if you get stuck please raise an issue in the [Github](https://github.com/a-b-street/abstr/issues).
-If you succeed in generating a simulation for chosen city please share it on social media so we can see how you have used the methods/data.
+If you succeed in generating a simulation for chosen city please share it on social media tagging the authors `abstr` so we can see how you have used the methods/data.
 If you are looking to extend this work presented in this vignette, why not try:
 
 -   building a simulation with a different uptake model
