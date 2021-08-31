@@ -10,3 +10,4 @@
 ^README\.Rmd$
 ^ab_scenario\.json$
 ^cran-comments\.md$
+^CRAN-RELEASE$
