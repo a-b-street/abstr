@@ -80,6 +80,19 @@ To run the example below, replace `devon` with a different region from the list 
 region_name = "devon"
 ```
 
+You can select a specific local authority of interest from those available in the region of interest.
+You can check which are available in your region of interest as follows:
+
+```{r}
+table(pct_regions_lookup$lad16nm[pct_regions_lookup$region_name == region_name])
+```
+
+For the purposes of this article we will use Exeter as the case study:
+
+```{r}
+lad_name = "Exeter"
+```
+
 # Fetching PCT Data
 
 Next you want to fetch two types of PCT data.
@@ -89,11 +102,13 @@ Secondly, commute data, which is gathered using the `get_pct_lines()` function a
 ```{r eval=FALSE}
 ####    READ DATA ####
 devon_zones = get_pct_zones(region = region_name, geography = "msoa") # get zone data
-exeter_zones = devon_zones %>% filter(lad_name == "Exeter") %>% select(geo_code) # filter for exeter
+# filter for exeter
+exeter_zones = devon_zones %>% filter(lad_name == lad_name) %>%
+  select(geo_code) 
 
 exeter_commute_od = get_pct_lines(region = region_name, geography = "msoa") %>% # get commute od data
-  filter(lad_name1 == "Exeter" &
-           lad_name2 == "Exeter") # filter for exeter
+  filter(lad_name1 == lad_name &
+           lad_name2 == lad_name) # filter for exeter
 ```
 
 # Data Cleaning and Transformation
