@@ -274,11 +274,8 @@ Once the game has booted up click on the `scenarios` tab in the top right, it wi
 
 ### Conclusions and next steps
 
-This vignette is by no means simple, and if you get stuck please raise an issue in the [Github](https://github.com/a-b-street/abstr/issues). If you succeed in generating a simulation for chosen city please share it on social media so we can see how you have used the methods/data. If youu are looking to extend this work presented in this vignette, why not try:
+This vignette is by no means simple, and if you get stuck please raise an issue in the [Github](https://github.com/a-b-street/abstr/issues). If you succeed in generating a simulation for chosen city please share it on social media so we can see how you have used the methods/data. If you are looking to extend this work presented in this vignette, why not try:
 
 * building a simulation with a different uptake model
 * integrating school commute data from the PCT package
 * build your own uptake model
-
-
-
