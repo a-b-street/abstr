@@ -57,7 +57,7 @@ To begin with, you need to install and load the necessary packages for this vign
 ```{r eval=FALSE}
 #### INSTALL PACKAGES ####
 cran_pkgs = c("abstr","pct","osmextract","sf","tidyverse")
-devtools::install_cran(cran_pkgs)
+remotes::install_cran(cran_pkgs)
 #### LOAD PACKAGES ####
 library(abstr)
 library(pct)
