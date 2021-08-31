@@ -233,7 +233,6 @@ This table is filtered to not include any `NA's` and is aggregated to only inclu
 exeter_osm_buildings_all_joined = exeter_osm_buildings_all %>%
   sf::st_join(exeter_zones)
 
-set.seed(2021)
 exeter_osm_buildings_sample = exeter_osm_buildings_all_joined %>%
   filter(!is.na(osm_way_id))
 
@@ -249,9 +248,10 @@ This means you need to rename mode columns for scenario generation.
 In order to make things easy, we can create a simple logic gate that renames our mode columns depending on the boolean value `go_active`.
 
 ```{r eval = FALSE}
+set.seed(2021) # for reproducible builds
 ####  LOGIC GATE ####
 # Logic gate for go_dutch scenario of change, where cycling levels increase to a proportion reflecting the Netherlands.
-#Switch to FALSE if you want census commuting OD
+# Switch to FALSE if you want census commuting OD
 go_dutch = TRUE
 if (go_dutch == TRUE) {
   exeter_od = exeter_commute_od %>%
@@ -291,11 +291,18 @@ output_sf = ab_scenario(
 ```
 
 To conclude you will need to generate a `JSON` format using the `ab_json()` function and then save the json file to your local machine using the `ab_save()` function.
+(You can download this [file](https://github.com/a-b-street/abstr/releases/download/6543bdc/dutch.json) from the repo's releases.)
 
 ```{r eval = FALSE}
 #### SAVE JSON FILE ####
-output_json = ab_json(output_sf, time_fun = ab_time_normal, scenario_name = "Exeter Example")
-ab_save(output_json, f = "../../Desktop/exeter.json")
+output_json = ab_json(output_sf, time_fun = ab_time_normal, scenario_name = "Go Dutch")
+ab_save(output_json, f = "dutch.json")
+```
+
+```{r, eval=FALSE, echo=FALSE}
+# Upload the json file for future reference
+piggyback::pb_upload("dutch.json")
+piggyback::pb_download_url("dutch.json")
 ```
 
 # Importing scenario files into A/B Street
