@@ -63,7 +63,7 @@ library(abstr)
 library(pct)
 library(osmextract)
 library(sf)
-library(tidyverse)
+library(dplyr)
 ```
 
 # Choosing a region
@@ -84,7 +84,8 @@ You can select a specific local authority of interest from those available in th
 You can check which are available in your region of interest as follows:
 
 ```{r}
-table(pct_regions_lookup$lad16nm[pct_regions_lookup$region_name == region_name])
+lookup = pct::pct_regions_lookup
+table(lookup$lad16nm[lookup$region_name == region_name])
 ```
 
 For the purposes of this article we will use Exeter as the case study:
