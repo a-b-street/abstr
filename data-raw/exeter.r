@@ -174,5 +174,5 @@ output_json = ab_json(output_sf, time_fun = ab_time_normal, scenario_name = "Exe
 ab_save(output_json, f = "../../Desktop/exeter.json")
 
 #### COMMANDS FOR AB STREET
-
-# $ cargo run --bin import_traffic -- --map=data/system/us/seattle/maps/montlake.bin --input=/C:Users/natha/OneDrive/Desktop/exeter.json
+# $ cargo run
+# $ cargo run --bin import_traffic -- --map=PATH/TO/MAP --input=/PATH/TO/JSON.json
