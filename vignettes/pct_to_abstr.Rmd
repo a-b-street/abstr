@@ -74,13 +74,28 @@ Secondly, commute data, which is gathered using the `get_pct_lines()` function a
 
 ```{r eval=FALSE}
 ####    READ DATA ####
-devon_zones = pct::get_pct_zones(region = "devon", geography = "msoa") # get zone data
+devon_zones = pct::get_pct_zones(region = region_name, geography = "msoa") # get zone data
 exeter_zones = devon_zones %>% filter(lad_name == "Exeter") %>% select(geo_code) # filter for exeter
 
-exeter_commute_od = pct::get_pct_lines(region = "devon", geography = "msoa") %>% # get commute od data
+exeter_commute_od = pct::get_pct_lines(region = region_name, geography = "msoa") %>% # get commute od data
   filter(lad_name1 == "Exeter" &
            lad_name2 == "Exeter") # filter for exeter
 ```
+
+# Choosing a region
+
+Data in the PCT for England and Wales is divided into regions, which can be seen here.
+
+```{r}
+pct::pct_regions$region_name
+```
+
+To run the example below, replace `devon` with a different region from the list above (warning, this may not work for large regions).
+
+```{r}
+region_name = "devon"
+```
+
 
 # Data Cleaning and Transformation
 
