@@ -68,7 +68,7 @@ library(tidyverse)
 
 ### Fetching PCT Data
 
-Next you want to fetch two types of PCT data. Firstly, zone data, which is gathered using the `get_pct_zones()` function and is filtered to only include a local authority of choice, in this example we use Exeter. Secondly, commute data, which is gathered using the `get_pct_lines()` function and is also filtered to only include trips within the local authority.
+Next you want to fetch two types of PCT data. Firstly, zone data, which is gathered using the `get_pct_zones()` function and is filtered to only include a local authority of choice, in this example we use Exeter. Secondly, commute data, which is gathered using the `get_pct_lines()` function and is also filtered to only include trips within the local authority. 
 
 ```{r eval=FALSE}
 ####    READ DATA ####
@@ -83,7 +83,8 @@ exeter_commute_od = pct::get_pct_lines(region = "devon", geography = "msoa") %>%
 
 ### Data Cleaning and Transformation
 
-Now you have your data, its time to clean and transform it. In fact, you only need to transform the `exeter_commute_od` dataframe as the `exeter_zones` is already in `abstr` format. The first step in cleaning the data requires renaming variables 
+Now you have your data, its time to clean and transform it. In fact, you only need to transform the `exeter_commute_od` dataframe as the `exeter_zones` is already in `abstr` format. The first step in cleaning the data requires renaming variables so that we can clearly see the difference between the base scenario and the scenario of change. Next, you calculate the euclidean distance of the origin-destination data which will then be used in the 
+
 ```{r eval=FALSE}
 exeter_commute_od = exeter_commute_od %>%
   mutate(cycle_base = bicycle) %>%
@@ -91,7 +92,6 @@ exeter_commute_od = exeter_commute_od %>%
   mutate(transit_base = bus + train_tube) %>% # bunch of renaming -_-
   mutate(drive_base = car_driver + car_passenger + motorbike + taxi_other) %>%
   mutate(all_base = all) %>%
-  mutate(euclidean_distance = as.numeric(sf::st_length(exeter_commute_od))) %>%
   mutate(
     # create new columns
     pcycle_godutch_uptake = pct::uptake_pct_godutch_2020(distance = rf_dist_km, gradient = rf_avslope_perc),
