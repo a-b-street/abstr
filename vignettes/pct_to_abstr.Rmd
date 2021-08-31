@@ -217,8 +217,8 @@ building_types = c(
   "sports_centre"
 )
 osm_buildings  = osm_polygons %>%
-  dplyr::filter(building %in% building_types) %>%
-  dplyr::select(osm_way_id, name, building)
+  filter(building %in% building_types) %>%
+  select(osm_way_id, name, building)
 
 osm_buildings_valid = osm_buildings[sf::st_is_valid(osm_buildings), ]
 
@@ -235,10 +235,10 @@ exeter_osm_buildings_all_joined = exeter_osm_buildings_all %>%
 
 set.seed(2021)
 exeter_osm_buildings_sample = exeter_osm_buildings_all_joined %>%
-  dplyr::filter(!is.na(osm_way_id))
+  filter(!is.na(osm_way_id))
 
 exeter_osm_buildings_tbl = exeter_osm_buildings_all %>%
-  dplyr::filter(osm_way_id %in% exeter_osm_buildings_sample$osm_way_id)
+  filter(osm_way_id %in% exeter_osm_buildings_sample$osm_way_id)
 ```
 
 # Using Abstr to Generate Scenarios
