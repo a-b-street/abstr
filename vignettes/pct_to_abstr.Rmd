@@ -40,32 +40,6 @@ In 2018 the beasty `stplanr` (sustainable transport planning) package and R jour
 
 Finally, on the R side, in 2021 the `od` package was released which provided functions for working with origin-destination data.
 A central focus in all of the packages and papers mentioned above is to provide open access transport tools to support data driven transport policies based on an objective and transparent evidence base.
-While these packages finish our open access transport model history, several other open access R packages enabled the creation of `abstr`.
-
-These include:
-
--   [jsonlite](https://cran.r-project.org/web/packages/jsonlite/index.html) for awesome JSON parsing and generation
--   [magrittr](https://cran.r-project.org/web/packages/magrittr/index.html) for magic `%>%` pipe-command chaining
--   [sf](https://cran.r-project.org/web/packages/sf/index.html) for simple feature support
--   [tibble](https://cran.r-project.org/web/packages/tibble/index.html) for strict data-frame declaration
--   [tidyr](https://cran.r-project.org/web/packages/tidyr/index.html) for all things data cleaning
-
-
-## Getting started
-
-In order to import scenario files into A/B Street, you will need to:
-
--   Install a stable version of [Rstudio and R](https://www.rstudio.com/products/rstudio/)
-
--   Install a stable version of [Rust](https://www.rust-lang.org/tools/install)
-
-    -   On Windows, you will also need [Visual Code Studio](https://code.visualstudio.com/) and [Visual Studio c++ build tools](https://visualstudio.microsoft.com/downloads/) prior to installing Rust.
-
--   On Linux, run `sudo apt-get install libasound2-dev libxcb-shape0-dev libxcb-xfixes0-dev libpango1.0-dev libgtk-3-dev` or the equivalent for your distribution.
-
--   Download the A/B Street repo `git clone https://github.com/a-b-street/abstreet.git`
-
--   Fetch the minimal amount of data needed to get started `cargo run --bin updater -- --minimal`
 
 Given you have all of the above, you are ready to start transforming data-frames into simulations!
 So lets set an aim for the vignette
