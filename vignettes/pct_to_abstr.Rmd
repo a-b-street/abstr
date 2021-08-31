@@ -18,7 +18,9 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-The `abstr` package was originally developed as part of the Active Travel Orientated Development paper by Talbolt et al. (2021): this study assessed the active travel prevision of new and proposed housing development sites in England and Wales.
+The `abstr` package was originally developed as part of the ActDev project which aims to provide evidence on active travel provision and potential in and around planned and proposed development sites.
+<!-- Todo: cite  -->
+<!-- the Active Travel Orientated Development paper by Talbot et al. (2021): this study assessed the active travel prevision of new and proposed housing development sites in England and Wales. -->
 The [ActDev]() website, which visualizes all 38 sites used in the study, is fueled by a reproducible R [project](https://github.com/cyipt/actdev/tree/main/code) which was the basis for creation of `abstr`.
 To understand the methods and motivations behind `abstr`, one must become familiar with the history and ecosystem of open access transport models built in R.
 The history begins in 2017 with The Propensity to Cycle Tool (PCT), an open source transport planning system for England and Wales.
