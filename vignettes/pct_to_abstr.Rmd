@@ -50,6 +50,7 @@ These include:
 -   [tibble](https://cran.r-project.org/web/packages/tibble/index.html) for strict data-frame declaration
 -   [tidyr](https://cran.r-project.org/web/packages/tidyr/index.html) for all things data cleaning
 
+
 ## Getting started
 
 In order to import scenario files into A/B Street, you will need to:
@@ -77,6 +78,16 @@ So lets set an aim for the vignette
 ####
 ####
 ```
+
+While the PCT is a powerful and popular tool for strategic cycleway planning it has some key limitations that are addressed by A/B Street:
+
+- The PCT only provides data on scenarios of behaviour change, providing little for people who want to visualise and explore scenarios of infrastructure change
+- The PCT does not allow the user to edit the road network to help design the pro-cycling and traffic-reducing interventions that are needed to enable more people to cycle safely
+- It does not provide evidence at high zoom levels, being designed for strategic planning
+<!-- - Any others (TODO) -->
+
+This vignette aims to demonstrate how data from the PCT, which provides evidence-based visions of how cycling could become the natural choice for urban travel, can be visualised in A/B Street to overcome the limitations outlined above.
+The first stage is to install the necessary packages (see the [`abstr`](https://a-b-street.github.io/abstr/articles/abstr.html) vignette for a detailed introduction to software requirements).
 
 ### Installing and Loading Packages
 
