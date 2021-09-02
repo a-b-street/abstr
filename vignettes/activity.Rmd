@@ -85,6 +85,7 @@ od = tibble::tribble(
 od_sf = od::od_to_sf(od, places_sf)
 plot(od_sf["departure"], reset = FALSE, key.pos = 1, lwd = 6:2)
 plot(places_sf$geometry, pch = places$name, add = TRUE, cex =2)
+mapview::mapview(od_sf["departure"])
 ```
 
 ```{r, eval=FALSE}
@@ -102,9 +103,9 @@ departure_times = c(
   17
 )
 od_sf$departure = ab_time_normal(hr = departure_times, sd = 0.15, n = length(departure_times))
-od_json1 = abstr::ab_json(desire_lines_out = od_sf[1, ], scenario_name = "activity")
-od_json2 = abstr::ab_json(desire_lines_out = od_sf[1:2, ], scenario_name = "activity")
-od_json = abstr::ab_json(desire_lines_out = od_sf, scenario_name = "activity")
+od_json1 = ab_json(desire_lines_out = od_sf[1, ], scenario_name = "activity")
+od_json2 = ab_json(desire_lines_out = od_sf[1:2, ], scenario_name = "activity")
+od_json = ab_json(desire_lines_out = od_sf, scenario_name = "activity")
 ```
 
 ```{r, results='asis'}
