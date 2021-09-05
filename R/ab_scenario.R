@@ -290,3 +290,5 @@ match_scenario_mode = function(cnames, scenario = "base", mode = "Walk") {
   # todo: add warning message if there's more than 1 (RL 2020-02-10)?
   cname_matching
 }
+
+globalVariables(names = c("origin", "destination"))
