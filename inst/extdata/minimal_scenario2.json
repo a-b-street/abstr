@@ -1,5 +1,5 @@
 {
-  "scenario_name": "monday",
+  "scenario_name": "minimal2",
   "people": [
     {
       "trips": [
@@ -55,7 +55,7 @@
               "latitude": 47.6388600
         }
           },
-          "mode": "Bike",
+          "mode": "Walk",
           "purpose": "Meal"
         },
         {
@@ -72,8 +72,8 @@
               "latitude": 47.6404773
         }
           },
-          "mode": "Walk",
-          "purpose": "Recreation"
+          "mode": "Bike",
+          "purpose": "Work"
         }
       ]
     }
