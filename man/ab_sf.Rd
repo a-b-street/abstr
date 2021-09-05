@@ -4,10 +4,10 @@
 \alias{ab_sf}
 \title{Convert JSON representation of trips from A/B Street into an 'sf' object}
 \usage{
-ab_sf(json_df)
+ab_sf(json)
 }
 \arguments{
-\item{json_df}{Character string or list representing a JSON file or list that
+\item{json}{Character string or list representing a JSON file or list that
 has been read into R and converted to a data frame.}
 }
 \value{
@@ -25,9 +25,9 @@ to represent seconds, which are easier to work with that 10,000th of
 a second units.
 }
 \examples{
-file_name = system.file("extdata/minimal_scenario.json", package = "abstr")
-json_df = jsonlite::read_json(file_name, simplifyVector = TRUE)
-ab_sf(json_df)
+file_name = system.file("extdata/minimal_scenario2.json", package = "abstr")
+json = jsonlite::read_json(file_name, simplifyVector = TRUE)
+ab_sf(json)
 ab_sf(file_name)
-json_df = jsonlite::read_json("inst/extdata/minimal_scenario2.json", simplifyVector = TRUE)
+json = jsonlite::read_json("inst/extdata/minimal_scenario2.json", simplifyVector = TRUE)
 }

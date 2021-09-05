@@ -218,7 +218,7 @@ ab_json = function(
 #' @return An `sf` data frame
 #' @export
 #' @examples
-#' file_name = system.file("extdata/minimal_scenario.json", package = "abstr")
+#' file_name = system.file("extdata/minimal_scenario2.json", package = "abstr")
 #' json = jsonlite::read_json(file_name, simplifyVector = TRUE)
 #' ab_sf(json)
 #' ab_sf(file_name)
