@@ -230,7 +230,7 @@ ab_sf = function(
     json = jsonlite::read_json(json, simplifyVector = TRUE)
   }
 
-  trip_data = dplyr::bind_rows(json$people$trips, .id = "id")
+  trip_data = dplyr::bind_rows(json$people$trips, .id = "person")
   linestrings = od::odc_to_sfc(cbind(
     trip_data$origin$Position$longitude,
     trip_data$origin$Position$latitude,
