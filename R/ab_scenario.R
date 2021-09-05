@@ -230,29 +230,6 @@ ab_json = function(
     )
   } )
 
-  # Old approach for comparison. Todo: delete.
-  # trips = lapply(seq(nrow(desire_lines_out)), function(i) {
-  #   Position_origin = data.frame(
-  #     longitude = start_points[i, "X"],
-  #     latitude = start_points[i, "Y"]
-  #   )
-  #   Position_destination = data.frame(
-  #     longitude = end_points[i, "X"],
-  #     latitude = end_points[i, "Y"]
-  #   )
-  #   origin = tibble::tibble(Position = Position_origin)
-  #   destination = tibble::tibble(Position = Position_destination)
-  #   tibble::tibble(
-  #     departure = desire_lines_out$departure[i],
-  #     origin = origin,
-  #     destination = destination,
-  #     mode = desire_lines_out[[mode_column]][i],
-  #     purpose = "Shopping"
-  #   )
-  # })
-  #
-  # people = tibble::tibble(trips)
-
   if(is.null(scenario_name)) {
     scenario_name = gsub(pattern = "mode_", replacement = "", x = mode_column)
   }
