@@ -298,8 +298,9 @@ ab_sf = function(
     sf_data,
     geometry = linestrings
   )
+  # Give departure time more user friendly units:
+  sf_linestring$departure = sf_linestring$departure / 10000
   sf_linestring
-
 }
 
 
