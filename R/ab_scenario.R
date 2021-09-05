@@ -252,7 +252,13 @@ ab_json = function(
 #' @param json Character string or list representing a JSON file or list that
 #'   has been read into R and converted to a data frame.
 #'
-#' @return An `sf` data frame
+#' @return An `sf` data frame representing travel behaviour scenarios
+#'   from, and which can be fed into, A/B Street. Contains the following
+#'   columns: person (the ID of each agent in the simulation),
+#'   departure (seconds after midnight of the travel starting),
+#'   mode (the mode of transport, being `Walk`, `Bike`, `Transit` and `Drive`),
+#'   purpose (what the trip was for, e.g. `Work`), and
+#'   geometry (a linestring showing the start and end point of the trip/stage).
 #' @export
 #' @examples
 #' file_name = system.file("extdata/minimal_scenario2.json", package = "abstr")

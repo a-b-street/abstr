@@ -11,7 +11,13 @@ ab_sf(json)
 has been read into R and converted to a data frame.}
 }
 \value{
-An \code{sf} data frame
+An \code{sf} data frame representing travel behaviour scenarios
+from, and which can be fed into, A/B Street. Contains the following
+columns: person (the ID of each agent in the simulation),
+departure (seconds after midnight of the travel starting),
+mode (the mode of transport, being \code{Walk}, \code{Bike}, \code{Transit} and \code{Drive}),
+purpose (what the trip was for, e.g. \code{Work}), and
+geometry (a linestring showing the start and end point of the trip/stage).
 }
 \description{
 This function takes a path to a JSON file representing an A/B Street
