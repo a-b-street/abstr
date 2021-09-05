@@ -182,8 +182,12 @@ ab_json = function(
   }
 
   # Do not multiply by 10k if the maximum number is already greater than 7 days
-  if(!max(desire_lines_out$departure) > 7 * 24 * 60 * 60) {
-    desire_lines_out$departure = desire_lines_out$departure * 10000
+  if(max(desire_lines_out$departure) > 7 * 24 * 60 * 60) {
+    stop(
+      "Values greater than 604800 found in the input for departure timesT Try:\n",
+      "desire_lines_out$departure = desire_lines_out$departure / 10000 \n",
+      "if the original input was in 10,000th of a second (used internally by A/B Street)"
+      )
   }
 
   start_points = lwgeom::st_startpoint(desire_lines_out) %>% sf::st_coordinates()
