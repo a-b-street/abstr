@@ -201,6 +201,54 @@ ab_json = function(
   json_r
 }
 
+#' Convert JSON representation of trips from A/B Street into an 'sf' object
+#'
+#' This function takes a path to a JSON file representing an A/B Street
+#' scenario, or an R representation of the JSON in a list, and returns
+#' an `sf` object with the same structure as objects returned by
+#' [ab_scenario()].
+#'
+#' Note: the departure time in seconds is divided by 10000 on conversion
+#' to represent seconds, which are easier to work with that 10,000th of
+#' a second units.
+#'
+#' @param json Character string or list representing a JSON file or list that
+#'   has been read into R and converted to a data frame.
+#'
+#' @return An `sf` data frame
+#' @export
+#' @examples
+#' file_name = system.file("extdata/minimal_scenario.json", package = "abstr")
+#' json = jsonlite::read_json(file_name, simplifyVector = TRUE)
+#' ab_sf(json)
+#' ab_sf(file_name)
+#' json = jsonlite::read_json("inst/extdata/minimal_scenario2.json", simplifyVector = TRUE)
+ab_sf = function(
+  json
+) {
+
+  if(is.character(json))  {
+    json = jsonlite::read_json(json, simplifyVector = TRUE)
+  }
+
+  trip_data = dplyr::bind_rows(json$people$trips, .id = "id")
+  linestrings = od::odc_to_sfc(cbind(
+    trip_data$origin$Position$longitude,
+    trip_data$origin$Position$latitude,
+    trip_data$destination$Position$longitude,
+    trip_data$destination$Position$latitude
+  ))
+  sf_data = subset(trip_data, select = -c(origin, destination))
+  sf_linestring = sf::st_sf(
+    sf_data,
+    geometry = linestrings
+  )
+  sf_linestring
+
+}
+
+
+
 #' Save OD data as JSON files for import into A/B Street
 #'
 #' @return A JSON file containing scenarios from ab_scenario()
