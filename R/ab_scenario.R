@@ -163,7 +163,7 @@ ab_json = function(
   }
 
   # Do not multiply by 10k if the maximum number is already greater than 7 days
-  if(!max(desire_lines$departure) > 7 * 24 * 60 * 60) {
+  if(!max(desire_lines_out$departure) > 7 * 24 * 60 * 60) {
     desire_lines_out$departure = desire_lines_out$departure * 10000
   }
 
