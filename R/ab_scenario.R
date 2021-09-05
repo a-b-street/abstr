@@ -161,7 +161,11 @@ ab_json = function(
   if(is.null(desire_lines_out$departure)) {
     desire_lines_out$departure = time_fun(n = n, ...)
   }
-  desire_lines_out$departure = desire_lines_out$departure * 10000.0
+
+  # Do not multiply by 10k if the maximum number is already greater than 7 days
+  if(!max(desire_lines$departure) > 7 * 24 * 60 * 60) {
+    desire_lines_out$departure = desire_lines_out$departure * 10000
+  }
 
   start_points = lwgeom::st_startpoint(desire_lines_out) %>% sf::st_coordinates()
   end_points = lwgeom::st_endpoint(desire_lines_out) %>% sf::st_coordinates()
