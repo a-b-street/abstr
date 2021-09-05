@@ -85,7 +85,7 @@ od = tibble::tribble(
 od_sf = od::od_to_sf(od, places_sf)
 plot(od_sf["departure"], reset = FALSE, key.pos = 1, lwd = 6:2)
 plot(places_sf$geometry, pch = places$name, add = TRUE, cex =2)
-mapview::mapview(od_sf["departure"])
+# mapview::mapview(od_sf["departure"])
 ```
 
 ```{r, eval=FALSE}
@@ -152,66 +152,3 @@ What do the first 2 trips look like?
 ab_save(od_json2, "scenario2.json")
 # file.edit("scenario2.json")
 ```
-
-```json
-{
-  "scenario_name": "activity",
-  "people": [
-    {
-      "trips": [
-        {
-          "departure": 304770000,
-          "origin": {
-            "Position": {
-              "longitude": -1.524,
-              "latitude": 53.819
-            }
-          },
-          "destination": {
-            "Position": {
-              "longitude": -1.552,
-              "latitude": 53.807
-            }
-          },
-          "mode": "Bike",
-          "purpose": "Shopping"
-        }
-      ]
-    },
-    {
-      "trips": [
-        {
-          "departure": 415890000,
-          "origin": {
-            "Position": {
-              "longitude": -1.552,
-              "latitude": 53.807
-            }
-          },
-          "destination": {
-            "Position": {
-              "longitude": -1.56,
-              "latitude": 53.812
-            }
-          },
-          "mode": "Walk",
-          "purpose": "Shopping"
-        }
-      ]
-    }
-  ]
-}
-
-```
-
-
-```{r}
-# ab_json2(desire_lines_out = od_sf, scenario_name = "activity")
-```
-
-
-
-
-
-
-
