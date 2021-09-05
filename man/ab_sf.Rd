@@ -26,8 +26,7 @@ a second units.
 }
 \examples{
 file_name = system.file("extdata/minimal_scenario2.json", package = "abstr")
+ab_sf(file_name)
 json = jsonlite::read_json(file_name, simplifyVector = TRUE)
 ab_sf(json)
-ab_sf(file_name)
-json = jsonlite::read_json("inst/extdata/minimal_scenario2.json", simplifyVector = TRUE)
 }
