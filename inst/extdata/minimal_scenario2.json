@@ -1,0 +1,81 @@
+{
+  "scenario_name": "minimal2",
+  "people": [
+    {
+      "trips": [
+        {
+          "departure": 1000,
+          "origin": {
+            "Position": {
+              "longitude": -122.303723,
+              "latitude": 47.6372834
+            }
+          },
+          "destination": {
+            "Position": {
+             "longitude": -122.3190500,
+              "latitude": 47.6378600
+        }
+          },
+          "mode": "Bike",
+          "purpose": "Meal"
+        },
+        {
+          "departure": 10000000,
+          "origin": {
+            "Position": {
+             "longitude": -122.3190500,
+              "latitude": 47.6378600
+        }
+          },
+          "destination": {
+            "Position": {
+              "longitude": -122.3075948,
+              "latitude": 47.6394773
+        }
+          },
+          "mode": "Walk",
+          "purpose": "Recreation"
+        }
+      ]
+    },
+    {
+      "trips": [
+        {
+          "departure": 11000,
+          "origin": {
+            "Position": {
+              "longitude": -122.303723,
+              "latitude": 47.6382834
+            }
+          },
+          "destination": {
+            "Position": {
+             "longitude": -122.3190500,
+              "latitude": 47.6388600
+        }
+          },
+          "mode": "Walk",
+          "purpose": "Meal"
+        },
+        {
+          "departure": 10010000,
+          "origin": {
+            "Position": {
+             "longitude": -122.3190500,
+              "latitude": 47.6388600
+        }
+          },
+          "destination": {
+            "Position": {
+              "longitude": -122.3075948,
+              "latitude": 47.6404773
+        }
+          },
+          "mode": "Bike",
+          "purpose": "Work"
+        }
+      ]
+    }
+  ]
+}

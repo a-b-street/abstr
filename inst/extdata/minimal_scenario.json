@@ -1,0 +1,43 @@
+{
+  "scenario_name": "minimal",
+  "people": [
+    {
+      "trips": [
+        {
+          "departure": 10000,
+          "origin": {
+            "Position": {
+              "longitude": -122.303723,
+              "latitude": 47.6372834
+            }
+          },
+          "destination": {
+            "Position": {
+             "longitude": -122.3190500,
+              "latitude": 47.6378600
+        }
+          },
+          "mode": "Bike",
+          "purpose": "Meal"
+        },
+        {
+          "departure": 12000000,
+          "origin": {
+            "Position": {
+             "longitude": -122.3190500,
+              "latitude": 47.6378600
+        }
+          },
+          "destination": {
+            "Position": {
+              "longitude": -122.3075948,
+              "latitude": 47.6394773
+        }
+          },
+          "mode": "Walk",
+          "purpose": "Recreation"
+        }
+      ]
+    }
+  ]
+}

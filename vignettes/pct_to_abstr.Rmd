@@ -359,7 +359,13 @@ Change this to the first option to "Go Dutch", or whatever you called the scenar
 <!-- In any case,  -->
 After selecting your scenario, you should see something like this, a Go Dutch scenario of cycling taking place before your eyes, making the OD data frames come to life in a real time simulation!
 
-![](https://user-images.githubusercontent.com/1825120/131586989-6ac002e0-55b0-4124-817e-4fa999421100.gif)
+<!-- https://github.com/a-b-street/abstr/issues/67 -->
+<!-- Large gif -->
+<!-- ![](https://user-images.githubusercontent.com/1825120/131586989-6ac002e0-55b0-4124-817e-4fa999421100.gif) -->
+
+<!-- Small gif -->
+![](https://user-images.githubusercontent.com/1825120/132119415-0bdf5289-9ff2-4dfb-953e-39bcb2ac7765.gif)
+
 
 Then let your eyes wonder on the simulation you have created and let your imagination explore the possibilities of transforming your local area into an active travel utopia.
 

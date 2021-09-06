@@ -8,7 +8,8 @@ ab_json(
   desire_lines_out,
   mode_column = NULL,
   time_fun = ab_time_normal,
-  scenario_name,
+  scenario_name = "test",
+  default_purpose = "Work",
   ...
 )
 }
@@ -22,7 +23,14 @@ the mode of transport. \code{"mode_baseline"} by default.}
 \item{time_fun}{The function used to calculate departure times.
 \code{ab_time_normal()} by default.}
 
-\item{scenario_name}{The name of the scenario to appear in A/B Street}
+\item{scenario_name}{The name of the scenario to appear in A/B Street.
+The default value is \code{"test"}, which generates a message to tell you to
+think of a more imaginative scenario name!}
+
+\item{default_purpose}{In case a \code{purpose} column is not present in the input,
+or there are missing values in the \code{purpose} column, this argument sets
+the default, fallback purpose, as \code{"Work"} by default, reflecting the
+prevalence of work-based data and thinking in transport models.}
 
 \item{...}{Additional arguments to pass to \code{\link[=ab_json]{ab_json()}}}
 }
@@ -38,6 +46,7 @@ Note: the departure time in seconds is multiplied by 10000 on conversion
 to a .json list object for compatibility with the A/B Street schema.
 }
 \examples{
+# Starting with tabular data
 od = leeds_od
 od[[1]] = c("E02006876")
 zones = leeds_zones
@@ -47,4 +56,11 @@ ab_list$scenario
 f = tempfile(fileext = ".json")
 ab_save(ab_list, f)
 readLines(f)[1:30]
+
+# Starting with JSON data from A/B Street (multiple trips per person)
+f = system.file("extdata/minimal_scenario2.json", package = "abstr")
+desire_lines_out = ab_sf(f)
+desire_lines_out
+json_list = ab_json(desire_lines_out)
+json_list
 }
