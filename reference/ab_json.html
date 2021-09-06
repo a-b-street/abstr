@@ -99,6 +99,9 @@ can be saved as a JSON file for import into A/B Street." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/activity.html">Multi-trip activity models</a>
+    </li>
+    <li>
       <a href="../articles/montlake.html">Reproducing Montlake Eastside Seattle, US</a>
     </li>
     <li>
@@ -144,7 +147,8 @@ can be saved as a JSON file for import into A/B Street.</p>
   <span class='va'>desire_lines_out</span>,
   mode_column <span class='op'>=</span> <span class='cn'>NULL</span>,
   time_fun <span class='op'>=</span> <span class='va'>ab_time_normal</span>,
-  <span class='va'>scenario_name</span>,
+  scenario_name <span class='op'>=</span> <span class='st'>"test"</span>,
+  default_purpose <span class='op'>=</span> <span class='st'>"Work"</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
@@ -168,7 +172,16 @@ the mode of transport. <code>"mode_baseline"</code> by default.</p></td>
     </tr>
     <tr>
       <th>scenario_name</th>
-      <td><p>The name of the scenario to appear in A/B Street</p></td>
+      <td><p>The name of the scenario to appear in A/B Street.
+The default value is <code>"test"</code>, which generates a message to tell you to
+think of a more imaginative scenario name!</p></td>
+    </tr>
+    <tr>
+      <th>default_purpose</th>
+      <td><p>In case a <code>purpose</code> column is not present in the input,
+or there are missing values in the <code>purpose</code> column, this argument sets
+the default, fallback purpose, as <code>"Work"</code> by default, reflecting the
+prevalence of work-based data and thinking in transport models.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -185,12 +198,13 @@ the mode of transport. <code>"mode_baseline"</code> by default.</p></td>
 to a .json list object for compatibility with the A/B Street schema.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>od</span> <span class='op'>=</span> <span class='va'>leeds_od</span>
+    <pre class="examples"><div class='input'><span class='co'># Starting with tabular data</span>
+<span class='va'>od</span> <span class='op'>=</span> <span class='va'>leeds_od</span>
 <span class='va'>od</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"E02006876"</span><span class='op'>)</span>
 <span class='va'>zones</span> <span class='op'>=</span> <span class='va'>leeds_zones</span>
 <span class='va'>ablines</span> <span class='op'>=</span> <span class='fu'><a href='ab_scenario.html'>ab_scenario</a></span><span class='op'>(</span><span class='va'>od</span>, zones <span class='op'>=</span> <span class='va'>zones</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>0 origins with no match in zone ids</span></div><div class='output co'>#&gt; <span class='message'>0 destinations with no match in zone ids</span></div><div class='output co'>#&gt; <span class='message'> points not in od data removed.</span></div><div class='output co'>#&gt; <span class='message'>Linking to GEOS 3.8.1, GDAL 3.2.1, PROJ 7.2.1</span></div><div class='input'><span class='va'>ab_list</span> <span class='op'>=</span> <span class='fu'>ab_json</span><span class='op'>(</span><span class='va'>ablines</span>, mode_column <span class='op'>=</span> <span class='st'>"mode"</span>, scenario_name <span class='op'>=</span> <span class='st'>"test"</span><span class='op'>)</span>
-<span class='va'>ab_list</span><span class='op'>$</span><span class='va'>scenario</span>
+</div><div class='output co'>#&gt; <span class='message'>Default scenario name of 'test' used.</span></div><div class='input'><span class='va'>ab_list</span><span class='op'>$</span><span class='va'>scenario</span>
 </div><div class='output co'>#&gt; [1] "test"</div><div class='input'><span class='va'>f</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span><span class='op'>(</span>fileext <span class='op'>=</span> <span class='st'>".json"</span><span class='op'>)</span>
 <span class='fu'><a href='ab_save.html'>ab_save</a></span><span class='op'>(</span><span class='va'>ab_list</span>, <span class='va'>f</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/readLines.html'>readLines</a></span><span class='op'>(</span><span class='va'>f</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>30</span><span class='op'>]</span>
@@ -200,7 +214,7 @@ to a .json list object for compatibility with the A/B Street schema.</p>
 #&gt;  [4] "    {"                                
 #&gt;  [5] "      \"trips\": ["                   
 #&gt;  [6] "        {"                            
-#&gt;  [7] "          \"departure\": 316860000,"  
+#&gt;  [7] "          \"departure\": 31686,"      
 #&gt;  [8] "          \"origin\": {"              
 #&gt;  [9] "            \"Position\": {"          
 #&gt; [10] "              \"longitude\": -1.5142,"
@@ -214,16 +228,168 @@ to a .json list object for compatibility with the A/B Street schema.</p>
 #&gt; [18] "            }"                        
 #&gt; [19] "          },"                         
 #&gt; [20] "          \"mode\": \"Walk\","        
-#&gt; [21] "          \"purpose\": \"Shopping\""  
+#&gt; [21] "          \"purpose\": \"Work\""      
 #&gt; [22] "        }"                            
 #&gt; [23] "      ]"                              
 #&gt; [24] "    },"                               
 #&gt; [25] "    {"                                
 #&gt; [26] "      \"trips\": ["                   
 #&gt; [27] "        {"                            
-#&gt; [28] "          \"departure\": 301270000,"  
+#&gt; [28] "          \"departure\": 30127,"      
 #&gt; [29] "          \"origin\": {"              
-#&gt; [30] "            \"Position\": {"          </div></pre>
+#&gt; [30] "            \"Position\": {"          </div><div class='input'>
+<span class='co'># Starting with JSON data from A/B Street (multiple trips per person)</span>
+<span class='va'>f</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata/minimal_scenario2.json"</span>, package <span class='op'>=</span> <span class='st'>"abstr"</span><span class='op'>)</span>
+<span class='va'>desire_lines_out</span> <span class='op'>=</span> <span class='fu'><a href='ab_sf.html'>ab_sf</a></span><span class='op'>(</span><span class='va'>f</span><span class='op'>)</span>
+<span class='va'>desire_lines_out</span>
+</div><div class='output co'>#&gt; Simple feature collection with 4 features and 4 fields
+#&gt; Geometry type: LINESTRING
+#&gt; Dimension:     XY
+#&gt; Bounding box:  xmin: -122.319 ymin: 47.63728 xmax: -122.3037 ymax: 47.64048
+#&gt; CRS:           NA
+#&gt;   person departure mode    purpose                       geometry
+#&gt; 1      1       0.1 Bike       Meal LINESTRING (-122.3037 47.63...
+#&gt; 2      1    1000.0 Walk Recreation LINESTRING (-122.3191 47.63...
+#&gt; 3      2       1.1 Walk       Meal LINESTRING (-122.3037 47.63...
+#&gt; 4      2    1001.0 Bike       Work LINESTRING (-122.3191 47.63...</div><div class='input'><span class='va'>json_list</span> <span class='op'>=</span> <span class='fu'>ab_json</span><span class='op'>(</span><span class='va'>desire_lines_out</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Default scenario name of 'test' used.</span></div><div class='input'><span class='va'>json_list</span>
+</div><div class='output co'>#&gt; $scenario_name
+#&gt; [1] "test"
+#&gt; 
+#&gt; $people
+#&gt; $people[[1]]
+#&gt; $people[[1]]$trips
+#&gt; $people[[1]]$trips[[1]]
+#&gt; $people[[1]]$trips[[1]]$departure
+#&gt; [1] 0.1
+#&gt; 
+#&gt; $people[[1]]$trips[[1]]$origin
+#&gt; $people[[1]]$trips[[1]]$origin$Position
+#&gt; $people[[1]]$trips[[1]]$origin$Position$longitude
+#&gt; [1] -122.3037
+#&gt; 
+#&gt; $people[[1]]$trips[[1]]$origin$Position$latitude
+#&gt; [1] 47.63728
+#&gt; 
+#&gt; 
+#&gt; 
+#&gt; $people[[1]]$trips[[1]]$destination
+#&gt; $people[[1]]$trips[[1]]$destination$Position
+#&gt; $people[[1]]$trips[[1]]$destination$Position$longitude
+#&gt; [1] -122.3191
+#&gt; 
+#&gt; $people[[1]]$trips[[1]]$destination$Position$latitude
+#&gt; [1] 47.63786
+#&gt; 
+#&gt; 
+#&gt; 
+#&gt; $people[[1]]$trips[[1]]$mode
+#&gt; [1] "Bike"
+#&gt; 
+#&gt; $people[[1]]$trips[[1]]$purpose
+#&gt; [1] "Meal"
+#&gt; 
+#&gt; 
+#&gt; $people[[1]]$trips[[2]]
+#&gt; $people[[1]]$trips[[2]]$departure
+#&gt; [1] 1000
+#&gt; 
+#&gt; $people[[1]]$trips[[2]]$origin
+#&gt; $people[[1]]$trips[[2]]$origin$Position
+#&gt; $people[[1]]$trips[[2]]$origin$Position$longitude
+#&gt; [1] -122.3191
+#&gt; 
+#&gt; $people[[1]]$trips[[2]]$origin$Position$latitude
+#&gt; [1] 47.63786
+#&gt; 
+#&gt; 
+#&gt; 
+#&gt; $people[[1]]$trips[[2]]$destination
+#&gt; $people[[1]]$trips[[2]]$destination$Position
+#&gt; $people[[1]]$trips[[2]]$destination$Position$longitude
+#&gt; [1] -122.3076
+#&gt; 
+#&gt; $people[[1]]$trips[[2]]$destination$Position$latitude
+#&gt; [1] 47.63948
+#&gt; 
+#&gt; 
+#&gt; 
+#&gt; $people[[1]]$trips[[2]]$mode
+#&gt; [1] "Walk"
+#&gt; 
+#&gt; $people[[1]]$trips[[2]]$purpose
+#&gt; [1] "Recreation"
+#&gt; 
+#&gt; 
+#&gt; 
+#&gt; 
+#&gt; $people[[2]]
+#&gt; $people[[2]]$trips
+#&gt; $people[[2]]$trips[[1]]
+#&gt; $people[[2]]$trips[[1]]$departure
+#&gt; [1] 1.1
+#&gt; 
+#&gt; $people[[2]]$trips[[1]]$origin
+#&gt; $people[[2]]$trips[[1]]$origin$Position
+#&gt; $people[[2]]$trips[[1]]$origin$Position$longitude
+#&gt; [1] -122.3037
+#&gt; 
+#&gt; $people[[2]]$trips[[1]]$origin$Position$latitude
+#&gt; [1] 47.63828
+#&gt; 
+#&gt; 
+#&gt; 
+#&gt; $people[[2]]$trips[[1]]$destination
+#&gt; $people[[2]]$trips[[1]]$destination$Position
+#&gt; $people[[2]]$trips[[1]]$destination$Position$longitude
+#&gt; [1] -122.3191
+#&gt; 
+#&gt; $people[[2]]$trips[[1]]$destination$Position$latitude
+#&gt; [1] 47.63886
+#&gt; 
+#&gt; 
+#&gt; 
+#&gt; $people[[2]]$trips[[1]]$mode
+#&gt; [1] "Walk"
+#&gt; 
+#&gt; $people[[2]]$trips[[1]]$purpose
+#&gt; [1] "Meal"
+#&gt; 
+#&gt; 
+#&gt; $people[[2]]$trips[[2]]
+#&gt; $people[[2]]$trips[[2]]$departure
+#&gt; [1] 1001
+#&gt; 
+#&gt; $people[[2]]$trips[[2]]$origin
+#&gt; $people[[2]]$trips[[2]]$origin$Position
+#&gt; $people[[2]]$trips[[2]]$origin$Position$longitude
+#&gt; [1] -122.3191
+#&gt; 
+#&gt; $people[[2]]$trips[[2]]$origin$Position$latitude
+#&gt; [1] 47.63886
+#&gt; 
+#&gt; 
+#&gt; 
+#&gt; $people[[2]]$trips[[2]]$destination
+#&gt; $people[[2]]$trips[[2]]$destination$Position
+#&gt; $people[[2]]$trips[[2]]$destination$Position$longitude
+#&gt; [1] -122.3076
+#&gt; 
+#&gt; $people[[2]]$trips[[2]]$destination$Position$latitude
+#&gt; [1] 47.64048
+#&gt; 
+#&gt; 
+#&gt; 
+#&gt; $people[[2]]$trips[[2]]$mode
+#&gt; [1] "Bike"
+#&gt; 
+#&gt; $people[[2]]$trips[[2]]$purpose
+#&gt; [1] "Work"
+#&gt; 
+#&gt; 
+#&gt; 
+#&gt; 
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

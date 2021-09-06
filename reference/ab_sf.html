@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Changelog • abstr</title>
+<title>Convert JSON representation of trips from A/B Street into an 'sf' object — ab_sf • abstr</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,11 @@
 
 
 
-<meta property="og:title" content="Changelog" />
+<meta property="og:title" content="Convert JSON representation of trips from A/B Street into an 'sf' object — ab_sf" />
+<meta property="og:description" content="This function takes a path to a JSON file representing an A/B Street
+scenario, or an R representation of the JSON in a list, and returns
+an sf object with the same structure as objects returned by
+ab_scenario()." />
 
 
 
@@ -58,7 +62,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-news">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -131,44 +135,75 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1 data-toc-skip>Changelog <small></small></h1>
-      <small>Source: <a href='https://github.com/a-b-street/abstr/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
+    <h1>Convert JSON representation of trips from A/B Street into an 'sf' object</h1>
+    <small class="dont-index">Source: <a href='https://github.com/a-b-street/abstr/blob/master/R/ab_scenario.R'><code>R/ab_scenario.R</code></a></small>
+    <div class="hidden name"><code>ab_sf.Rd</code></div>
     </div>
 
-    <div id="abstr-development-version" class="section level1">
-<h1 class="page-header" data-toc-text="development version">
-<a href="#abstr-development-version" class="anchor"></a>abstr (development version)<small> Unreleased </small>
-</h1>
-</div>
-    <div id="abstr-030" class="section level1">
-<h1 class="page-header" data-toc-text="0.3.0">
-<a href="#abstr-030" class="anchor"></a>abstr 0.3.0<small> 2021-08-19 </small>
-</h1>
-<ul>
-<li>New Vignette to reproduce the datasets based on the Montlake area in Seattle</li>
-<li>Add cran-comments.md file to track cran submissions</li>
-<li>Remove commented examples (<a href='https://github.com/a-b-street/abstr/issues/53'>#53</a>)</li>
-<li>Update maintainer roles</li>
-</ul>
-</div>
-    <div id="abstr-021" class="section level1">
-<h1 class="page-header" data-toc-text="0.2.1">
-<a href="#abstr-021" class="anchor"></a>abstr 0.2.1<small> Unreleased </small>
-</h1>
-<ul>
-<li>Added a <code>NEWS.md</code> file to track changes to the package.</li>
-<li>Uses only packages versions that are available on CRAN and can be installed automatically</li>
-<li>New example datasets based on the Montlake area in Seatle, the default map that loads when A/B Street starts</li>
-</ul>
-</div>
-  </div>
+    <div class="ref-description">
+    <p>This function takes a path to a JSON file representing an A/B Street
+scenario, or an R representation of the JSON in a list, and returns
+an <code>sf</code> object with the same structure as objects returned by
+<code><a href='ab_scenario.html'>ab_scenario()</a></code>.</p>
+    </div>
 
+    <pre class="usage"><span class='fu'>ab_sf</span><span class='op'>(</span><span class='va'>json</span><span class='op'>)</span></pre>
+
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>json</th>
+      <td><p>Character string or list representing a JSON file or list that
+has been read into R and converted to a data frame.</p></td>
+    </tr>
+    </table>
+
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>An <code>sf</code> data frame representing travel behaviour scenarios
+from, and which can be fed into, A/B Street. Contains the following
+columns: person (the ID of each agent in the simulation),
+departure (seconds after midnight of the travel starting),
+mode (the mode of transport, being <code>Walk</code>, <code>Bike</code>, <code>Transit</code> and <code>Drive</code>),
+purpose (what the trip was for, e.g. <code>Work</code>), and
+geometry (a linestring showing the start and end point of the trip/stage).</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Note: the departure time in seconds is divided by 10000 on conversion
+to represent seconds, which are easier to work with that 10,000th of
+a second units.</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='va'>file_name</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata/minimal_scenario2.json"</span>, package <span class='op'>=</span> <span class='st'>"abstr"</span><span class='op'>)</span>
+<span class='fu'>ab_sf</span><span class='op'>(</span><span class='va'>file_name</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Simple feature collection with 4 features and 4 fields
+#&gt; Geometry type: LINESTRING
+#&gt; Dimension:     XY
+#&gt; Bounding box:  xmin: -122.319 ymin: 47.63728 xmax: -122.3037 ymax: 47.64048
+#&gt; CRS:           NA
+#&gt;   person departure mode    purpose                       geometry
+#&gt; 1      1       0.1 Bike       Meal LINESTRING (-122.3037 47.63...
+#&gt; 2      1    1000.0 Walk Recreation LINESTRING (-122.3191 47.63...
+#&gt; 3      2       1.1 Walk       Meal LINESTRING (-122.3037 47.63...
+#&gt; 4      2    1001.0 Bike       Work LINESTRING (-122.3191 47.63...</div><div class='input'><span class='va'>json</span> <span class='op'>=</span> <span class='fu'>jsonlite</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/jsonlite/man/read_json.html'>read_json</a></span><span class='op'>(</span><span class='va'>file_name</span>, simplifyVector <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='fu'>ab_sf</span><span class='op'>(</span><span class='va'>json</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Simple feature collection with 4 features and 4 fields
+#&gt; Geometry type: LINESTRING
+#&gt; Dimension:     XY
+#&gt; Bounding box:  xmin: -122.319 ymin: 47.63728 xmax: -122.3037 ymax: 47.64048
+#&gt; CRS:           NA
+#&gt;   person departure mode    purpose                       geometry
+#&gt; 1      1       0.1 Bike       Meal LINESTRING (-122.3037 47.63...
+#&gt; 2      1    1000.0 Walk Recreation LINESTRING (-122.3191 47.63...
+#&gt; 3      2       1.1 Walk       Meal LINESTRING (-122.3037 47.63...
+#&gt; 4      2    1001.0 Bike       Work LINESTRING (-122.3191 47.63...</div></pre>
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
     </nav>
   </div>
-
 </div>
 
 

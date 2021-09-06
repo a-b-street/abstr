@@ -57,6 +57,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="../articles/activity.html">Multi-trip activity models</a>
+    </li>
+    <li>
       <a href="../articles/montlake.html">Reproducing Montlake Eastside Seattle, US</a>
     </li>
     <li>
@@ -220,7 +223,7 @@ Example data that can be used as an input by functions in abstr to generate trip
 <div id="importing-scenario-files-into-ab-street" class="section level1">
 <h1 class="hasAnchor">
 <a href="#importing-scenario-files-into-ab-street" class="anchor"></a>Importing scenario files into A/B Street</h1>
-<p><img src="https://user-images.githubusercontent.com/22789869/128907563-4aa95b30-a98d-4fbc-9275-97e0b30dd227.gif"></p>
+<!-- ![](https://user-images.githubusercontent.com/22789869/128907563-4aa95b30-a98d-4fbc-9275-97e0b30dd227.gif) -->
 <p>In order to import scenario files into A/B Street, you will need to:</p>
 <ul>
 <li>Install a stable version of <a href="https://www.rust-lang.org/tools/install">Rust</a>
@@ -239,6 +242,7 @@ Example data that can be used as an input by functions in abstr to generate trip
 <p>Given you have correctly set the file path, the scenario should now be imported into your local version of the Montlake map. Next you can run the following command to start the A/B Street simulation in Montlake.</p>
 <pre><code>cargo run --bin game -- --dev data/system/us/seattle/maps/montlake.bin</code></pre>
 <p>Once the game has booted up click on the <code>scenarios</code> tab in the top right, it will currently be set as “none”. Change this to the first option “Montlake Example” which will be the scenario we have just uploaded. Alternatively, you can skip the first import command and use the GUI to select a scenario file to import.</p>
+<p>See <a href="https://user-images.githubusercontent.com/22789869/128907563-4aa95b30-a98d-4fbc-9275-97e0b30dd227.gif">here</a> for a GIF of the process (watch out for a video demo).</p>
 </div>
 <div id="projects-supporting-abstr" class="section level1">
 <h1 class="hasAnchor">
