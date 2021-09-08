@@ -1,13 +1,12 @@
 ---
-title: "Reproducing Montlake Eastside Seattle, US"
+title: "Get started with abstr"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Reproducing Montlake Eastside Seattle, US}
+  %\VignetteIndexEntry{Get started with abstr}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-author: 
-- "Robin Lovelace, Trevor Nederlof and Nathanael Sheehan"
 ---
+
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -15,172 +14,102 @@ knitr::opts_chunk$set(
 )
 ```
 
-## Introduction 
-Lets start with the city A/B street began, Seattle. U.S. The seaport city is home to over 700,000 people, including A/B Street creator, Dustin Carlino, who has been developing tools to empirically study the impact of small changes within the road network: this means "you can transform that street parking into a bus lane or fix that pesky left turn at a traffic signal, measure the effects, then propose actually making the change". For the past two years, Seattle has been a key are of study within the A/B street simuverse and thus makes it a great starting point in understanding the utilities of `abstr` to generate site data for A/B street. 
+# Getting started
 
-<!-- ## Install packages -->
-<!-- ```{r, eval = FALSE} -->
-<!-- devtools::install_cran(tidyverse) -->
-<!-- ``` -->
+## Installing R
 
-## Example
-This example demonstrates how to wrangle the data for the three key components needsed to generate scenarios for A/B street. These components are: OD data, site zones and site buildings. With these components, the `abstr` package is ready to convert dataframes into simulations! Lets get started.
+To generate new scenario files to import into A/B Street with the `abstr` R package, you need to have installed a stable version of [Rstudio and R](https://www.rstudio.com/products/rstudio/).
 
-### Load packages
-```{r, eval = FALSE}
-library(tidyverse)
-library(sf)
+## Installing A/B Street
+
+Todo...
+
+## Installing Rust and the development version of A/B Street
+
+-   Install a stable version of [Rust](https://www.rust-lang.org/tools/install)
+
+    -   On Windows, you will also need [Visual Code Studio](https://code.visualstudio.com/) and [Visual Studio c++ build tools](https://visualstudio.microsoft.com/downloads/) prior to installing Rust.
+
+-   On Linux, run `sudo apt-get install libasound2-dev libxcb-shape0-dev libxcb-xfixes0-dev libpango1.0-dev libgtk-3-dev` or the equivalent for your distribution.
+
+-   Download the A/B Street repo `git clone https://github.com/a-b-street/abstreet.git`
+
+-   Fetch the minimal amount of data needed to get started `cargo run --bin updater -- --minimal`
+
+The example below shows how `abstr` can be used.
+
+# Using `abstr`
+
+Load the package as follows:
+
+```{r setup}
 library(abstr)
 ```
 
+The input datasets include `sf` objects representing buildings, origin-destination (OD) data represented as desire lines and administrative zones representing the areas within which trips in the desire lines start and end.
+With the exception of OD data, each of the input datasets is readily available for most cities.
+The input datasets are illustrated in the plots below, which show example data shipped in the package, taken from the Seattle, U.S. 
 
-### Fetch Montlake Polygon
-
-Now lets start with fetching the polygon area for Montlake. To be consistent with whats on A/B street currently, we can grab the official polygon from the github repo. Following this we can clean the data and convert it to WGS84. 
-
-```{r, eval = FALSE}
-montlake_poly_url <- "https://raw.githubusercontent.com/a-b-street/abstreet/master/importer/config/us/seattle/montlake.poly"
-
-raw_boundary_vec <- readr::read_lines(montlake_poly_url)
-boundary_matrix <- raw_boundary_vec[(raw_boundary_vec != "boundary") & (raw_boundary_vec != "1") & (raw_boundary_vec != "END")] %>%
-  stringr::str_trim() %>%
-  tibble::as_tibble() %>%
-  dplyr::mutate(y_boundary = as.numeric(lapply(stringr::str_split(value, "    "), `[[`, 1)),
-                x_boundary = as.numeric(lapply(stringr::str_split(value, "    "), `[[`, 2))) %>%
-  dplyr::select(-value) %>%
-  as.matrix()
-boundary_sf_poly <- sf::st_sf(geometry = sf::st_sfc(sf::st_polygon(list(boundary_matrix)), crs = 4326))
-
+```{r input, fig.cap="Example data that can be used as an input by functions in abstr to generate trip-level scenarios that can be imported by A/B Street."}
+library(abstr)
+library(tmap) # for map making
+tm_shape(montlake_zones) + tm_polygons(col = "grey") +
+  tm_shape(montlake_buildings) + tm_polygons(col = "blue")  +
+tm_style("classic")
 ```
 
-### Parsing zones
+The map above is a graphical representation of the Montlake residential neighborhood in central Seattle, Washington. Here, `montlake_zones` represents neighborhood residential zones declared by Seattle local government and `montlake_buildings` being the accumulation of buildings listed in <a link href="https://www.openstreetmap.org/#map=5/54.910/-3.432"> OpenStreetMap</a>
 
-Next, we fetch zone data for the Seattle district, this comes from soundcast and needs to be parsed based on our polygon boundary.
+The final piece of the `abstr` puzzle is OD data. 
 
-```{r, eval = FALSE}
-all_zones_tbl <- sf::st_read("https://raw.githubusercontent.com/psrc/soundcast/master/inputs/base_year/taz2010.geojson") %>% sf::st_transform(4326)
-zones_in_boundary_tbl <- all_zones_tbl[sf::st_intersects(all_zones_tbl, boundary_sf_poly, sparse = F),]
+```{r output-sf, message=FALSE, warning=FALSE}
+head(montlake_od)
 ```
 
-### Generate OD Matrix and zones table
+In this example, the first two columns correspond to the origin and destination zones in Montlake, with the subsequent columns representing the transport mode share between these zones.
 
-Now we need to get some OD data into the mix. Finding this data for some cities can be tricky, luckily soundcast provides granular data for trips in Seattle for 2014. This data is then converted to an OD matrix and is filtered by trips that start or finish in Montlake zones. Furthermore, the data is then transformed into a wide format and filtered to only include OD entries with greater than 25 trips. Voila, the OD data is ready to go. The OD data is then parsed against all zones in the montlake area. 
+Let's combine each of the elements outlined above, the zone, building and OD data.
+We do this using the `ab_scenario()` function in the `abstr` package, which generates a data frame representing tavel between the `montlake_buildings`.
+While the OD data contains information on origin and destination zone, `ab_scenario()` 'disaggregates' the data and randomly selects building within each origin and destination zone to simulate travel at the individual level, as illustrated in the chunk below which uses only a sample of the `montlake_od` data, showing travel between three pairs of zones, to illustrate the process:
 
-```{r, eval = FALSE}
-## process the disagreggated soundcast trips data
-all_trips_tbl <- readr::read_csv("http://abstreet.s3-website.us-east-2.amazonaws.com/dev/data/input/us/seattle/trips_2014.csv.gz")
-
-## create a OD matrix
-od_tbl_long <- dplyr::select(all_trips_tbl, otaz, dtaz, mode) %>%
-  dplyr::mutate(mode = dplyr::case_when(mode %in% c(1, 9) ~ "Walk",
-                                        mode == 2 ~ "Bike",
-                                        mode %in% c(3, 4, 5) ~ "Drive",
-                                        mode %in% c(6, 7, 8) ~ "Transit",
-                                        TRUE ~ as.character(NA))) %>%
-  dplyr::filter(!is.na(mode)) %>%
-  dplyr::group_by(otaz, dtaz, mode) %>%
-  dplyr::summarize(n = n()) %>%
-  dplyr::ungroup() %>%
-  # only keep an entry if the origin or destination is in a Montlake zone
-  dplyr::filter((otaz %in% zones_in_boundary_tbl$TAZ) | (dtaz %in% zones_in_boundary_tbl$TAZ))
-
-# create a wide OD matrix and filter out any OD entries with under 25 trips in it
-montlake_od_tbl <- tidyr::pivot_wider(od_tbl_long, names_from = mode, values_from = n, values_fill = 0) %>%
-  dplyr::rename(o_id = otaz, d_id = dtaz) %>%
-  dplyr::mutate(total = Drive + Transit + Bike + Walk) %>%
-  dplyr::filter(total >= 25) %>%
-  dplyr::select(-total)
-
-montlake_zone_tbl <- dplyr::right_join(all_zones_tbl,
-                                       tibble::tibble("TAZ" = unique(c(montlake_od_tbl$o_id, montlake_od_tbl$d_id))),
-                                       by = "TAZ") %>%
-  dplyr::select(TAZ) %>%
-  dplyr::rename(id = TAZ)
-```
-
-### Fetching OSM building data
-
-A/B street functions by generating buildings based on OSM entries, luckily the `osmextract` makes this an easy process in R. OSM buildings must be valid `sf` objects so that they can be parsed against the zone areas. To speed things up, the later part of this chunk selects 20% of buildings in each zone.  
-
-```{r, eval = FALSE}
-osm_polygons <- osmextract::oe_read("http://download.geofabrik.de/north-america/us/washington-latest.osm.pbf", layer = "multipolygons")
-
-building_types <- c("yes", "house", "detached", "residential", "apartments",
-                    "commercial", "retail", "school", "industrial", "semidetached_house",
-                    "church", "hangar", "mobile_home", "warehouse", "office",
-                    "college", "university", "public", "garages", "cabin", "hospital",
-                    "dormitory", "hotel", "service", "parking", "manufactured",
-                    "civic", "farm", "manufacturing", "floating_home", "government",
-                    "bungalow", "transportation", "motel", "manufacture", "kindergarten",
-                    "house_boat", "sports_centre")
-osm_buildings <- osm_polygons %>%
-  dplyr::filter(building %in% building_types) %>%
-  dplyr::select(osm_way_id, name, building)
-
-osm_buildings_valid <- osm_buildings[sf::st_is_valid(osm_buildings),]
-
-montlake_osm_buildings_all <- osm_buildings_valid[montlake_zone_tbl,]
-
-# # use to visualize the building data
-# tmap::tm_shape(boundary_sf_poly) + tmap::tm_borders() +
-#   tmap::tm_shape(montlake_osm_buildings) + tmap::tm_polygons(col = "building")
-
-# Filter down large objects for package -----------------------------------
-montlake_osm_buildings_all_joined <- montlake_osm_buildings_all %>%
-  sf::st_join(montlake_zone_tbl)
-
-set.seed(2021)
-# select 20% of buildings in each zone to reduce file size for this example
-# remove this filter or increase the sampling to include more buildings
-montlake_osm_buildings_sample <- montlake_osm_buildings_all_joined %>%
-  dplyr::filter(!is.na(osm_way_id)) %>%
-  sf::st_drop_geometry() %>%
-  dplyr::group_by(id) %>%
-  dplyr::sample_frac(0.20) %>%
-  dplyr::ungroup()
-
-montlake_osm_buildings_tbl <- montlake_osm_buildings_all %>%
-  dplyr::filter(osm_way_id %in% montlake_osm_buildings_sample$osm_way_id)
-
-```
-
-
-### Generate A/B Street scenarios using `abstr`
-
-So now we are ready to generate simulation files. To do this, lets combine each of the elements outlined above, the zone (`montlake_zone_tbl`), building (`montlake_osm_buildings_tbl`) and OD (`montlake_od_tbl`) data. We do this using the ab_scenario() function in the abstr package, which generates a data frame representing travel between the montlake_buildings. While the OD data contains information on origin and destination zone, ab_scenario() ‘disaggregates’ the data and randomly selects building within each origin and destination zone to simulate travel at the individual level, as illustrated in the chunk below which uses only a sample of the montlake_od data, showing travel between three pairs of zones, to illustrate the process:
-
-```{r, eval = FALSE}
-# use subset of OD data for speed
+```{r message=FALSE,warning=FALSE}
 set.seed(42)
-montlake_od_minimal = montlake_od_tbl[sample(nrow(montlake_od_tbl), size = 3), ]
-
-output_sf <- ab_scenario(
+montlake_od_minimal = subset(montlake_od, o_id == "373" |o_id == "402" | o_id == "281" | o_id == "588" | o_id == "301" | o_id == "314")
+output_sf = ab_scenario(
   od = montlake_od_minimal,
-  zones = montlake_zone_tbl,
+  zones = montlake_zones,
   zones_d = NULL,
-  origin_buildings = montlake_osm_buildings_tbl,
-  destination_buildings = montlake_osm_buildings_tbl,
-  # destinations2 = NULL,
+  origin_buildings = montlake_buildings,
+  destination_buildings = montlake_buildings,
   pop_var = 3,
   time_fun = ab_time_normal,
   output = "sf",
-  modes = c("Walk", "Bike", "Drive", "Transit"))
-
-# # visualize the results
-# tmap::tm_shape(res) + tmap::tm_lines(col="mode") +
-#   tmap::tm_shape(montlake_zone_tbl) + tmap::tm_borders()
-
-# build json output
-ab_save(ab_json(output_sf, time_fun = ab_time_normal,
-                scenario_name = "Montlake Example"),
-        f = "montlake_scenarios.json")
+  modes = c("Walk", "Bike", "Drive", "Transit")
+)
 ```
 
-                                                                              
+The `output_sf` object created above can be further transformed to match [A/B Street's schema](https://a-b-street.github.io/docs/tech/dev/formats/scenarios.html) and visualised in A/B Street, or visualised in R (using the `tmap` package in the code chunk below):
+
+```{r outputplot}
+tm_shape(output_sf) + tmap::tm_lines(col = "mode", lwd = .8, lwd.legeld.col = "black") +
+  tm_shape(montlake_zones) + tmap::tm_borders(lwd = 1.2, col = "gray") +
+  tm_text("id", size = 0.6) +
+tm_style("cobalt")
+```
+
+Each line in the plot above represents a single trip, with the color representing each transport mode. Moreover, each trip is configured with an associated departure time, that can be represented in A/B Street.
+
+The `ab_save` and `ab_json` functions conclude the `abstr` workflow by outputting a local JSON file, matching the [A/B Street's schema](https://a-b-street.github.io/docs/tech/dev/formats/scenarios.html).
+
+```{r message=FALSE, warning=FALSE}
+output_json = ab_json(output_sf, time_fun = ab_time_normal, scenario_name = "Montlake Example")
+ab_save(output_json, f = "montlake_scenarios.json")
+```
+
 Let's see what is in the file:
 
 ```r
-file.edit("montlake_scenarios.json")
+file.edit("ab_scenario.json")
 ```
 
 The first trip schedule should look something like this, matching [A/B Street's schema](https://a-b-street.github.io/docs/tech/dev/formats/).
@@ -212,7 +141,13 @@ The first trip schedule should look something like this, matching [A/B Street's 
     }
 ```
 
-### Importing scenario files into A/B Street
+```{r, include=FALSE}
+# remove just generated .json file
+file.remove("montlake_scenarios.json")
+```
+
+# Importing scenario files into A/B Street
+<!-- ![](https://user-images.githubusercontent.com/22789869/128907563-4aa95b30-a98d-4fbc-9275-97e0b30dd227.gif) -->
 
 In order to import scenario files into A/B Street, you will need to:
 
@@ -223,6 +158,7 @@ In order to import scenario files into A/B Street, you will need to:
 * Fetch the minimal amount of data needed to get started `cargo run --bin updater -- --minimal`
 
 Once you have all of this up and running, you will be able to run the scenario import. To start, open up a terminal in Visual Studio or your chosen IDE. Next edit the following command to include the local path of your scenario.json file.
+
 ```
 cargo run --bin import_traffic -- --map=data/system/us/seattle/maps/montlake.bin --input=/path/to/input.json
 ```
@@ -234,3 +170,39 @@ cargo run --bin game -- --dev data/system/us/seattle/maps/montlake.bin
 ```  
 
 Once the game has booted up click on the `scenarios` tab in the top right, it will currently be set as "none". Change this to the first option "Montlake Example" which will be the scenario we have just uploaded. Alternatively, you can skip the first import command and use the GUI to select a scenario file to import.
+
+See [here](https://user-images.githubusercontent.com/22789869/128907563-4aa95b30-a98d-4fbc-9275-97e0b30dd227.gif) for a GIF of the process (watch out for a video demo).
+
+
+# Projects supporting `abstr`
+
+Several open source R packages enabled the creation of `abstr`.
+
+These include:
+
+-   [jsonlite](https://cran.r-project.org/web/packages/jsonlite/index.html) for awesome JSON parsing and generation
+-   [magrittr](https://cran.r-project.org/web/packages/magrittr/index.html) for magic `%>%` pipe-command chaining
+-   [sf](https://cran.r-project.org/web/packages/sf/index.html) for simple feature support
+-   [tibble](https://cran.r-project.org/web/packages/tibble/index.html) for strict data-frame declaration
+-   [tidyr](https://cran.r-project.org/web/packages/tidyr/index.html) for all things data cleaning
+
+
+# Context
+
+To further understand the methods and motivations behind `abstr`, it helps to have some context.
+The package builds on the ecosystem of open source software for geospatial data ([FOSS4G](https://foss4g.org/)) and packages such as [`stplanr`](https://docs.ropensci.org/stplanr) for working with transport data in R.
+`stplanr` was developed to support development of the the Propensity to Cycle Tool ([PCT](https://www.pct.bike/)), an open source transport planning system for England and Wales.
+The PCT [package](https://github.com/ITSLeeds/pct) enables access to the data generated by the PCT project, plus scenario of change modeling (not forecasting) at the origin-destination level, which can provide results at regions, local, route and route network levels.
+
+![](https://www.pct.bike/www/static/01_logos/pct-logo.png)
+
+The PCT provides a range of deterministic scenarios of change, such as `go_dutch` (where cycling levels matches that of the Netherlands), `gender_eq` (where there is equal levels of cycling among Female and Males) and `gov_target` (where cycling levels reflect that of UK government current targets).
+An academic [paper](https://www.jtlu.org/index.php/jtlu/article/view/862) on the PCT provides further detail on the motivations for and methods underlying the project.
+In 2018 the beasty `stplanr` (sustainable transport planning) package and R journal [article](https://journal.r-project.org/archive/2018/RJ-2018-053/RJ-2018-053.pdf) came on the scene, and further provided functions for solving common problems in transport planning and modeling, as well as advocating a transparency in tool usage within the transport planning paradigm.
+
+[![](https://raw.githubusercontent.com/ropensci/stplanr/master/man/figures/stplanr.png)](https://github.com/ropensci/stplanr)
+
+Finally, on the R side, in 2021 the `od` package was released which provided functions for working with origin-destination data.
+A central focus in all of the packages and papers mentioned above is to provide open access transport tools to support data driven transport policies based on an objective and transparent evidence base.
+
+For more on the history motivating the development of the `abstr` package see the [`pct_to_abstr` vignette]()

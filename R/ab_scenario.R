@@ -129,13 +129,20 @@ ab_scenario = function(
 #'   [ab_scenario()].
 #' @param mode_column The column name in the desire lines data that contains
 #'   the mode of transport. `"mode_baseline"` by default.
-#' @param scenario_name The name of the scenario to appear in A/B Street
+#' @param scenario_name The name of the scenario to appear in A/B Street.
+#'   The default value is `"test"`, which generates a message to tell you to
+#'   think of a more imaginative scenario name!
+#' @param default_purpose In case a `purpose` column is not present in the input,
+#'   or there are missing values in the `purpose` column, this argument sets
+#'   the default, fallback purpose, as `"Work"` by default, reflecting the
+#'   prevalence of work-based data and thinking in transport models.
 #' @inheritParams ab_scenario
 #'
 #' @return A list that can be saved as a JSON file with [ab_save()]
 #' @export
 #'
 #' @examples
+#' # Starting with tabular data
 #' od = leeds_od
 #' od[[1]] = c("E02006876")
 #' zones = leeds_zones
@@ -145,13 +152,25 @@ ab_scenario = function(
 #' f = tempfile(fileext = ".json")
 #' ab_save(ab_list, f)
 #' readLines(f)[1:30]
+#'
+#' # Starting with JSON data from A/B Street (multiple trips per person)
+#' f = system.file("extdata/minimal_scenario2.json", package = "abstr")
+#' desire_lines_out = ab_sf(f)
+#' desire_lines_out
+#' json_list = ab_json(desire_lines_out)
+#' json_list
 ab_json = function(
   desire_lines_out,
   mode_column = NULL,
   time_fun = ab_time_normal,
-  scenario_name,
+  scenario_name = "test",
+  default_purpose = "Work",
   ...
   ) {
+
+  if(scenario_name == "test") {
+    message("Default scenario name of 'test' used.")
+  }
 
   if(is.null(mode_column)) {
     mode_column = "mode"
@@ -161,33 +180,55 @@ ab_json = function(
   if(is.null(desire_lines_out$departure)) {
     desire_lines_out$departure = time_fun(n = n, ...)
   }
-  desire_lines_out$departure = desire_lines_out$departure * 10000.0
+
+  # Do not multiply by 10k if the maximum number is already greater than 7 days
+  if(max(desire_lines_out$departure) > 7 * 24 * 60 * 60) {
+    stop(
+      "Values greater than 604800 found in the input for departure timesT Try:\n",
+      "desire_lines_out$departure = desire_lines_out$departure / 10000 \n",
+      "if the original input was in 10,000th of a second (used internally by A/B Street)"
+      )
+  }
 
   start_points = lwgeom::st_startpoint(desire_lines_out) %>% sf::st_coordinates()
   end_points = lwgeom::st_endpoint(desire_lines_out) %>% sf::st_coordinates()
+  colnames(start_points) = c("ox", "oy")
+  colnames(end_points) = c("dx", "dy")
 
 
-  trips = lapply(seq(nrow(desire_lines_out)), function(i) {
-    Position_origin = data.frame(
-      longitude = start_points[i, "X"],
-      latitude = start_points[i, "Y"]
+  ddf = cbind(
+    sf::st_drop_geometry(desire_lines_out),
+    start_points,
+    end_points
+  )
+  if(is.null(desire_lines_out$person)) {
+    ddf$person = seq(nrow(desire_lines_out))
+  }
+  if(is.null(desire_lines_out$purpose)) {
+    ddf$purpose = default_purpose
+  }
+  # Base R approach (tried tidyverse briefly to no avail)
+  people = lapply(unique(ddf$person), function(p) {
+    ddfp = ddf[ddf$person == p, ]
+    # trips = list(origin = list(Position = list(longitude = 1)))
+    list(
+      trips = lapply(seq(nrow(ddfp)), function(i) {
+        list(
+          departure = ddfp$departure[i],
+          origin = list(Position = list(
+            longitude = ddfp$ox[i],
+            latitude = ddfp$oy[i]
+          )),
+          destination = list(Position = list(
+            longitude = ddfp$dx[i],
+            latitude = ddfp$dy[i]
+          )),
+          mode = ddfp$mode[i],
+          purpose = ddfp$purpose[i]
+        )
+      } )
     )
-    Position_destination = data.frame(
-      longitude = end_points[i, "X"],
-      latitude = end_points[i, "Y"]
-    )
-    origin = tibble::tibble(Position = Position_origin)
-    destination = tibble::tibble(Position = Position_destination)
-    tibble::tibble(
-      departure = desire_lines_out$departure[i],
-      origin = origin,
-      destination = destination,
-      mode = desire_lines_out[[mode_column]][i],
-      purpose = "Shopping"
-    )
-  })
-
-  people = tibble::tibble(trips)
+  } )
 
   if(is.null(scenario_name)) {
     scenario_name = gsub(pattern = "mode_", replacement = "", x = mode_column)
@@ -196,6 +237,60 @@ ab_json = function(
   json_r = list(scenario_name = scenario_name, people = people)
   json_r
 }
+
+#' Convert JSON representation of trips from A/B Street into an 'sf' object
+#'
+#' This function takes a path to a JSON file representing an A/B Street
+#' scenario, or an R representation of the JSON in a list, and returns
+#' an `sf` object with the same structure as objects returned by
+#' [ab_scenario()].
+#'
+#' Note: the departure time in seconds is divided by 10000 on conversion
+#' to represent seconds, which are easier to work with that 10,000th of
+#' a second units.
+#'
+#' @param json Character string or list representing a JSON file or list that
+#'   has been read into R and converted to a data frame.
+#'
+#' @return An `sf` data frame representing travel behaviour scenarios
+#'   from, and which can be fed into, A/B Street. Contains the following
+#'   columns: person (the ID of each agent in the simulation),
+#'   departure (seconds after midnight of the travel starting),
+#'   mode (the mode of transport, being `Walk`, `Bike`, `Transit` and `Drive`),
+#'   purpose (what the trip was for, e.g. `Work`), and
+#'   geometry (a linestring showing the start and end point of the trip/stage).
+#' @export
+#' @examples
+#' file_name = system.file("extdata/minimal_scenario2.json", package = "abstr")
+#' ab_sf(file_name)
+#' json = jsonlite::read_json(file_name, simplifyVector = TRUE)
+#' ab_sf(json)
+ab_sf = function(
+  json
+) {
+
+  if(is.character(json))  {
+    json = jsonlite::read_json(json, simplifyVector = TRUE)
+  }
+
+  trip_data = dplyr::bind_rows(json$people$trips, .id = "person")
+  linestrings = od::odc_to_sfc(cbind(
+    trip_data$origin$Position$longitude,
+    trip_data$origin$Position$latitude,
+    trip_data$destination$Position$longitude,
+    trip_data$destination$Position$latitude
+  ))
+  sf_data = subset(trip_data, select = -c(origin, destination))
+  sf_linestring = sf::st_sf(
+    sf_data,
+    geometry = linestrings
+  )
+  # Give departure time more user friendly units:
+  sf_linestring$departure = sf_linestring$departure / 10000
+  sf_linestring
+}
+
+
 
 #' Save OD data as JSON files for import into A/B Street
 #'
@@ -239,3 +334,5 @@ match_scenario_mode = function(cnames, scenario = "base", mode = "Walk") {
   # todo: add warning message if there's more than 1 (RL 2020-02-10)?
   cname_matching
 }
+
+globalVariables(names = c("origin", "destination"))
