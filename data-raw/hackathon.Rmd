@@ -1,0 +1,20 @@
+---
+output: bookdown::github_document2
+---
+
+# Working with origin-destination and activity data to model decarbonisation
+
+In this session we will explore the potential for origin-destination data to be used as a basis for decar
+
+- Live demo with R
+- Live demo with A/B Street
+
+- Presentation of a new example dataset
+- How can we visualise the data with static maps?
+- How can we visualise the data with animated static maps (e.g. with gganimate)
+- How can we visualise the data with animated interactive maps (e.g. with mapdeck)
+- How can we model destination switching and working from home?
+- How can origin-destination data be used to support decarbonisation research and policy?
+
+
+
