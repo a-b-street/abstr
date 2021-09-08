@@ -45,7 +45,8 @@ Suggests:
     dplyr (>= 1.0.0),
     rmarkdown,
     pct,
-    tmap
+    tmap,
+    foreign
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
