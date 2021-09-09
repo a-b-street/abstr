@@ -36,4 +36,21 @@ There is no strict agenda but the workshop will include the following components
 
 -   How can origin-destination data be used to support decarbonisation research and policy?
 
+
+## Accessing Data
+
+Install the development version from GitHub as follows:
+```{r eval=FALSE}
+remotes::install_github("a-b-street/abstr")
+```
+
+Load package and read datasets:
+```{r eval=FALSE}
+library(abstr)
+
+hack_data_small = sao_paulo_activity_df_2
+
+hack_data_big = sao_paulo_activity_df_20
+```
+
 ## References
