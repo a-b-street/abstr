@@ -7,9 +7,7 @@
 \alias{leeds_desire_lines}
 \alias{leeds_zones}
 \alias{leeds_od}
-\alias{sao_paulo_activity_df_20}
-\alias{sao_paulo_activity_df_2}
-\title{Datasets from Leeds and Sao Paulo}
+\title{Datasets from Leeds}
 \description{
-These datasets represent OD data from Leeds and Sao Paulo.
+These datasets represent data from the case study city of Leeds.
 }
