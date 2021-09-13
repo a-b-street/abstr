@@ -14,6 +14,8 @@ knitr::opts_chunk$set(
 )
 ```
 
+# Introduction
+
 Simple representations of transport systems based on origin-destination data often represent daily travel patterns as a single main trip per day, without distinguishing between multiple stages in a multi-stage trip (walk -> bus -> walk -> destination trips are simply represented as bus -> destination) or even multiple trips during the course of the day (omitting the fact that many people take a lunchtime trip to get lunch or simply to stretch their legs each day).
 
 The concept of an 'activity model' aims to address these limitations by representing the complete list of activities undertaken by people throughout the day in the activity model.
@@ -26,14 +28,15 @@ This 5 trip activity is more realistic that simple OD based models that just rep
 
 
 How to get this information into a format for modelling?
-This article demonstrates how the data can be represented in R, and then converted into a format that can be imported by A/B Street.
+This article demonstrates how the data can be represented in R with the `abstr` package, and then converted into a format that can be imported by A/B Street.
 
 ```{r setup}
 library(abstr)
 ```
 
+# Minimal example
 
-In R code, this can be represented as follows:
+In R code, the minimal example shown above can be represented as follows:
 
 
 ```{r getlocations, eval=FALSE, echo=FALSE}
@@ -123,7 +126,7 @@ That results in the following file:
     {
       "trips": [
         {
-          "departure": 304770000,
+          "departure": 30856,
           "origin": {
             "Position": {
               "longitude": -1.524,
@@ -137,7 +140,7 @@ That results in the following file:
             }
           },
           "mode": "Bike",
-          "purpose": "Shopping"
+          "purpose": "Work"
         }
       ]
     }
