@@ -212,6 +212,21 @@
 <code class="sourceCode R"><span class="va">od_sf_roundtrip</span> <span class="op">=</span> <span class="fu"><a href="../reference/ab_sf.html">ab_sf</a></span><span class="op">(</span>json <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata/activity_leeds.json"</span>, package <span class="op">=</span> <span class="st">"abstr"</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/identical.html">identical</a></span><span class="op">(</span><span class="va">od_sf</span><span class="op">$</span><span class="va">geometry</span>, <span class="va">od_sf_roundtrip</span><span class="op">$</span><span class="va">geometry</span><span class="op">)</span> 
 <span class="co">#&gt; [1] TRUE</span></code></pre></div>
+<div id="importing-into-ab-street" class="section level2">
+<h2 class="hasAnchor">
+<a href="#importing-into-ab-street" class="anchor"></a>Importing into A/B Street</h2>
+<p>As described in the <a href="https://a-b-street.github.io/docs/tech/dev/formats/scenarios.html">documentation hosted at a-b-street.github.io/docs</a>, you can import new ‘scenario.json’ files from the system command line as follows (requires cargo and <code>abstreet</code> as your working directory):</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1"></a><span class="ex">cargo</span> run --bin import_traffic -- --map=data/system/gb/leeds/maps/north.bin --input=/home/activity_leeds.json</span></code></pre></div>
+<p>Then you can run the game as follows (you can also run the game directly and import the scenario by selecting a file using the GUI):</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1"></a><span class="ex">cargo</span> run --bin game -- --dev data/system/gb/leeds/maps/north.bin</span></code></pre></div>
+<p>And you should see something like this (see <a href="https://github.com/a-b-street/abstr/issues/76">#76</a> for animated version of the image below):</p>
+<p><img src="https://user-images.githubusercontent.com/1825120/133152963-a57d3812-e05c-4acb-8969-5464ab2b5d74.png"></p>
+<p>Of course, the steps outlined above work for anywhere in the world. Possible next step to sharpen your A/B Street/R skills: try adding a small scenario for a city you know and explore scenarios of change.</p>
+<!-- Todo: -->
+<!-- possible -->
+<!-- # Montlake example -->
+<!-- # Intermediate example: Sao Paulo -->
+</div>
 </div>
   </div>
 
