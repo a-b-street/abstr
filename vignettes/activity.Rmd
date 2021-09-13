@@ -177,5 +177,31 @@ od_sf_roundtrip = ab_sf(json = system.file("extdata/activity_leeds.json", packag
 identical(od_sf$geometry, od_sf_roundtrip$geometry) 
 ```
 
+## Importing into A/B Street
+
+As described in the [documentation hosted at a-b-street.github.io/docs](https://a-b-street.github.io/docs/tech/dev/formats/scenarios.html), you can import new 'scenario.json' files from the system command line as follows (requires cargo and `abstreet` as your working directory):
+
+```bash
+cargo run --bin import_traffic -- --map=data/system/gb/leeds/maps/north.bin --input=/home/activity_leeds.json
+```
+
+Then you can run the game as follows (you can also run the game directly and import the scenario by selecting a file using the GUI):
+
+```bash
+cargo run --bin game -- --dev data/system/gb/leeds/maps/north.bin
+```
+
+And you should see something like this (see [#76](https://github.com/a-b-street/abstr/issues/76) for animated version of the image below):
 
 
+![](https://user-images.githubusercontent.com/1825120/133152963-a57d3812-e05c-4acb-8969-5464ab2b5d74.png)
+
+Of course, the steps outlined above work for anywhere in the world.
+Possible next step to sharpen your A/B Street/R skills: try adding a small scenario for a city you know and explore scenarios of change.
+
+<!-- Todo: -->
+
+<!-- possible -->
+<!-- # Montlake example -->
+
+<!-- # Intermediate example: Sao Paulo -->
