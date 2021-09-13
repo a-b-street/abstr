@@ -189,6 +189,7 @@ ab_json = function(
       "if the original input was in 10,000th of a second (used internally by A/B Street)"
       )
   }
+  desire_lines$departure = desire_lines$departure * 10000
 
   start_points = lwgeom::st_startpoint(desire_lines_out) %>% sf::st_coordinates()
   end_points = lwgeom::st_endpoint(desire_lines_out) %>% sf::st_coordinates()
