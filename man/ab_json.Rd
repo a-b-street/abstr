@@ -5,7 +5,7 @@
 \title{Convert geographic ('sf') representation of OD data to 'JSON list' structure}
 \usage{
 ab_json(
-  desire_lines_out,
+  desire_lines,
   mode_column = NULL,
   time_fun = ab_time_normal,
   scenario_name = "test",
@@ -14,7 +14,7 @@ ab_json(
 )
 }
 \arguments{
-\item{desire_lines_out}{OD data represented as geographic lines created by
+\item{desire_lines}{OD data represented as geographic lines created by
 \code{\link[=ab_scenario]{ab_scenario()}}.}
 
 \item{mode_column}{The column name in the desire lines data that contains
@@ -59,8 +59,8 @@ readLines(f)[1:30]
 
 # Starting with JSON data from A/B Street (multiple trips per person)
 f = system.file("extdata/minimal_scenario2.json", package = "abstr")
-desire_lines_out = ab_sf(f)
-desire_lines_out
-json_list = ab_json(desire_lines_out)
+desire_lines = ab_sf(f)
+desire_lines
+json_list = ab_json(desire_lines)
 json_list
 }

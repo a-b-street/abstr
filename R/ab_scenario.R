@@ -125,7 +125,7 @@ ab_scenario = function(
 #' Note: the departure time in seconds is multiplied by 10000 on conversion
 #' to a .json list object for compatibility with the A/B Street schema.
 #'
-#' @param desire_lines_out OD data represented as geographic lines created by
+#' @param desire_lines OD data represented as geographic lines created by
 #'   [ab_scenario()].
 #' @param mode_column The column name in the desire lines data that contains
 #'   the mode of transport. `"mode_baseline"` by default.
@@ -155,12 +155,12 @@ ab_scenario = function(
 #'
 #' # Starting with JSON data from A/B Street (multiple trips per person)
 #' f = system.file("extdata/minimal_scenario2.json", package = "abstr")
-#' desire_lines_out = ab_sf(f)
-#' desire_lines_out
-#' json_list = ab_json(desire_lines_out)
+#' desire_lines = ab_sf(f)
+#' desire_lines
+#' json_list = ab_json(desire_lines)
 #' json_list
 ab_json = function(
-  desire_lines_out,
+  desire_lines,
   mode_column = NULL,
   time_fun = ab_time_normal,
   scenario_name = "test",
@@ -175,36 +175,37 @@ ab_json = function(
   if(is.null(mode_column)) {
     mode_column = "mode"
   }
-  n = nrow(desire_lines_out)
+  n = nrow(desire_lines)
 
-  if(is.null(desire_lines_out$departure)) {
-    desire_lines_out$departure = time_fun(n = n, ...)
+  if(is.null(desire_lines$departure)) {
+    desire_lines$departure = time_fun(n = n, ...)
   }
 
   # Do not multiply by 10k if the maximum number is already greater than 7 days
-  if(max(desire_lines_out$departure) > 7 * 24 * 60 * 60) {
+  if(max(desire_lines$departure) > 7 * 24 * 60 * 60) {
     stop(
       "Values greater than 604800 found in the input for departure timesT Try:\n",
-      "desire_lines_out$departure = desire_lines_out$departure / 10000 \n",
+      "desire_lines$departure = desire_lines$departure / 10000 \n",
       "if the original input was in 10,000th of a second (used internally by A/B Street)"
       )
   }
+  desire_lines$departure = desire_lines$departure * 10000
 
-  start_points = lwgeom::st_startpoint(desire_lines_out) %>% sf::st_coordinates()
-  end_points = lwgeom::st_endpoint(desire_lines_out) %>% sf::st_coordinates()
+  start_points = lwgeom::st_startpoint(desire_lines) %>% sf::st_coordinates()
+  end_points = lwgeom::st_endpoint(desire_lines) %>% sf::st_coordinates()
   colnames(start_points) = c("ox", "oy")
   colnames(end_points) = c("dx", "dy")
 
 
   ddf = cbind(
-    sf::st_drop_geometry(desire_lines_out),
+    sf::st_drop_geometry(desire_lines),
     start_points,
     end_points
   )
-  if(is.null(desire_lines_out$person)) {
-    ddf$person = seq(nrow(desire_lines_out))
+  if(is.null(desire_lines$person)) {
+    ddf$person = seq(nrow(desire_lines))
   }
-  if(is.null(desire_lines_out$purpose)) {
+  if(is.null(desire_lines$purpose)) {
     ddf$purpose = default_purpose
   }
   # Base R approach (tried tidyverse briefly to no avail)
@@ -283,7 +284,8 @@ ab_sf = function(
   sf_data = subset(trip_data, select = -c(origin, destination))
   sf_linestring = sf::st_sf(
     sf_data,
-    geometry = linestrings
+    geometry = linestrings,
+    crs = 4326
   )
   # Give departure time more user friendly units:
   sf_linestring$departure = sf_linestring$departure / 10000

@@ -1,0 +1,94 @@
+{
+  "scenario_name": "activity",
+  "people": [
+    {
+      "trips": [
+        {
+          "departure": 313400000,
+          "origin": {
+            "Position": {
+              "longitude": -1.524,
+              "latitude": 53.819
+            }
+          },
+          "destination": {
+            "Position": {
+              "longitude": -1.552,
+              "latitude": 53.807
+            }
+          },
+          "mode": "Bike",
+          "purpose": "Work"
+        },
+        {
+          "departure": 410950000,
+          "origin": {
+            "Position": {
+              "longitude": -1.552,
+              "latitude": 53.807
+            }
+          },
+          "destination": {
+            "Position": {
+              "longitude": -1.56,
+              "latitude": 53.812
+            }
+          },
+          "mode": "Walk",
+          "purpose": "Work"
+        },
+        {
+          "departure": 442960000,
+          "origin": {
+            "Position": {
+              "longitude": -1.56,
+              "latitude": 53.812
+            }
+          },
+          "destination": {
+            "Position": {
+              "longitude": -1.556,
+              "latitude": 53.802
+            }
+          },
+          "mode": "Walk",
+          "purpose": "Work"
+        },
+        {
+          "departure": 462420000,
+          "origin": {
+            "Position": {
+              "longitude": -1.556,
+              "latitude": 53.802
+            }
+          },
+          "destination": {
+            "Position": {
+              "longitude": -1.552,
+              "latitude": 53.807
+            }
+          },
+          "mode": "Walk",
+          "purpose": "Work"
+        },
+        {
+          "departure": 614180000,
+          "origin": {
+            "Position": {
+              "longitude": -1.552,
+              "latitude": 53.807
+            }
+          },
+          "destination": {
+            "Position": {
+              "longitude": -1.524,
+              "latitude": 53.819
+            }
+          },
+          "mode": "Bike",
+          "purpose": "Work"
+        }
+      ]
+    }
+  ]
+}
