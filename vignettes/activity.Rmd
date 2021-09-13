@@ -26,7 +26,6 @@ This 5 trip activity is more realistic that simple OD based models that just rep
 
 ![](od-sketch.png)
 
-
 How to get this information into a format for modelling?
 This article demonstrates how the data can be represented in R with the `abstr` package, and then converted into a format that can be imported by A/B Street.
 
@@ -36,8 +35,7 @@ library(abstr)
 
 # Minimal example
 
-In R code, the minimal example shown above can be represented as follows:
-
+In R code, the minimal example shown above can be represented as two data frames (tabular datasets), one representing trip origins and destinations and the other representing movement between them, as follows:
 
 ```{r getlocations, eval=FALSE, echo=FALSE}
 home = stplanr::geo_code("potternewton park")
@@ -46,7 +44,6 @@ park = stplanr::geo_code("woodhouse moore park")
 cafe = stplanr::geo_code("heart centre leeds")
 cafe = stplanr::geo_code("worsley building leeds")
 ```
-
 
 
 ```{r places}
@@ -85,16 +82,24 @@ od = tibble::tribble(
   "Cafe", "Work", "Walk", "12:45", 1,
   "Work", "Home", "Bike", "17:00", 1
 )
+```
+
+The two datasets can be joined, giving spatial attributes (origin and destination locations creating a straight line) for each OD pairs, using the `od_to_sf()` function from the `od` package as follows:
+
+```{r}
 od_sf = od::od_to_sf(od, places_sf)
 plot(od_sf["departure"], reset = FALSE, key.pos = 1, lwd = 6:2)
 plot(places_sf$geometry, pch = places$name, add = TRUE, cex =2)
 # mapview::mapview(od_sf["departure"])
 ```
 
-```{r, eval=FALSE}
-od::od_coordinates(od_sf)
+As an aside, another way of representing the spatial attributes of the OD data with with four columns with 'X' and 'Y' coordinates for both origins and destinations:
+
+```{r}
+(od::od_coordinates(od_sf))
 ```
 
+We will assign departure times and randomise the exact time (representing the fact that people rarely depart when they plan to, let alone exactly on the hour) with the `ab_time_normal()` function as follows:
 
 
 ```{r}
@@ -106,18 +111,32 @@ departure_times = c(
   17
 )
 od_sf$departure = ab_time_normal(hr = departure_times, sd = 0.15, n = length(departure_times))
-od_json1 = ab_json(desire_lines_out = od_sf[1, ], scenario_name = "activity")
-od_json2 = ab_json(desire_lines_out = od_sf[1:2, ], scenario_name = "activity")
-od_json = ab_json(desire_lines_out = od_sf, scenario_name = "activity")
 ```
 
-```{r, results='asis'}
+The `ab_json()` function converts the 'spatial data frame' representation of activity patterns shown above into the 'nested list' format required by A/B Street as follows (with the first line converting only the first row and the second line converting all 5 OD pairs):
+
+```{r}
+od_json1 = ab_json(od_sf[1, ], scenario_name = "activity")
+od_json = ab_json(od_sf, scenario_name = "activity")
+```
+
+Finally, the list representation can be saved as a `.json` file as follows:
+
+```{r absave}
 ab_save(od_json1, f = "scenario1.json")
-# readChar("scenario1.json", nchars = 1e9)
-# file.edit("scenario1.json")
 ```
 
-That results in the following file:
+```{r, eval=FALSE, echo=FALSE}
+ab_save(od_json, "inst/extdata/activity_leeds.json")
+```
+
+
+That results in the following file (see [activity_leeds.json](https://github.com/a-b-street/abstr/blob/main/inst/extdata/activity_leeds.json) in the package's external data for the full dataset in JSON form):
+
+```{r, eval=FALSE}
+file.edit("scenario1.json")
+```
+
 
 ```json
 {
@@ -149,9 +168,14 @@ That results in the following file:
 
 ```
 
-What do the first 2 trips look like?
+You can check the 'round trip' conversion of this JSON representation back into the data frame representation as follows:
+
+<!-- Todo: these are not totally identical, only the geomtry is: -->
 
 ```{r}
-ab_save(od_json2, "scenario2.json")
-# file.edit("scenario2.json")
+od_sf_roundtrip = ab_sf(json = system.file("extdata/activity_leeds.json", package = "abstr"))
+identical(od_sf$geometry, od_sf_roundtrip$geometry) 
 ```
+
+
+
