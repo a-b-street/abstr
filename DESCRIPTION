@@ -16,6 +16,9 @@ Authors@R:
       person(given = "Trevor",
              family = "Nederlof",
              role = "aut"),
+      person(given = "Lucas",
+             family = "Dias",
+             role = "cbt"),
       person(given = "Dustin",
              family = "Carlino",
              role = "aut"))
