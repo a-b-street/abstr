@@ -93,7 +93,7 @@ plot(places_sf$geometry, pch = places$name, add = TRUE, cex =2)
 # mapview::mapview(od_sf["departure"])
 ```
 
-As an aside, another way of representing the spatial attributes of the OD data with with four columns with 'X' and 'Y' coordinates for both origins and destinations:
+As an aside, another way of representing the spatial attributes of the OD data: four columns with 'X' and 'Y' coordinates for both origins and destinations:
 
 ```{r}
 (od::od_coordinates(od_sf))
