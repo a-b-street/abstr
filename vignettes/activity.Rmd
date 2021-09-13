@@ -110,6 +110,7 @@ departure_times = c(
   12.75,
   17
 )
+set.seed(42) # if you want deterministic results, set a seed.
 od_sf$departure = ab_time_normal(hr = departure_times, sd = 0.15, n = length(departure_times))
 ```
 
@@ -145,7 +146,7 @@ file.edit("scenario1.json")
     {
       "trips": [
         {
-          "departure": 30856,
+          "departure": 313400000,
           "origin": {
             "Position": {
               "longitude": -1.524,
@@ -165,7 +166,6 @@ file.edit("scenario1.json")
     }
   ]
 }
-
 ```
 
 You can check the 'round trip' conversion of this JSON representation back into the data frame representation as follows:

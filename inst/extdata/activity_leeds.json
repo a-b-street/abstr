@@ -4,7 +4,7 @@
     {
       "trips": [
         {
-          "departure": 30544,
+          "departure": 313400000,
           "origin": {
             "Position": {
               "longitude": -1.524,
@@ -21,7 +21,7 @@
           "purpose": "Work"
         },
         {
-          "departure": 41090,
+          "departure": 410950000,
           "origin": {
             "Position": {
               "longitude": -1.552,
@@ -38,7 +38,7 @@
           "purpose": "Work"
         },
         {
-          "departure": 43823,
+          "departure": 442960000,
           "origin": {
             "Position": {
               "longitude": -1.56,
@@ -55,7 +55,7 @@
           "purpose": "Work"
         },
         {
-          "departure": 45870,
+          "departure": 462420000,
           "origin": {
             "Position": {
               "longitude": -1.556,
@@ -72,7 +72,7 @@
           "purpose": "Work"
         },
         {
-          "departure": 60672,
+          "departure": 614180000,
           "origin": {
             "Position": {
               "longitude": -1.552,
