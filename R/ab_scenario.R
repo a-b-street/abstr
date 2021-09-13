@@ -283,7 +283,8 @@ ab_sf = function(
   sf_data = subset(trip_data, select = -c(origin, destination))
   sf_linestring = sf::st_sf(
     sf_data,
-    geometry = linestrings
+    geometry = linestrings,
+    crs = 4326
   )
   # Give departure time more user friendly units:
   sf_linestring$departure = sf_linestring$departure / 10000
