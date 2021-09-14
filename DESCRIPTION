@@ -18,7 +18,7 @@ Authors@R:
              role = "aut"),
       person(given = "Lucas",
              family = "Dias",
-             role = "cbt"),
+             role = "ctb"),
       person(given = "Dustin",
              family = "Carlino",
              role = "aut"))
