@@ -28,14 +28,13 @@ sao_paulo_activity_df_20 = sao_paulo_activity_df_20 %>%
 
 matrix = sao_paulo_activity_df_20 %>% dplyr::select(CO_O_X, CO_O_Y, CO_D_X, CO_D_Y)
 
+table(sao_paulo_activity_df_20$MODOPRIN)
+
 sao_paulo_activity_df_20 = sf::st_sf(
   sao_paulo_activity_df_20,
   od::odc_to_sfc(matrix),
   crs = 22523   # the local projection
-)
-
-sp_2_agents = sp_2_agents %>%
-  sf::st_as_sf() %>%
+) %>%
   sf::st_transform(crs = 4326) %>%
   dplyr::mutate(mode = dplyr::case_when(MODOPRIN == 1  ~ "Transit",
                                         MODOPRIN == 16 ~ "Walk")
