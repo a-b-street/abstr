@@ -226,6 +226,24 @@
 <!-- possible -->
 <!-- # Montlake example -->
 <!-- # Intermediate example: Sao Paulo -->
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">sp_2_agents</span> <span class="op">=</span> <span class="va">sao_paulo_activity_df_2</span> <span class="op">%&gt;%</span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">ID_PESS</span>, <span class="va">CO_O_X</span>, <span class="va">CO_O_Y</span>, <span class="va">CO_D_X</span>, <span class="va">CO_D_Y</span>, <span class="va">MODOPRIN</span>, <span class="va">H_SAIDA</span>, <span class="va">MIN_SAIDA</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>departure <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">H_SAIDA</span> <span class="op">+</span> <span class="va">MIN_SAIDA</span><span class="op">/</span><span class="fl">60</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>person <span class="op">=</span> <span class="va">ID_PESS</span><span class="op">)</span>
+
+<span class="va">matrix</span> <span class="op">=</span> <span class="va">sp_2_agents</span> <span class="op">%&gt;%</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">CO_O_X</span>, <span class="va">CO_O_Y</span>, <span class="va">CO_D_X</span>, <span class="va">CO_D_Y</span><span class="op">)</span>
+
+<span class="va">sp_2_agents</span><span class="op">[</span>,<span class="fl">10</span><span class="op">]</span> <span class="op">=</span> <span class="fu">od</span><span class="fu">::</span><span class="fu"><a href="https://itsleeds.github.io/od/reference/odc_to_sf.html">odc_to_sf</a></span><span class="op">(</span><span class="va">matrix</span>, crs <span class="op">=</span> <span class="fl">22523</span><span class="op">)</span>   <span class="co"># the local projection</span>
+
+<span class="va">sp_2_agents</span> <span class="op">=</span> <span class="va">sp_2_agents</span> <span class="op">%&gt;%</span>
+  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html">st_as_sf</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_transform.html">st_transform</a></span><span class="op">(</span>crs <span class="op">=</span> <span class="fl">4326</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>mode <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span><span class="va">MODOPRIN</span> <span class="op">==</span> <span class="fl">1</span>  <span class="op">~</span> <span class="st">"Transit"</span>,
+                                 <span class="va">MODOPRIN</span> <span class="op">==</span> <span class="fl">16</span> <span class="op">~</span> <span class="st">"Walk"</span><span class="op">)</span>
+                <span class="op">)</span>
+
+<span class="va">sp_2_json</span> <span class="op">=</span> <span class="fu"><a href="../reference/ab_json.html">ab_json</a></span><span class="op">(</span><span class="va">sp_2_agents</span>, mode_column <span class="op">=</span> <span class="st">"mode"</span>, scenario_name <span class="op">=</span> <span class="st">"2-agents"</span><span class="op">)</span></code></pre></div>
 </div>
 </div>
   </div>
