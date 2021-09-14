@@ -14,8 +14,7 @@ head(OD_SP_2017)
 sapply(OD_SP_2017, class)
 people = unique(OD_SP_2017$ID_PESS)
 
-sao_paulo_activity_df_2 = OD_SP_2017 %>%
-  filter(ID_PESS %in% sample(people, 2))
+set.seed(42)
 
 sao_paulo_activity_df_20 = OD_SP_2017 %>%
   filter(ID_PESS %in% sample(people, 20))
@@ -23,23 +22,40 @@ sao_paulo_activity_df_20 = OD_SP_2017 %>%
 # generate smaller subset of data
 sao_paulo_activity_df_20 = sao_paulo_activity_df_20 %>%
   dplyr::select(ID_PESS, CO_O_X, CO_O_Y, CO_D_X, CO_D_Y, MODOPRIN, H_SAIDA, MIN_SAIDA) %>%
-  dplyr::mutate(departure = round(H_SAIDA + MIN_SAIDA/60, digits = 2)) %>%
+  dplyr::mutate(
+    departure = round(H_SAIDA + MIN_SAIDA/60, digits = 2),
+    mode = dplyr::case_when(
+      MODOPRIN %in% 1:4  ~ "Transit",
+      MODOPRIN %in% 8:12  ~ "Car",
+      MODOPRIN == 15 ~ "Bike",
+      MODOPRIN == 16 ~ "Walk"
+    )
+    ) %>%
   dplyr::rename(person = ID_PESS)
 
 matrix = sao_paulo_activity_df_20 %>% dplyr::select(CO_O_X, CO_O_Y, CO_D_X, CO_D_Y)
 
 table(sao_paulo_activity_df_20$MODOPRIN)
 
-sao_paulo_activity_df_20 = sf::st_sf(
-  sao_paulo_activity_df_20,
-  od::odc_to_sfc(matrix),
-  crs = 22523   # the local projection
-) %>%
-  sf::st_transform(crs = 4326) %>%
-  dplyr::mutate(mode = dplyr::case_when(MODOPRIN == 1  ~ "Transit",
-                                        MODOPRIN == 16 ~ "Walk")
-  )
+sao_paulo_activity_sf_20 = sao_paulo_activity_df_20 %>%
+  select(-matches("CO")) %>%
+  dplyr::mutate(
+    geometry = od::odc_to_sfc(matrix)
+  ) %>%
+  sf::st_sf(crs = 22523) %>% # the local projection
+  sf::st_transform(crs = 4326)
 
+sao_paulo_activity_df_2 = sao_paulo_activity_df_20 %>%
+  filter(person %in% sample(person, 2))
+
+sao_paulo_activity_sf_2 = sao_paulo_activity_sf_20 %>%
+  filter(person %in% sample(person, 2))
+
+
+table(sao_paulo_activity_df_20$mode)
+table(sao_paulo_activity_df_2$mode)
 
 usethis::use_data(sao_paulo_activity_df_2, overwrite = T)
 usethis::use_data(sao_paulo_activity_df_20, overwrite = T)
+usethis::use_data(sao_paulo_activity_sf_2, overwrite = T)
+usethis::use_data(sao_paulo_activity_sf_20, overwrite = T)
