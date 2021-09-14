@@ -9,7 +9,7 @@ unlink("OD-2017", recursive = T, force = T)
 
 # just São Paulo municipality with short trips
 OD_SP_2017 = OD_SP_2017 %>%
-  filter(MUNI_DOM == 36 & DISTANCIA <= 5000)
+  filter(ZONA_O %in% c(1:9, 18:19, 24:26) & ZONA_D %in% c(1:9, 18:19, 24:26))
 
 people = unique(OD_SP_2017$ID_PESS)
 
