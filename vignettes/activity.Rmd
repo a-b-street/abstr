@@ -210,22 +210,23 @@ Possible next step to sharpen your A/B Street/R skills: try adding a small scena
 
 sp_2_agents = sao_paulo_activity_df_2 %>%
   dplyr::select(ID_PESS, CO_O_X, CO_O_Y, CO_D_X, CO_D_Y, MODOPRIN, H_SAIDA, MIN_SAIDA) %>%
-  dplyr::mutate(departure = H_SAIDA + MIN_SAIDA/60) %>% 
+  dplyr::mutate(departure = round(H_SAIDA + MIN_SAIDA/60, digits=2)) %>% 
   dplyr::rename(person = ID_PESS)
 
-sp_2_agents[,10] = od::odc_to_sf(matrix, crs = 22523)
+matrix = sp_2_agents %>% dplyr::select(CO_O_X, CO_O_Y, CO_D_X, CO_D_Y)
+
+sp_2_agents[,10] = od::odc_to_sf(matrix, crs = 22523)   # the local projection
 
 sp_2_agents = sp_2_agents %>%
   sf::st_as_sf() %>%
-  st_transform(crs = 4326) %>%
-  dplyr::mutate(mode = "Drive") 
+  sf::st_transform(crs = 4326) %>%
+  dplyr::mutate(mode = case_when(MODOPRIN == 1  ~ "Transit",
+                                 MODOPRIN == 16 ~ "Walk"
+                                 )
+                )
 
 sp_2_json = ab_json(sp_2_agents, mode_column = "mode", scenario_name = "2-agents")
 
 ab_save(sp_2_json, "inst/extdata/activity_sp_2.json")
 
 ```
-
-
-
-
