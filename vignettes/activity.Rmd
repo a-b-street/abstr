@@ -220,7 +220,7 @@ sp_2_agents[,10] = od::odc_to_sf(matrix, crs = 22523)   # the local projection
 sp_2_agents = sp_2_agents %>%
   sf::st_as_sf() %>%
   sf::st_transform(crs = 4326) %>%
-  dplyr::mutate(mode = case_when(MODOPRIN == 1  ~ "Transit",
+  dplyr::mutate(mode = dplyr::case_when(MODOPRIN == 1  ~ "Transit",
                                  MODOPRIN == 16 ~ "Walk"
                                  )
                 )
