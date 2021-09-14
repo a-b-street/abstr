@@ -206,11 +206,12 @@ Possible next step to sharpen your A/B Street/R skills: try adding a small scena
 
 <!-- # Intermediate example: Sao Paulo -->
 
+
 ```{r}
 
 sp_2_agents = sao_paulo_activity_df_2 %>%
   dplyr::select(ID_PESS, CO_O_X, CO_O_Y, CO_D_X, CO_D_Y, MODOPRIN, H_SAIDA, MIN_SAIDA) %>%
-  dplyr::mutate(departure = round(H_SAIDA + MIN_SAIDA/60, digits=2)) %>% 
+  dplyr::mutate(departure = round(H_SAIDA + MIN_SAIDA/60, digits = 2)) %>% 
   dplyr::rename(person = ID_PESS)
 
 matrix = sp_2_agents %>% dplyr::select(CO_O_X, CO_O_Y, CO_D_X, CO_D_Y)
@@ -221,12 +222,14 @@ sp_2_agents = sp_2_agents %>%
   sf::st_as_sf() %>%
   sf::st_transform(crs = 4326) %>%
   dplyr::mutate(mode = dplyr::case_when(MODOPRIN == 1  ~ "Transit",
-                                 MODOPRIN == 16 ~ "Walk"
-                                 )
+                                 MODOPRIN == 16 ~ "Walk")
                 )
 
 sp_2_json = ab_json(sp_2_agents, mode_column = "mode", scenario_name = "2-agents")
 
-ab_save(sp_2_json, "inst/extdata/activity_sp_2.json")
-
 ```
+
+```{r, eval=FALSE, echo=FALSE}
+ab_save(sp_2_json, "./inst/extdata/activity_sp_2.json")
+```
+
