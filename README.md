@@ -55,15 +55,7 @@ tm_shape(montlake_zones) + tm_polygons(col = "grey") +
 tm_style("classic")
 ```
 
-<div class="figure">
-
-<img src="man/figures/README-input-1.png" alt="Example data that can be used as an input by functions in abstr to generate trip-level scenarios that can be imported by A/B Street." width="100%" />
-<p class="caption">
-Example data that can be used as an input by functions in abstr to
-generate trip-level scenarios that can be imported by A/B Street.
-</p>
-
-</div>
+<img src="man/figures/README-input-1.png" title="Example data that can be used as an input by functions in abstr to generate trip-level scenarios that can be imported by A/B Street." alt="Example data that can be used as an input by functions in abstr to generate trip-level scenarios that can be imported by A/B Street." width="100%" />
 
 The map above is a graphical representation of the Montlake residential
 neighborhood in central Seattle, Washington. Here, `montlake_zones`
@@ -207,7 +199,11 @@ scenario import. To start, open up a terminal in Visual Studio or your
 chosen IDE. Next edit the following command to include the local path of
 your scenario.json file.
 
-    cargo run --bin import_traffic -- --map=data/system/us/seattle/maps/montlake.bin --input=/path/to/input.json
+``` bash
+git clone git@github.com:a-b-street/abstreet
+cd abstreet # or wherever you cloned the A/B Street repo
+cargo run --bin import_traffic -- --map=data/system/us/seattle/maps/montlake.bin --input=/path/abstreet/input.json
+```
 
 Given you have correctly set the file path, the scenario should now be
 imported into your local version of the Montlake map. Next you can run
@@ -220,6 +216,25 @@ right, it will currently be set as “none”. Change this to the first
 option “Montlake Example” which will be the scenario we have just
 uploaded. Alternatively, you can skip the first import command and use
 the GUI to select a scenario file to import.
+
+To import and run data for other cities, check the [A/B Street
+documentation](https://a-b-street.github.io/docs). Scenario files used
+by A/B Street are documented at [a-b-street.github.io/docs in the
+scenarios
+section](https://a-b-street.github.io/docs/tech/dev/formats/scenarios.html).
+See the [Building map
+data](https://a-b-street.github.io/docs//tech/dev/index.html#building-map-data)
+documentation on getting map data loaded on your computer ready to
+import data for a particular city or region. As documented in the links
+above, you can import new ‘scenario.json’ files from the system command
+line as follows (requires cargo and `abstreet` as your working
+directory):
+
+``` bash
+cd abstreet # or wherever you cloned the A/B Street repo
+./import.sh --raw --map --city=gb/leeds
+cargo run --bin import_traffic -- --map=data/system/gb/leeds/maps/north.bin --input=activity_leeds.json
+```
 
 ## Next steps
 
