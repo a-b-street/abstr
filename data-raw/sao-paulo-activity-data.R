@@ -45,7 +45,7 @@ sao_paulo_activity_sf_20 = sao_paulo_activity_df_20 %>%
     departure = H_SAIDA * 3600 + MIN_SAIDA * 60,
     mode = dplyr::case_when(
       MODOPRIN %in% 1:4  ~ "Transit",
-      MODOPRIN %in% 8:12  ~ "Car",
+      MODOPRIN %in% 8:12  ~ "Drive",
       MODOPRIN == 15 ~ "Bike",
       MODOPRIN == 16 ~ "Walk"
     ),
@@ -58,7 +58,7 @@ sao_paulo_activity_sf_20 = sao_paulo_activity_df_20 %>%
       MOTIVO_O %in% 8  ~ "Home",
       MOTIVO_O %in% 9  ~ "Work",
       MOTIVO_O %in% 10  ~ "PersonalBusiness",
-      MOTIVO_O %in% 11  ~ "Food"
+      MOTIVO_O %in% 11  ~ "Meal"
     ),
     geometry = od::odc_to_sfc(matrix)
   ) %>%
