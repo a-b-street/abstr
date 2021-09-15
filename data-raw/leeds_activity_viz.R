@@ -1,4 +1,3 @@
-library(abstr)
 library(osrm)
 library(stplanr)
 library(sf)
