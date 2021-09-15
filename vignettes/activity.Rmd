@@ -209,7 +209,11 @@ Then you can run the game as follows (you can also run the game directly and imp
 cargo run --bin game -- --dev data/system/gb/leeds/maps/north.bin
 ```
 
-And you should see something like this (see [#76](https://github.com/a-b-street/abstr/issues/76) for animated version of the image below):
+Select the scenario you want with the scenario button, as shown below.
+
+![](https://user-images.githubusercontent.com/1825120/133446982-043eaad3-e832-4e7e-bcd3-2371a9094ad8.png)
+
+Tou should see something like this (see [#76](https://github.com/a-b-street/abstr/issues/76) for animated version of the image below):
 
 
 ![](https://user-images.githubusercontent.com/1825120/133152963-a57d3812-e05c-4acb-8969-5464ab2b5d74.png)
@@ -260,3 +264,9 @@ Then you can run the game as follows (you can also run the game directly and imp
 ```bash
 cargo run --bin game -- --dev data/system/br/sao_paulo/maps/center.bin
 ```
+
+After running the game you should see a button to change scenario as shown below.
+Clicking on this will allow you to change to a scenario you have generated with `abstr`.
+After that you should see a simulation, as shown in the GIF [here](https://twitter.com/robinlovelace/status/1438086347672236033).
+
+![](https://user-images.githubusercontent.com/1825120/133446982-043eaad3-e832-4e7e-bcd3-2371a9094ad8.png)
