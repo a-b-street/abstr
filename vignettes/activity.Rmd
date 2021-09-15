@@ -199,7 +199,9 @@ file.remove("scenario1.json")
 
 ## Importing into A/B Street
 
-As described in the [documentation hosted at a-b-street.github.io/docs](https://a-b-street.github.io/docs/tech/dev/formats/scenarios.html), you can import new 'scenario.json' files from the system command line as follows (requires cargo and `abstreet` as your working directory):
+Scenario files used by A/B Street are documented at [a-b-street.github.io/docs in the scenarios section](https://a-b-street.github.io/docs/tech/dev/formats/scenarios.html).
+See the [Building map data](https://a-b-street.github.io/docs//tech/dev/index.html#building-map-data) documentation on getting map data loaded on your computer ready to import data for a particular city or region.
+As documented in the links above, you can import new 'scenario.json' files from the system command line as follows (requires cargo and `abstreet` as your working directory):
 
 ```bash
 git clone git@github.com:a-b-street/abstreet
