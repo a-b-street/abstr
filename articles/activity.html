@@ -223,10 +223,10 @@
 <div id="importing-into-ab-street" class="section level2">
 <h2 class="hasAnchor">
 <a href="#importing-into-ab-street" class="anchor"></a>Importing into A/B Street</h2>
-<p>As described in the <a href="https://a-b-street.github.io/docs/tech/dev/formats/scenarios.html">documentation hosted at a-b-street.github.io/docs</a>, you can import new ‘scenario.json’ files from the system command line as follows (requires cargo and <code>abstreet</code> as your working directory):</p>
+<p>Scenario files used by A/B Street are documented at <a href="https://a-b-street.github.io/docs/tech/dev/formats/scenarios.html">a-b-street.github.io/docs in the scenarios section</a>. See the <a href="https://a-b-street.github.io/docs//tech/dev/index.html#building-map-data">Building map data</a> documentation on getting map data loaded on your computer ready to import scenario files for a particular city or region. As documented in the links above, you can import new ‘scenario.json’ files from the system command line as follows (requires cargo and <code>abstreet</code> as your working directory):</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1"></a><span class="fu">git</span> clone git@github.com:a-b-street/abstreet</span>
 <span id="cb15-2"><a href="#cb15-2"></a><span class="bu">cd</span> abstreet <span class="co"># or wherever you cloned the A/B Street repo</span></span>
-<span id="cb15-3"><a href="#cb15-3"></a><span class="ex">./import.sh</span> --raw --map --city=br/sao_paulo</span>
+<span id="cb15-3"><a href="#cb15-3"></a><span class="ex">./import.sh</span> --raw --map --city=gb/leeds</span>
 <span id="cb15-4"><a href="#cb15-4"></a><span class="ex">cargo</span> run --bin import_traffic -- --map=data/system/gb/leeds/maps/north.bin --input=activity_leeds.json</span></code></pre></div>
 <p>Then you can run the game as follows (you can also run the game directly and import the scenario by selecting a file using the GUI):</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1"></a><span class="ex">cargo</span> run --bin game -- --dev data/system/gb/leeds/maps/north.bin</span></code></pre></div>
