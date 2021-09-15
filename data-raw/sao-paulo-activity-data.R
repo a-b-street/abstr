@@ -5,6 +5,7 @@ temp = tempfile()
 download.file("https://transparencia.metrosp.com.br/node/3322/download", temp, mode="wb")
 OD_SP_2017_ALL = read.dbf(unzip(temp, "OD-2017/Banco de Dados-OD2017/OD_2017_v1.dbf"), as.is = FALSE)
 # unlink(temp, recursive = T, force = T) # uncomment to remove temp file
+unlink("OD-2017/", recursive = TRUE)
 
 # just São Paulo municipality with short trips
 OD_SP_2017_OUTSIDE = OD_SP_2017_ALL %>%

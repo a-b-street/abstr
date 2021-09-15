@@ -44,13 +44,10 @@
 #' @format A data frame with columns:
 #' \describe{
 #' \item{person}{Person identifier.}
-#' \item{CO_O_X}{Origin coordinate X.}
-#' \item{CO_O_Y}{Origin coordinate Y.}
-#' \item{CO_D_X}{Destination coordinate X.}
-#' \item{CO_D_Y}{Destination coordinate Y.}
-#' \item{MODOPRIN}{Main mode.}
-#' \item{H_SAIDA}{Departure hour.}
-#' \item{MIN_SAIDA}{Departure minute.}
+#' \item{departure}{Departure time in seconds past midnight}
+#' \item{mode}{Mode of travel in A/B Street terms}
+#' \item{purpose}{Purpose of travel in A/B Street terms}
+#' \item{geometry}{Geometry of the linestring representing the OD pair}
 #' }
 #' @aliases sao_paulo_activity_sf_2
 #' @examples
