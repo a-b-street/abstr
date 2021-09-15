@@ -127,7 +127,15 @@ Finally, the list representation can be saved as a `.json` file as follows:
 ab_save(od_json1, f = "scenario1.json")
 ```
 
+Note: you may want to save the file to a different location, e.g. to the directory where you have cloned the `a-b-street/abstreet` repo (see below for more on this and change `~/orgs/a-b-street/abstreet` to the location where the repo is saved on your computer):
+
+```{r, eval=FALSE}
+ab_save(od_json1, f = "~/orgs/a-b-street/abstreet/scenario1.json")
+```
+
+
 ```{r, eval=FALSE, echo=FALSE}
+# Regenerate json data 
 ab_save(od_json, "inst/extdata/activity_leeds.json")
 ```
 
@@ -173,7 +181,9 @@ You can check the 'round trip' conversion of this JSON representation back into 
 <!-- Todo: these are not totally identical, only the geomtry is: -->
 
 ```{r}
-od_sf_roundtrip = ab_sf(json = system.file("extdata/activity_leeds.json", package = "abstr"))
+od_sf_roundtrip = ab_sf("activity_leeds.json")
+# Or in the file saved in the abstr package
+# od_sf_roundtrip = ab_sf(json = system.file("extdata/activity_leeds.json", package = "abstr"))
 identical(od_sf$geometry, od_sf_roundtrip$geometry) 
 ```
 
@@ -187,7 +197,10 @@ file.remove("scenario1.json")
 As described in the [documentation hosted at a-b-street.github.io/docs](https://a-b-street.github.io/docs/tech/dev/formats/scenarios.html), you can import new 'scenario.json' files from the system command line as follows (requires cargo and `abstreet` as your working directory):
 
 ```bash
-cargo run --bin import_traffic -- --map=data/system/gb/leeds/maps/north.bin --input=/home/activity_leeds.json
+git clone git@github.com:a-b-street/abstreet
+cd abstreet # or wherever you cloned the A/B Street repo
+./import.sh --city=gb/leeds --map north
+cargo run --bin import_traffic -- --map=data/system/gb/leeds/maps/north.bin --input=activity_leeds.json
 ```
 
 Then you can run the game as follows (you can also run the game directly and import the scenario by selecting a file using the GUI):
@@ -216,8 +229,8 @@ head(sao_paulo_activity_sf_2)
 sp_2_json = ab_json(sao_paulo_activity_sf_2, mode_column = "mode", scenario_name = "2-agents")
 ```
 
-```{r, eval=FALSE, echo=FALSE}
-ab_save(sp_2_json, "./inst/extdata/activity_sp_2.json")
+```{r, eval=FALSE}
+ab_save(sp_2_json, "activity_sp_2.json")
 ```
 
 ```{r}
@@ -225,7 +238,25 @@ head(sao_paulo_activity_sf_20)
 sp_20_json = ab_json(sao_paulo_activity_sf_20, mode_column = "mode", scenario_name = "20-agents")
 ```
 
-```{r, eval=FALSE, echo=FALSE}
-ab_save(sp_20_json, "./inst/extdata/activity_sp_20.json")
+```{r, eval=FALSE}
+ab_save(sp_20_json, "activity_sp_20.json") # save in current folder, or:
+# save to directory where you cloned the abstreet repo 
+# (replace '~/orgs...' with the path to your local directory)
+# ab_save(sp_20_json, "~/orgs/a-b-street/abstreet/activity_sp_20.json")
 ```
 
+As with the Leeds example, you can import the data, after saving it with `ab_save()` into the folder where you have cloned the `a-b-street/abstreet` repo, from the system command line as follows:
+
+```bash
+git clone git@github.com:a-b-street/abstreet
+cd abstreet # or wherever you cloned the A/B Street repo
+./import.sh --city=br/sao_paulo --raw center
+./import.sh --city=br/sao_paulo --map center
+cargo run --bin import_traffic -- --map=data/system/br/sao_paulo/maps/center.bin --input=activity_sp_20.json
+```
+
+Then you can run the game as follows (you can also run the game directly and import the scenario by selecting a file using the GUI):
+
+```bash
+cargo run --bin game -- --dev data/system/br/sao_paulo/maps/center.bin
+```
