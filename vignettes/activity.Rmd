@@ -204,7 +204,7 @@ As described in the [documentation hosted at a-b-street.github.io/docs](https://
 ```bash
 git clone git@github.com:a-b-street/abstreet
 cd abstreet # or wherever you cloned the A/B Street repo
-./import.sh --city=gb/leeds --map north
+./import.sh --raw --map --city=br/sao_paulo
 cargo run --bin import_traffic -- --map=data/system/gb/leeds/maps/north.bin --input=activity_leeds.json
 ```
 
@@ -259,8 +259,7 @@ As with the Leeds example, you can import the data, after saving it with `ab_sav
 ```bash
 git clone git@github.com:a-b-street/abstreet
 cd abstreet # or wherever you cloned the A/B Street repo
-./import.sh --city=br/sao_paulo --raw center
-./import.sh --city=br/sao_paulo --map center
+./import.sh --raw --map --city=br/sao_paulo
 cargo run --bin import_traffic -- --map=data/system/br/sao_paulo/maps/center.bin --input=activity_sp_20.json
 ```
 
