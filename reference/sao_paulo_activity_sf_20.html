@@ -185,11 +185,11 @@ in the package's GitHub repo.</p>
 #&gt; <span style='color: #BCBCBC;'>5</span> 00030743103     <span style='text-decoration: underline;'>24</span>900 Walk  Home    (-46.62906 -23.55553, -46.629 -23.55449)
 #&gt; <span style='color: #BCBCBC;'>6</span> 00030743103     <span style='text-decoration: underline;'>25</span>500 Walk  School  (-46.629 -23.55449, -46.62906 -23.55553)</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>sao_paulo_activity_sf_20</span><span class='op'>$</span><span class='va'>mode</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; 
-#&gt;     Car Transit    Walk 
+#&gt;   Drive Transit    Walk 
 #&gt;      12       4      72 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>sao_paulo_activity_sf_20</span><span class='op'>$</span><span class='va'>purpose</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; 
-#&gt;       Food       Home Recreation     School   Shopping       Work 
-#&gt;          2         39          3         14          2         28 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span><span class='op'>(</span><span class='va'>sao_paulo_activity_sf_2</span><span class='op'>)</span>
+#&gt;       Home       Meal Recreation     School   Shopping       Work 
+#&gt;         39          2          3         14          2         28 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span><span class='op'>(</span><span class='va'>sao_paulo_activity_sf_2</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] 6 5</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>sao_paulo_activity_sf_2</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "person"    "departure" "mode"      "purpose"   "geometry" </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>sao_paulo_activity_sf_2</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Simple feature collection with 6 features and 4 fields

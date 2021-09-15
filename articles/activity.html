@@ -232,6 +232,23 @@
 <h1 class="hasAnchor">
 <a href="#intermediate-example-sao-paulo" class="anchor"></a>Intermediate example: Sao Paulo</h1>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">sao_paulo_activity_sf_2</span><span class="op">)</span>
+<span class="co">#&gt; Simple feature collection with 6 features and 4 fields</span>
+<span class="co">#&gt; Geometry type: LINESTRING</span>
+<span class="co">#&gt; Dimension:     XY</span>
+<span class="co">#&gt; Bounding box:  xmin: -46.64341 ymin: -23.56186 xmax: -46.63204 ymax: -23.54425</span>
+<span class="co">#&gt; Geodetic CRS:  WGS 84</span>
+<span class="co">#&gt; # A tibble: 6 × 5</span>
+<span class="co">#&gt;   person      departure mode    purpose                                 geometry</span>
+<span class="co">#&gt;   &lt;chr&gt;           &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;                           &lt;LINESTRING [°]&gt;</span>
+<span class="co">#&gt; 1 00240507101     30600 Transit Home       (-46.63204 -23.5592, -46.63422 -23.5…</span>
+<span class="co">#&gt; 2 00240507101     33600 Walk    Shopping   (-46.63422 -23.55028, -46.64341 -23.…</span>
+<span class="co">#&gt; 3 00240507101     63000 Transit Work       (-46.64341 -23.54499, -46.63204 -23.…</span>
+<span class="co">#&gt; 4 00241455101     39600 Transit Home       (-46.63329 -23.56186, -46.63264 -23.…</span>
+<span class="co">#&gt; 5 00241455101     45600 Transit Shopping   (-46.63264 -23.54425, -46.63508 -23.…</span>
+<span class="co">#&gt; 6 00241455101     52200 Walk    Recreation (-46.63508 -23.55833, -46.63329 -23.…</span>
+<span class="va">sp_2_json</span> <span class="op">=</span> <span class="fu"><a href="../reference/ab_json.html">ab_json</a></span><span class="op">(</span><span class="va">sao_paulo_activity_sf_2</span>, mode_column <span class="op">=</span> <span class="st">"mode"</span>, scenario_name <span class="op">=</span> <span class="st">"2-agents"</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">sao_paulo_activity_sf_20</span><span class="op">)</span>
 <span class="co">#&gt; Simple feature collection with 6 features and 4 fields</span>
 <span class="co">#&gt; Geometry type: LINESTRING</span>
