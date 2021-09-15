@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Example Activity data for São Paulo (20 agents) — sao_paulo_activity_df_20 • abstr</title>
+<title>Example Activity data for São Paulo — sao_paulo_activity_df_20 • abstr</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,10 @@
 
 
 
-<meta property="og:title" content="Example Activity data for São Paulo (20 agents) — sao_paulo_activity_df_20" />
-<meta property="og:description" content="Each row of this table contains a single trip of 20 different agents in the São Paulo city." />
+<meta property="og:title" content="Example Activity data for São Paulo — sao_paulo_activity_df_20" />
+<meta property="og:description" content="Each row of this table contains a single trip of people in the São Paulo city.
+sao_paulo_activity_df_2 represents the movement of 2 people,
+sao_paulo_activity_df_20 represents the movement of 20 people." />
 
 
 
@@ -132,13 +134,15 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Example Activity data for São Paulo (20 agents)</h1>
+    <h1>Example Activity data for São Paulo</h1>
     <small class="dont-index">Source: <a href='https://github.com/a-b-street/abstr/blob/master/R/sao_paulo_activity_df_20.R'><code>R/sao_paulo_activity_df_20.R</code></a></small>
     <div class="hidden name"><code>sao_paulo_activity_df_20.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Each row of this table contains a single trip of 20 different agents in the São Paulo city.</p>
+    <p>Each row of this table contains a single trip of people in the São Paulo city.
+<code>sao_paulo_activity_df_2</code> represents the movement of 2 people,
+<code>sao_paulo_activity_df_20</code> represents the movement of 20 people.</p>
     </div>
 
     <pre class="usage"><span class='va'>sao_paulo_activity_df_20</span></pre>
@@ -147,141 +151,50 @@
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
     <p>A data frame with columns:</p><dl>
-<dt>ZONA</dt><dd><p>Household zone.</p></dd>
-<dt>MUNI_DOM</dt><dd><p>Household municipality.</p></dd>
-<dt>CO_DOM_X</dt><dd><p>Household coordinate X.</p></dd>
-<dt>CO_DOM_Y</dt><dd><p>Household coordinate Y.</p></dd>
-<dt>ID_DOM</dt><dd><p>Household identifier.</p></dd>
-<dt>F_DOM</dt><dd><p>Identify first household record.</p></dd>
-<dt>FE_DOM</dt><dd><p>Household expansion factor.</p></dd>
-<dt>DOM</dt><dd><p>Household number.</p></dd>
-<dt>CD_ENTRE</dt><dd><p>Interview code.</p></dd>
-<dt>DATA</dt><dd><p>Date of interview.</p></dd>
-<dt>TIPO_DOM</dt><dd><p>Type of household.</p></dd>
-<dt>AGUA</dt><dd><p>Do you have piped water?.</p></dd>
-<dt>RUA_PAVI</dt><dd><p>Is the street paved?.</p></dd>
-<dt>NO_MORAD</dt><dd><p>Household size.</p></dd>
-<dt>TOT_FAM</dt><dd><p>Total families in the household.</p></dd>
-<dt>ID_FAM</dt><dd><p>Family identifier.</p></dd>
-<dt>F_FAM</dt><dd><p>Identify first family record.</p></dd>
-<dt>FE_FAM</dt><dd><p>Famiy expansion factor.</p></dd>
-<dt>FAMILIA</dt><dd><p>Family number</p></dd>
-<dt>NO_MORAF</dt><dd><p>Family size.</p></dd>
-<dt>CONDMORA</dt><dd><p>Housing condition.</p></dd>
-<dt>QT_BANHO</dt><dd><p>Bathrooms.</p></dd>
-<dt>QT_EMPRE</dt><dd><p>Domestic workers.</p></dd>
-<dt>QT_AUTO</dt><dd><p>Automobiles.</p></dd>
-<dt>QT_MICRO</dt><dd><p>Microcomputers.</p></dd>
-<dt>QT_LAVALOU</dt><dd><p>Dishwashers.</p></dd>
-<dt>QT_GEL1</dt><dd><p>One door refrigerator.</p></dd>
-<dt>QT_GEL2</dt><dd><p>Two door refrigerator.</p></dd>
-<dt>QT_FREEZ</dt><dd><p>Frezers.</p></dd>
-<dt>QT_MLAVA</dt><dd><p>Washing machines.</p></dd>
-<dt>QT_DVD</dt><dd><p>DVDs.</p></dd>
-<dt>QT_MICROON</dt><dd><p>Microwave oven.</p></dd>
-<dt>QT_MOTO</dt><dd><p>Motorcycles.</p></dd>
-<dt>QT_SECAROU</dt><dd><p>Clothes dryer.</p></dd>
-<dt>QT_BICICLE</dt><dd><p>Bikes.</p></dd>
-<dt>NAO_DCL_IT</dt><dd><p>Comfort item declaration code.</p></dd>
-<dt>CRITERIOBR</dt><dd><p>Critério de Classificação Econômica Brasil.</p></dd>
-<dt>PONTO_BR</dt><dd><p>Critério Brasil points.</p></dd>
-<dt>ANO_AUTO1</dt><dd><p>Year of manufacture of Auto 1.</p></dd>
-<dt>ANO_AUTO2</dt><dd><p>Year of manufacture of Auto 2.</p></dd>
-<dt>ANO_AUTO3</dt><dd><p>Year of manufacture of Auto 3.</p></dd>
-<dt>RENDA_FA</dt><dd><p>Monthly family income.</p></dd>
-<dt>CD_RENFA</dt><dd><p>Monthly family income code.</p></dd>
 <dt>ID_PESS</dt><dd><p>Person identifier.</p></dd>
-<dt>F_PESS</dt><dd><p>Identifies first person record.</p></dd>
-<dt>FE_PESS</dt><dd><p>Person expansion factor.</p></dd>
-<dt>PESSOA</dt><dd><p>Person number.</p></dd>
-<dt>SIT_FAM</dt><dd><p>Family situation.</p></dd>
-<dt>IDADE</dt><dd><p>Age.</p></dd>
-<dt>SEXO</dt><dd><p>Sex.</p></dd>
-<dt>ESTUDA</dt><dd><p>Are you currently studying?</p></dd>
-<dt>GRAU_INS</dt><dd><p>Education.</p></dd>
-<dt>CD_ATIVI</dt><dd><p>Labor market status.</p></dd>
-<dt>CO_REN_I</dt><dd><p>Individual income condition.</p></dd>
-<dt>VL_REN_I</dt><dd><p>Individual income.</p></dd>
-<dt>ZONA_ESC</dt><dd><p>School zone.</p></dd>
-<dt>MUNIESC</dt><dd><p>School municipality.</p></dd>
-<dt>CO_ESC_X</dt><dd><p>School coordinate X.</p></dd>
-<dt>CO_ESC_Y</dt><dd><p>School coordinate Y.</p></dd>
-<dt>TIPO_ESC</dt><dd><p>Type of school.</p></dd>
-<dt>ZONATRA1</dt><dd><p>Zone of 1st job.</p></dd>
-<dt>MUNITRA1</dt><dd><p>Municipality of 1st job.</p></dd>
-<dt>CO_TR1_X</dt><dd><p>1st job coordinate X.</p></dd>
-<dt>CO_TR1_Y</dt><dd><p>1st job coordinate Y.</p></dd>
-<dt>TRAB1_RE</dt><dd><p>Does 1st job equal residency?</p></dd>
-<dt>TRABEXT1</dt><dd><p>Performs outside work - 1st job.</p></dd>
-<dt>OCUP1</dt><dd><p>1st job occupation.</p></dd>
-<dt>SETOR1</dt><dd><p>1st job activity sector.</p></dd>
-<dt>VINC1</dt><dd><p>1st job employment relationship</p></dd>
-<dt>ZONATRA2</dt><dd><p>Zone of the 2nd job.</p></dd>
-<dt>MUNITRA2</dt><dd><p>Municipality of the 2nd job.</p></dd>
-<dt>CO_TR2_X</dt><dd><p>2nd job coordinate X.</p></dd>
-<dt>CO_TR2_Y</dt><dd><p>2nd job coordinate Y.</p></dd>
-<dt>TRAB2_RE</dt><dd><p>Does 2nd job equal residency?</p></dd>
-<dt>TRABEXT2</dt><dd><p>Performs outside work - 2nd job.</p></dd>
-<dt>OCUP2</dt><dd><p>2nd job occupation.</p></dd>
-<dt>SETOR2</dt><dd><p>2nd job activity sector.</p></dd>
-<dt>VINC2</dt><dd><p>2nd job employment relationship.</p></dd>
-<dt>N_VIAG</dt><dd><p>Trip number.</p></dd>
-<dt>FE_VIA</dt><dd><p>Trip expansion factor.</p></dd>
-<dt>DIA_SEM</dt><dd><p>Day of the week.</p></dd>
-<dt>TOT_VIAG</dt><dd><p>Total person's trip.</p></dd>
-<dt>ZONA_O</dt><dd><p>Zone of origin.</p></dd>
-<dt>MUNI_O</dt><dd><p>Municipality of origin.</p></dd>
 <dt>CO_O_X</dt><dd><p>Origin coordinate X.</p></dd>
 <dt>CO_O_Y</dt><dd><p>Origin coordinate Y.</p></dd>
-<dt>ZONA_D</dt><dd><p>Zone of destination.</p></dd>
-<dt>MUNI_D</dt><dd><p>Municipality of destination.</p></dd>
 <dt>CO_D_X</dt><dd><p>Destination coordinate X.</p></dd>
 <dt>CO_D_Y</dt><dd><p>Destination coordinate Y.</p></dd>
-<dt>ZONA_T1</dt><dd><p>Zone of the 1st transfer.</p></dd>
-<dt>MUNI_T1</dt><dd><p>Municipality of the 1st transfer.</p></dd>
-<dt>CO_T1_X</dt><dd><p>1st transfer coordinate X.</p></dd>
-<dt>CO_T1_Y</dt><dd><p>1st transfer coordinate Y.</p></dd>
-<dt>ZONA_T2</dt><dd><p>Zone of the 2nd transfer.</p></dd>
-<dt>MUNI_T2</dt><dd><p>Municipality of the 2nd transfer.</p></dd>
-<dt>CO_T2_X</dt><dd><p>2nd transfer coordinate X.</p></dd>
-<dt>CO_T2_Y</dt><dd><p>2nd transfer coordinate Y.</p></dd>
-<dt>ZONA_T3</dt><dd><p>Zone of the third transfer.</p></dd>
-<dt>MUNI_T3</dt><dd><p>Municipality of the 3rd transfer.</p></dd>
-<dt>CO_T3_X</dt><dd><p>3rd transfer coordinate X.</p></dd>
-<dt>CO_T3_Y</dt><dd><p>3rd transfer coordinate Y.</p></dd>
-<dt>MOTIVO_O</dt><dd><p>Reason at origin.</p></dd>
-<dt>MOTIVO_D</dt><dd><p>Reason at destination.</p></dd>
-<dt>MOT_SRES</dt><dd><p>Reason at destination without residence.</p></dd>
-<dt>SERVIR_O</dt><dd><p>Serving passenger at origin.</p></dd>
-<dt>SERVIR_D</dt><dd><p>Serving passenger at destination.</p></dd>
-<dt>MODO1</dt><dd><p>Mode 1.</p></dd>
-<dt>MODO2</dt><dd><p>Mode 2.</p></dd>
-<dt>MODO3</dt><dd><p>Mode 3.</p></dd>
-<dt>MODO4</dt><dd><p>Mode 4.</p></dd>
+<dt>MODOPRIN</dt><dd><p>Main mode.</p></dd>
 <dt>H_SAIDA</dt><dd><p>Departure hour.</p></dd>
 <dt>MIN_SAIDA</dt><dd><p>Departure minute.</p></dd>
-<dt>ANDA_O</dt><dd><p>Time walking in origin.</p></dd>
-<dt>H_CHEG</dt><dd><p>Arrival hour.</p></dd>
-<dt>MIN_CHEG</dt><dd><p>Arrival minute.</p></dd>
-<dt>ANDA_D</dt><dd><p>Time walking in destination.</p></dd>
-<dt>DURACAO</dt><dd><p>Duration.</p></dd>
-<dt>MODOPRIN</dt><dd><p>Main mode.</p></dd>
-<dt>TIPVG</dt><dd><p>Type of trip.</p></dd>
-<dt>PAG_VIAG</dt><dd><p>Who paid for the trip.</p></dd>
-<dt>TP_ESAUTO</dt><dd><p>Type of car or motorcycle parking.</p></dd>
-<dt>VL_EST</dt><dd><p>Car or motorcycle parking value.</p></dd>
-<dt>PE_BICI</dt><dd><p>Why did you travel by foot or bike?</p></dd>
-<dt>VIA_BICI</dt><dd><p>If you traveled by bicycle, did you use the segregated route?</p></dd>
-<dt>TP_ESBICI</dt><dd><p>Bike parking.</p></dd>
-<dt>DISTANCIA</dt><dd><p>Distance (meters).</p></dd>
-<dt>ID_ORDEM</dt><dd><p>Registration order number.</p></dd>
 
 </dl>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>See the code used to create this data in "data-raw/sao-paulo-activity-data.R"</p>
+    <p>See the code used to create this data, and the full open dataset with
+128 variables, the file
+<a href='https://github.com/a-b-street/abstr/blob/main/data-raw/sao-paulo-activity-data.R'>data-raw/sao-paulo-activity-data.R</a>
+in the package's GitHub repo.</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span><span class='op'>(</span><span class='va'>sao_paulo_activity_df_20</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 88  9</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>sao_paulo_activity_df_20</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "ID_PESS"   "CO_O_X"    "CO_O_Y"    "CO_D_X"    "CO_D_Y"    "MODOPRIN" 
+#&gt; [7] "MOTIVO_O"  "H_SAIDA"   "MIN_SAIDA"</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>sao_paulo_activity_df_20</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 6 × 9</span>
+#&gt;   ID_PESS     CO_O_X  CO_O_Y CO_D_X  CO_D_Y MODOPRIN MOTIVO_O H_SAIDA MIN_SAIDA
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> 00030710102 <span style='text-decoration: underline;'>333</span>614 7<span style='text-decoration: underline;'>394</span>212 <span style='text-decoration: underline;'>333</span>611 7<span style='text-decoration: underline;'>394</span>202       16        8       8         0
+#&gt; <span style='color: #BCBCBC;'>2</span> 00030710102 <span style='text-decoration: underline;'>333</span>611 7<span style='text-decoration: underline;'>394</span>202 <span style='text-decoration: underline;'>333</span>614 7<span style='text-decoration: underline;'>394</span>212       16        1      13         0
+#&gt; <span style='color: #BCBCBC;'>3</span> 00030710102 <span style='text-decoration: underline;'>333</span>614 7<span style='text-decoration: underline;'>394</span>212 <span style='text-decoration: underline;'>333</span>611 7<span style='text-decoration: underline;'>394</span>202       16        8      13        40
+#&gt; <span style='color: #BCBCBC;'>4</span> 00030710102 <span style='text-decoration: underline;'>333</span>611 7<span style='text-decoration: underline;'>394</span>202 <span style='text-decoration: underline;'>333</span>614 7<span style='text-decoration: underline;'>394</span>212       16        1      17         0
+#&gt; <span style='color: #BCBCBC;'>5</span> 00030743103 <span style='text-decoration: underline;'>333</span>754 7<span style='text-decoration: underline;'>394</span>044 <span style='text-decoration: underline;'>333</span>759 7<span style='text-decoration: underline;'>394</span>160       16        8       6        55
+#&gt; <span style='color: #BCBCBC;'>6</span> 00030743103 <span style='text-decoration: underline;'>333</span>759 7<span style='text-decoration: underline;'>394</span>160 <span style='text-decoration: underline;'>333</span>754 7<span style='text-decoration: underline;'>394</span>044       16        4       7         5</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span><span class='op'>(</span><span class='va'>sao_paulo_activity_df_2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 6 9</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>sao_paulo_activity_df_2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "ID_PESS"   "CO_O_X"    "CO_O_Y"    "CO_D_X"    "CO_D_Y"    "MODOPRIN" 
+#&gt; [7] "MOTIVO_O"  "H_SAIDA"   "MIN_SAIDA"</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>sao_paulo_activity_df_2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 6 × 9</span>
+#&gt;   ID_PESS     CO_O_X  CO_O_Y CO_D_X  CO_D_Y MODOPRIN MOTIVO_O H_SAIDA MIN_SAIDA
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> 00240507101 <span style='text-decoration: underline;'>333</span>454 7<span style='text-decoration: underline;'>393</span>635 <span style='text-decoration: underline;'>333</span>221 7<span style='text-decoration: underline;'>394</span>620        4        8       8        30
+#&gt; <span style='color: #BCBCBC;'>2</span> 00240507101 <span style='text-decoration: underline;'>333</span>221 7<span style='text-decoration: underline;'>394</span>620 <span style='text-decoration: underline;'>332</span>276 7<span style='text-decoration: underline;'>395</span>195       16        5       9        20
+#&gt; <span style='color: #BCBCBC;'>3</span> 00240507101 <span style='text-decoration: underline;'>332</span>276 7<span style='text-decoration: underline;'>395</span>195 <span style='text-decoration: underline;'>333</span>454 7<span style='text-decoration: underline;'>393</span>635        4        3      17        30
+#&gt; <span style='color: #BCBCBC;'>4</span> 00241455101 <span style='text-decoration: underline;'>333</span>330 7<span style='text-decoration: underline;'>393</span>338 <span style='text-decoration: underline;'>333</span>374 7<span style='text-decoration: underline;'>395</span>289        1        8      11         0
+#&gt; <span style='color: #BCBCBC;'>5</span> 00241455101 <span style='text-decoration: underline;'>333</span>374 7<span style='text-decoration: underline;'>395</span>289 <span style='text-decoration: underline;'>333</span>143 7<span style='text-decoration: underline;'>393</span>727        1        5      12        40
+#&gt; <span style='color: #BCBCBC;'>6</span> 00241455101 <span style='text-decoration: underline;'>333</span>143 7<span style='text-decoration: underline;'>393</span>727 <span style='text-decoration: underline;'>333</span>330 7<span style='text-decoration: underline;'>393</span>338       16        7      14        30</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
