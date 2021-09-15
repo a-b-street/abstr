@@ -226,7 +226,7 @@
 <p>As described in the <a href="https://a-b-street.github.io/docs/tech/dev/formats/scenarios.html">documentation hosted at a-b-street.github.io/docs</a>, you can import new ‘scenario.json’ files from the system command line as follows (requires cargo and <code>abstreet</code> as your working directory):</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1"></a><span class="fu">git</span> clone git@github.com:a-b-street/abstreet</span>
 <span id="cb15-2"><a href="#cb15-2"></a><span class="bu">cd</span> abstreet <span class="co"># or wherever you cloned the A/B Street repo</span></span>
-<span id="cb15-3"><a href="#cb15-3"></a><span class="ex">./import.sh</span> --city=gb/leeds --map north</span>
+<span id="cb15-3"><a href="#cb15-3"></a><span class="ex">./import.sh</span> --raw --map --city=br/sao_paulo</span>
 <span id="cb15-4"><a href="#cb15-4"></a><span class="ex">cargo</span> run --bin import_traffic -- --map=data/system/gb/leeds/maps/north.bin --input=activity_leeds.json</span></code></pre></div>
 <p>Then you can run the game as follows (you can also run the game directly and import the scenario by selecting a file using the GUI):</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1"></a><span class="ex">cargo</span> run --bin game -- --dev data/system/gb/leeds/maps/north.bin</span></code></pre></div>
@@ -287,9 +287,8 @@
 <p>As with the Leeds example, you can import the data, after saving it with <code><a href="../reference/ab_save.html">ab_save()</a></code> into the folder where you have cloned the <code>a-b-street/abstreet</code> repo, from the system command line as follows:</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">git</span> clone git@github.com:a-b-street/abstreet</span>
 <span id="cb21-2"><a href="#cb21-2"></a><span class="bu">cd</span> abstreet <span class="co"># or wherever you cloned the A/B Street repo</span></span>
-<span id="cb21-3"><a href="#cb21-3"></a><span class="ex">./import.sh</span> --city=br/sao_paulo --raw center</span>
-<span id="cb21-4"><a href="#cb21-4"></a><span class="ex">./import.sh</span> --city=br/sao_paulo --map center</span>
-<span id="cb21-5"><a href="#cb21-5"></a><span class="ex">cargo</span> run --bin import_traffic -- --map=data/system/br/sao_paulo/maps/center.bin --input=activity_sp_20.json</span></code></pre></div>
+<span id="cb21-3"><a href="#cb21-3"></a><span class="ex">./import.sh</span> --raw --map --city=br/sao_paulo</span>
+<span id="cb21-4"><a href="#cb21-4"></a><span class="ex">cargo</span> run --bin import_traffic -- --map=data/system/br/sao_paulo/maps/center.bin --input=activity_sp_20.json</span></code></pre></div>
 <p>Then you can run the game as follows (you can also run the game directly and import the scenario by selecting a file using the GUI):</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1"></a><span class="ex">cargo</span> run --bin game -- --dev data/system/br/sao_paulo/maps/center.bin</span></code></pre></div>
 <p>After running the game you should see a button to change scenario as shown below. Clicking on this will allow you to change to a scenario you have generated with <code>abstr</code>. After that you should see a simulation, as shown in the GIF <a href="https://twitter.com/robinlovelace/status/1438086347672236033">here</a>.</p>
