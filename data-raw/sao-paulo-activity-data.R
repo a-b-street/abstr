@@ -3,35 +3,35 @@ library(foreign)
 
 temp = tempfile()
 download.file("https://transparencia.metrosp.com.br/node/3322/download", temp, mode="wb")
-OD_SP_2017 = read.dbf(unzip(temp, "OD-2017/Banco de Dados-OD2017/OD_2017_v1.dbf"), as.is = FALSE)
+OD_SP_2017_ALL = read.dbf(unzip(temp, "OD-2017/Banco de Dados-OD2017/OD_2017_v1.dbf"), as.is = FALSE)
 # unlink(temp, recursive = T, force = T) # uncomment to remove temp file
 
 # just São Paulo municipality with short trips
-OD_SP_2017 = OD_SP_2017 %>%
-  filter(ZONA_O %in% c(1:9, 18:19, 24:26) & ZONA_D %in% c(1:9, 18:19, 24:26))
+OD_SP_2017_OUTSIDE = OD_SP_2017_ALL %>%
+  filter(!ZONA_O %in% c(1:9, 18:19, 24:26) | !ZONA_D %in% c(1:9, 18:19, 24:26))
+agents_who_stay_inside_sp_center = setdiff(OD_SP_2017_ALL$ID_PESS, OD_SP_2017_OUTSIDE$ID_PESS)
+OD_SP_2017 = OD_SP_2017_ALL %>%
+  filter(ID_PESS %in% agents_who_stay_inside_sp_center) %>%
+  group_by(ID_PESS) %>%
+  filter(n() > 2) %>%
+  ungroup()
+  # filter(ZONA_O %in% c(1:9, 18:19, 24:26) & ZONA_D %in% c(1:9, 18:19, 24:26))
+
+table(OD_SP_2017$MOTIVO_O)
+table(OD_SP_2017$MOTIVO_D)
 
 head(OD_SP_2017)
 sapply(OD_SP_2017, class)
 people = unique(OD_SP_2017$ID_PESS)
 
-set.seed(42)
-
+set.seed(2021) # for reproducible results
 sao_paulo_activity_df_20 = OD_SP_2017 %>%
   filter(ID_PESS %in% sample(people, 20))
 
 # generate smaller subset of data
 sao_paulo_activity_df_20 = sao_paulo_activity_df_20 %>%
-  dplyr::select(ID_PESS, CO_O_X, CO_O_Y, CO_D_X, CO_D_Y, MODOPRIN, H_SAIDA, MIN_SAIDA) %>%
-  dplyr::mutate(
-    departure = round(H_SAIDA + MIN_SAIDA/60, digits = 2),
-    mode = dplyr::case_when(
-      MODOPRIN %in% 1:4  ~ "Transit",
-      MODOPRIN %in% 8:12  ~ "Car",
-      MODOPRIN == 15 ~ "Bike",
-      MODOPRIN == 16 ~ "Walk"
-    )
-    ) %>%
-  dplyr::rename(person = ID_PESS)
+  dplyr::select(ID_PESS, CO_O_X, CO_O_Y, CO_D_X, CO_D_Y, MODOPRIN, MOTIVO_O, H_SAIDA, MIN_SAIDA) %>%
+  mutate(ID_PESS = as.character(ID_PESS))
 
 matrix = sao_paulo_activity_df_20 %>% dplyr::select(CO_O_X, CO_O_Y, CO_D_X, CO_D_Y)
 
@@ -39,21 +39,44 @@ table(sao_paulo_activity_df_20$MODOPRIN)
 
 sao_paulo_activity_sf_20 = sao_paulo_activity_df_20 %>%
   select(-matches("CO")) %>%
-  dplyr::mutate(
+  dplyr::transmute(
+    person = ID_PESS,
+    departure = H_SAIDA * 3600 + MIN_SAIDA * 60,
+    mode = dplyr::case_when(
+      MODOPRIN %in% 1:4  ~ "Transit",
+      MODOPRIN %in% 8:12  ~ "Car",
+      MODOPRIN == 15 ~ "Bike",
+      MODOPRIN == 16 ~ "Walk"
+    ),
+    purpose = dplyr::case_when(
+      MOTIVO_O %in% 1:3  ~ "Work",
+      MOTIVO_O %in% 4  ~ "School",
+      MOTIVO_O %in% 5  ~ "Shopping",
+      MOTIVO_O %in% 6  ~ "Medical",
+      MOTIVO_O %in% 7  ~ "Recreation",
+      MOTIVO_O %in% 8  ~ "Home",
+      MOTIVO_O %in% 9  ~ "Work",
+      MOTIVO_O %in% 10  ~ "PersonalBusiness",
+      MOTIVO_O %in% 11  ~ "Food"
+    ),
     geometry = od::odc_to_sfc(matrix)
   ) %>%
   sf::st_sf(crs = 22523) %>% # the local projection
   sf::st_transform(crs = 4326)
 
+# people2 = sample(sao_paulo_activity_df_20$ID_PESS, 2)
+mapview::mapview(sao_paulo_activity_sf_20)
+people2 = c("00241455101", "00240507101") # 2 interesting people found on the map
 sao_paulo_activity_df_2 = sao_paulo_activity_df_20 %>%
-  filter(person %in% sample(person, 2))
+  filter(ID_PESS %in% people2)
 
 sao_paulo_activity_sf_2 = sao_paulo_activity_sf_20 %>%
-  filter(person %in% sample(person, 2))
+  filter(person %in% people2)
 
+table(sao_paulo_activity_sf_20$mode)
+table(sao_paulo_activity_sf_2$mode)
 
-table(sao_paulo_activity_df_20$mode)
-table(sao_paulo_activity_df_2$mode)
+mapview::mapview(sao_paulo_activity_sf_2)
 
 usethis::use_data(sao_paulo_activity_df_2, overwrite = T)
 usethis::use_data(sao_paulo_activity_df_20, overwrite = T)
