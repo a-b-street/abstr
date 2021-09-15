@@ -213,7 +213,7 @@ Possible next step to sharpen your A/B Street/R skills: try adding a small scena
 
 ```{r}
 head(sao_paulo_activity_sf_2)
-sp_2_json = ab_json(sao_paulo_activity_sf_2, mode_column = "mode", scenario_name = "20-agents")
+sp_2_json = ab_json(sao_paulo_activity_sf_2, mode_column = "mode", scenario_name = "2-agents")
 ```
 
 ```{r, eval=FALSE, echo=FALSE}
