@@ -156,7 +156,10 @@ In order to import scenario files into A/B Street, you will need to:
 * Fetch the minimal amount of data needed to get started `cargo run --bin updater -- --minimal`
 
 Once you have all of this up and running, you will be able to run the scenario import. To start, open up a terminal in Visual Studio or your chosen IDE. Next edit the following command to include the local path of your scenario.json file.
-```
+
+```bash
+git clone git@github.com:a-b-street/abstreet
+cd abstreet # or wherever you cloned the A/B Street repo
 cargo run --bin import_traffic -- --map=data/system/us/seattle/maps/montlake.bin --input=/path/abstreet/input.json
 ```
 
@@ -174,7 +177,6 @@ See the [Building map data](https://a-b-street.github.io/docs//tech/dev/index.ht
 As documented in the links above, you can import new 'scenario.json' files from the system command line as follows (requires cargo and `abstreet` as your working directory):
 
 ```bash
-git clone git@github.com:a-b-street/abstreet
 cd abstreet # or wherever you cloned the A/B Street repo
 ./import.sh --raw --map --city=gb/leeds
 cargo run --bin import_traffic -- --map=data/system/gb/leeds/maps/north.bin --input=activity_leeds.json

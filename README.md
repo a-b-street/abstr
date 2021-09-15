@@ -199,7 +199,11 @@ scenario import. To start, open up a terminal in Visual Studio or your
 chosen IDE. Next edit the following command to include the local path of
 your scenario.json file.
 
-    cargo run --bin import_traffic -- --map=data/system/us/seattle/maps/montlake.bin --input=/path/abstreet/input.json
+``` bash
+git clone git@github.com:a-b-street/abstreet
+cd abstreet # or wherever you cloned the A/B Street repo
+cargo run --bin import_traffic -- --map=data/system/us/seattle/maps/montlake.bin --input=/path/abstreet/input.json
+```
 
 Given you have correctly set the file path, the scenario should now be
 imported into your local version of the Montlake map. Next you can run
@@ -227,7 +231,6 @@ line as follows (requires cargo and `abstreet` as your working
 directory):
 
 ``` bash
-git clone git@github.com:a-b-street/abstreet
 cd abstreet # or wherever you cloned the A/B Street repo
 ./import.sh --raw --map --city=gb/leeds
 cargo run --bin import_traffic -- --map=data/system/gb/leeds/maps/north.bin --input=activity_leeds.json
