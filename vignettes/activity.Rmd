@@ -177,6 +177,11 @@ od_sf_roundtrip = ab_sf(json = system.file("extdata/activity_leeds.json", packag
 identical(od_sf$geometry, od_sf_roundtrip$geometry) 
 ```
 
+```{r, echo=FALSE}
+file.remove("scenario1.json")
+```
+
+
 ## Importing into A/B Street
 
 As described in the [documentation hosted at a-b-street.github.io/docs](https://a-b-street.github.io/docs/tech/dev/formats/scenarios.html), you can import new 'scenario.json' files from the system command line as follows (requires cargo and `abstreet` as your working directory):
@@ -204,32 +209,15 @@ Possible next step to sharpen your A/B Street/R skills: try adding a small scena
 <!-- possible -->
 <!-- # Montlake example -->
 
-<!-- # Intermediate example: Sao Paulo -->
+# Intermediate example: Sao Paulo
 
 
 ```{r}
-
-sp_2_agents = sao_paulo_activity_df_2 %>%
-  dplyr::select(ID_PESS, CO_O_X, CO_O_Y, CO_D_X, CO_D_Y, MODOPRIN, H_SAIDA, MIN_SAIDA) %>%
-  dplyr::mutate(departure = round(H_SAIDA + MIN_SAIDA/60, digits = 2)) %>% 
-  dplyr::rename(person = ID_PESS)
-
-matrix = sp_2_agents %>% dplyr::select(CO_O_X, CO_O_Y, CO_D_X, CO_D_Y)
-
-sp_2_agents[,10] = od::odc_to_sf(matrix, crs = 22523)   # the local projection
-
-sp_2_agents = sp_2_agents %>%
-  sf::st_as_sf() %>%
-  sf::st_transform(crs = 4326) %>%
-  dplyr::mutate(mode = dplyr::case_when(MODOPRIN == 1  ~ "Transit",
-                                 MODOPRIN == 16 ~ "Walk")
-                )
-
-sp_2_json = ab_json(sp_2_agents, mode_column = "mode", scenario_name = "2-agents")
-
+head(sao_paulo_activity_sf_20)
+sp_20_json = ab_json(sao_paulo_activity_sf_20, mode_column = "mode", scenario_name = "20-agents")
 ```
 
 ```{r, eval=FALSE, echo=FALSE}
-ab_save(sp_2_json, "./inst/extdata/activity_sp_2.json")
+ab_save(sp_20_json, "./inst/extdata/activity_sp_2.json")
 ```
 
