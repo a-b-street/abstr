@@ -127,10 +127,15 @@ Finally, the list representation can be saved as a `.json` file as follows:
 ab_save(od_json1, f = "scenario1.json")
 ```
 
-Note: you may want to save the file to a different location, e.g. to the directory where you have cloned the `a-b-street/abstreet` repo (see below for more on this and change `~/orgs/a-b-street/abstreet` to the location where the repo is saved on your computer):
+Note: you may want to save the full output to a different location, e.g. to the directory where you have cloned the `a-b-street/abstreet` repo (see below for more on this and change the commented `~/orgs/a-b-street/abstreet` text to the location where the repo is saved on your computer for easy import into A/B Street):
 
-```{r, eval=FALSE}
-ab_save(od_json1, f = "~/orgs/a-b-street/abstreet/scenario1.json")
+```{r}
+# Save in the current directory:
+ab_save(od_json, f = "activity_leeds.json")
+# Save in a directory where you cloned the abstreet repo for the simulation
+# ab_save(od_json, f = "~/orgs/a-b-street/abstreet/activity_leeds.json")
+
+
 ```
 
 
@@ -187,7 +192,7 @@ od_sf_roundtrip = ab_sf("activity_leeds.json")
 identical(od_sf$geometry, od_sf_roundtrip$geometry) 
 ```
 
-```{r, echo=FALSE}
+```{r, include=FALSE}
 file.remove("scenario1.json")
 ```
 
