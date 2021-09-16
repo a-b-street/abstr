@@ -196,13 +196,15 @@ In order to import scenario files into A/B Street, you will need to:
 
 Once you have all of this up and running, you will be able to run the
 scenario import. To start, open up a terminal in Visual Studio or your
-chosen IDE. Next edit the following command to include the local path of
-your scenario.json file.
+chosen IDE. The following commands should enable you to import your
+scenario.json file.
 
 ``` bash
 git clone git@github.com:a-b-street/abstreet
-cd abstreet # or wherever you cloned the A/B Street repo
-cargo run --bin import_traffic -- --map=data/system/us/seattle/maps/montlake.bin --input=/path/abstreet/input.json
+cp montlake_scenarios.json abstreet # or to other location 
+cd abstreet                         # or wherever you cloned the A/B Street repo
+cargo run --bin import_traffic -- \
+  --map=data/system/us/seattle/maps/montlake.bin --input=montlake_scenarios.json
 ```
 
 Given you have correctly set the file path, the scenario should now be
@@ -228,16 +230,29 @@ documentation on getting map data loaded on your computer ready to
 import data for a particular city or region. As documented in the links
 above, you can import new ‘scenario.json’ files from the system command
 line as follows (requires cargo and `abstreet` as your working
-directory):
-
-``` bash
-cd abstreet # or wherever you cloned the A/B Street repo
-./import.sh --raw --map --city=gb/leeds
-cargo run --bin import_traffic -- --map=data/system/gb/leeds/maps/north.bin --input=activity_leeds.json
-```
+directory)
 
 ## Next steps
 
 For a more comprehensive guide in the art of collecting, transforming
 and saving data for A/B Street, check out the `abstr`
-[documentation](https://a-b-street.github.io/abstr/).
+[documentation](https://a-b-street.github.io/abstr/). The package
+website, hosted at
+[a-b-street.github.io/abstr](https://a-b-street.github.io/abstr/),
+contains articles that will help you get going with `abstr`. See the
+following articles for reproducible examples that will help you getting
+your valuable origin-destination and activity data into a dynamic
+transport simulation environment for visualisation, model exaperiments
+and more:
+
+-   The [`abstr`
+    vignette](https://a-b-street.github.io/abstr/articles/abstr.html)
+    for more detail on getting started with the package and context
+-   The [`activity`
+    vignette](https://a-b-street.github.io/abstr/articles/activity.html)
+    on representing multi-trip-per-person activity models in R and A/B
+    Street
+-   The [`pct_to_abstr`
+    vignette](https://a-b-street.github.io/abstr/articles/pct_to_abstr.html)
+    on importing output from an established project, the Propensity to
+    Cycle Tool, into A/B Street

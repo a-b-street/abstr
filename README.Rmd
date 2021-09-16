@@ -184,3 +184,9 @@ file.remove("montlake_scenarios.json")
 ## Next steps
 
 For a more comprehensive guide in the art of collecting, transforming and saving data for A/B Street, check out the `abstr` [documentation](https://a-b-street.github.io/abstr/).
+The package website, hosted at [a-b-street.github.io/abstr](https://a-b-street.github.io/abstr/), contains articles that will help you get going with `abstr`.
+See the following articles for reproducible examples that will help you getting your valuable origin-destination and activity data into a dynamic transport simulation environment for visualisation, model exaperiments and more:
+
+- The [`abstr` vignette](https://a-b-street.github.io/abstr/articles/abstr.html) for more detail on getting started with the package and context
+- The [`activity` vignette](https://a-b-street.github.io/abstr/articles/activity.html) on representing multi-trip-per-person activity models in R and A/B Street
+- The [`pct_to_abstr` vignette](https://a-b-street.github.io/abstr/articles/pct_to_abstr.html) on importing output from an established project, the Propensity to Cycle Tool, into A/B Street
