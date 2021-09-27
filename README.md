@@ -145,7 +145,8 @@ file.edit("ab_scenario.json")
 ```
 
 The first trip schedule should look something like this, matching [A/B
-Street’s schema](https://a-b-street.github.io/docs/tech/dev/formats/).
+Street’s
+schema](https://a-b-street.github.io/docs/tech/dev/formats/scenarios.html).
 
 ``` json
 {
@@ -178,59 +179,53 @@ Street’s schema](https://a-b-street.github.io/docs/tech/dev/formats/).
 
 ![](https://user-images.githubusercontent.com/22789869/128907563-4aa95b30-a98d-4fbc-9275-97e0b30dd227.gif)
 
-In order to import scenario files into A/B Street, you will need to:
+After generating a `ab_scenario.json`, you can import and simulate it as
+follows.
 
--   Install a stable version of
-    [Rust](https://www.rust-lang.org/tools/install)
-    -   On Windows, you will also need [Visual Code
-        Studio](https://code.visualstudio.com/) and [Visual Studio c++
-        build tools](https://visualstudio.microsoft.com/downloads/)
-        prior to installing Rust.
--   On Linux, run
-    `sudo apt-get install libasound2-dev libxcb-shape0-dev libxcb-xfixes0-dev libpango1.0-dev libgtk-3-dev`
-    or the equivalent for your distribution.
--   Download the A/B Street repo
-    `git clone https://github.com/a-b-street/abstreet.git`
--   Fetch the minimal amount of data needed to get started
-    `cargo run --bin updater -- --minimal`
+1.  Install the [latest
+    build](https://a-b-street.github.io/docs/user/index.html) of A/B
+    Street for your platform.
+2.  Run the software, and choose “Sandbox” on the title screen.
+3.  If necessary, change the map to the Montlake district of Seattle, or
+    whichever map your JSON scenario covers.
+4.  Change the scenario from the default “weekday” pattern. Choose
+    “import JSON scenario,” then select your `ab_scenario.json` file.
 
-Once you have all of this up and running, you will be able to run the
-scenario import. To start, open up a terminal in Visual Studio or your
-chosen IDE. The following commands should enable you to import your
-scenario.json file.
+After you successfully import this file once, it will be available in
+the list of scenarios, under the “Montlake Example” name, or whatever
+`name` specified by the JSON file.
+
+You can generate scenarios for any city in the world. See
+[here](https://a-b-street.github.io/docs/user/new_city.html) for how to
+import new cities into A/B Street.
+
+Note: Instead of installing a pre-built version of A/B Street in the
+first step, feel free to [build from
+source](https://a-b-street.github.io/docs/tech/dev/index.html), but it’s
+not necessary for any integration with the `abstr` package.
+
+### Advanced: scripting imports
+
+If you’re generating many JSON scenarios, you might not want to manually
+use A/B Street’s user interface to import each file. You can instead run
+a command.
+
+1.  Install the [latest
+    build](https://a-b-street.github.io/docs/user/index.html) of A/B
+    Street for your platform, or [build from
+    source](https://a-b-street.github.io/docs/tech/dev/index.html).
+2.  From the main A/B Street directory, run the following command:
 
 ``` bash
-git clone git@github.com:a-b-street/abstreet
-cp montlake_scenarios.json abstreet # or to other location 
-cd abstreet                         # or wherever you cloned the A/B Street repo
-cargo run --bin import_traffic -- \
-  --map=data/system/us/seattle/maps/montlake.bin --input=montlake_scenarios.json
+./cli import-scenario --input path/to/scenario.json --map data/system/us/seattle/maps/montlake.bin
 ```
 
-Given you have correctly set the file path, the scenario should now be
-imported into your local version of the Montlake map. Next you can run
-the following command to start the A/B Street simulation in Montlake.
+If you’re using Windows, you’ll instead run `cli.exe`. If you’re
+building from source use the following command:
 
-    cargo run --bin game -- --dev data/system/us/seattle/maps/montlake.bin
-
-Once the game has booted up click on the `scenarios` tab in the top
-right, it will currently be set as “none”. Change this to the first
-option “Montlake Example” which will be the scenario we have just
-uploaded. Alternatively, you can skip the first import command and use
-the GUI to select a scenario file to import.
-
-To import and run data for other cities, check the [A/B Street
-documentation](https://a-b-street.github.io/docs). Scenario files used
-by A/B Street are documented at [a-b-street.github.io/docs in the
-scenarios
-section](https://a-b-street.github.io/docs/tech/dev/formats/scenarios.html).
-See the [Building map
-data](https://a-b-street.github.io/docs//tech/dev/index.html#building-map-data)
-documentation on getting map data loaded on your computer ready to
-import data for a particular city or region. As documented in the links
-above, you can import new ‘scenario.json’ files from the system command
-line as follows (requires cargo and `abstreet` as your working
-directory)
+``` bash
+cargo run --release --bin cli -- import-scenario --input path/to/scenario.json --map data/system/us/seattle/maps/montlake.bin
+```
 
 ## Next steps
 
