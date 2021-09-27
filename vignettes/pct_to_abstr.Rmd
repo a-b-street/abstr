@@ -308,53 +308,14 @@ piggyback::pb_download_url("dutch.json")
 
 # Importing scenario files into A/B Street
 
-Given you have all of this up and running, you will be able to run the scenario import.
-AB Street contains 44 sites in England which appear in the ActDev project.
-If the local authority you have generated a scenario for is not included, follow the AB Street [documentation](https://a-b-street.github.io/docs/user/new_city.html) to import a new city.
-Next, fire up a terminal in Visual Studio or your chosen Rust IDE with the `abstreet` repo as the working directory run A/B Street as follows:
+Now that you've generated a scenario, you can simulate it. First install the [latest build](https://a-b-street.github.io/docs/user/index.html) of A/B Street for your platform. Run the software, and choose "Sandbox" on the title screen.
 
-```bash
-cargo run --bin game --release
-```
+You can then change the default map to other cities across the world. A/B Street contains over 40 sites in England from the ActDev project. If the local authority you have generated a scenario for is not included, you can also import a new city from the user interface.
 
-From there you can select the area for which data should be downloaded
-(see the A/B Street [docs on importing](https://a-b-street.github.io/docs/tech/map/importing/index.html) data for details).
-
-<!-- the scenario import tool as follows (you can check the list of maps with `ls ...`): -->
-
-Assuming you have the necessary map data the command to import the `.json` file is as follows:
-
-```bash
-cargo run --bin import_traffic -- --map=PATH/TO/MAP --input=/PATH/TO/JSON.json
-```
-
-If you used the Exeter case study and your data is located in the root directory, you can import the traffic as follows:
-
-```bash
-cargo run --bin import_traffic -- \
-  --map=data/system/gb/exeter_red_cow_village/maps/center.bin \
-  --input=dutch.json
-```
-
-Once this is done, you can fire up Fire up the AB street simulation software using the command:
-
-```bash
-cargo run --bin game -- --dev PATH/TO/MAP
-```
-
-which in the case of the Exeter example shown above is
-
-```bash
-cargo run --bin game -- --dev data/system/gb/exeter_red_cow_village/maps/center.bin
-```
-
-Once the game has booted up click on the `scenarios` tab in the top right, it will currently be set as "none".
+After loading the correct map, change the traffic scenario from the default "weekday" or "none" pattern. Choose "import JSON scenario," then select your `dutch` file.
 
 ![](https://user-images.githubusercontent.com/1825120/131586308-212caee2-3ebe-48f4-8e15-39efacedf3b4.png)
 
-Change this to the first option to "Go Dutch", or whatever you called the scenario you have just uploaded, as shown below.
-
-![](https://user-images.githubusercontent.com/1825120/131586413-c91cb53e-9b19-4d98-8e7b-d46a2f6a5845.png)
 <!-- Alternatively, you can skip the first import command and use the GUI to select a scenario file to import. -->
 <!-- In any case,  -->
 After selecting your scenario, you should see something like this, a Go Dutch scenario of cycling taking place before your eyes, making the OD data frames come to life in a real time simulation!
