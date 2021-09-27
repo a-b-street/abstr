@@ -223,16 +223,15 @@
 <div id="importing-into-ab-street" class="section level2">
 <h2 class="hasAnchor">
 <a href="#importing-into-ab-street" class="anchor"></a>Importing into A/B Street</h2>
-<p>Scenario files used by A/B Street are documented at <a href="https://a-b-street.github.io/docs/tech/dev/formats/scenarios.html">a-b-street.github.io/docs in the scenarios section</a>. See the <a href="https://a-b-street.github.io/docs//tech/dev/index.html#building-map-data">Building map data</a> documentation on getting map data loaded on your computer ready to import scenario files for a particular city or region. As documented in the links above, you can import new ‘scenario.json’ files from the system command line as follows (requires cargo and <code>abstreet</code> as your working directory):</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1"></a><span class="fu">git</span> clone git@github.com:a-b-street/abstreet</span>
-<span id="cb15-2"><a href="#cb15-2"></a><span class="bu">cd</span> abstreet <span class="co"># or wherever you cloned the A/B Street repo</span></span>
-<span id="cb15-3"><a href="#cb15-3"></a><span class="ex">./import.sh</span> --raw --map --city=gb/leeds</span>
-<span id="cb15-4"><a href="#cb15-4"></a><span class="ex">cargo</span> run --bin import_traffic -- --map=data/system/gb/leeds/maps/north.bin --input=activity_leeds.json</span></code></pre></div>
-<p>Then you can run the game as follows (you can also run the game directly and import the scenario by selecting a file using the GUI):</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1"></a><span class="ex">cargo</span> run --bin game -- --dev data/system/gb/leeds/maps/north.bin</span></code></pre></div>
-<p>Select the scenario you want with the scenario button, as shown below.</p>
+<ol style="list-style-type: decimal">
+<li>Install the <a href="https://a-b-street.github.io/docs/user/index.html">latest build</a> of A/B Street for your platform.</li>
+<li>Run the software, and choose “Sandbox” on the title screen.</li>
+<li>Change the map to North Leeds. You can navigate by country and city, or search all maps.</li>
+<li>Download data for Leeds, if this is your first time.</li>
+<li>Change the scenario from the default “none” pattern, as shown below. Choose “import JSON scenario,” then select your <code>scenario1.json</code> file.</li>
+</ol>
 <p><img src="https://user-images.githubusercontent.com/1825120/133446982-043eaad3-e832-4e7e-bcd3-2371a9094ad8.png"></p>
-<p>Tou should see something like this (see <a href="https://github.com/a-b-street/abstr/issues/76">#76</a> for animated version of the image below):</p>
+<p>You should see something like this (see <a href="https://github.com/a-b-street/abstr/issues/76">#76</a> for animated version of the image below):</p>
 <p><img src="https://user-images.githubusercontent.com/1825120/133152963-a57d3812-e05c-4acb-8969-5464ab2b5d74.png"></p>
 <p>Of course, the steps outlined above work for anywhere in the world. Possible next step to sharpen your A/B Street/R skills: try adding a small scenario for a city you know and explore scenarios of change.</p>
 <!-- Todo: -->
@@ -243,7 +242,7 @@
 <div id="intermediate-example-sao-paulo" class="section level1">
 <h1 class="hasAnchor">
 <a href="#intermediate-example-sao-paulo" class="anchor"></a>Intermediate example: Sao Paulo</h1>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">sao_paulo_activity_sf_2</span><span class="op">)</span>
 <span class="co">#&gt; Simple feature collection with 6 features and 4 fields</span>
 <span class="co">#&gt; Geometry type: LINESTRING</span>
@@ -260,9 +259,9 @@
 <span class="co">#&gt; 5 00241455101     45600 Transit Shopping   (-46.63264 -23.54425, -46.63508 -23.…</span>
 <span class="co">#&gt; 6 00241455101     52200 Walk    Recreation (-46.63508 -23.55833, -46.63329 -23.…</span>
 <span class="va">sp_2_json</span> <span class="op">=</span> <span class="fu"><a href="../reference/ab_json.html">ab_json</a></span><span class="op">(</span><span class="va">sao_paulo_activity_sf_2</span>, mode_column <span class="op">=</span> <span class="st">"mode"</span>, scenario_name <span class="op">=</span> <span class="st">"2-agents"</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/ab_save.html">ab_save</a></span><span class="op">(</span><span class="va">sp_2_json</span>, <span class="st">"activity_sp_2.json"</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">sao_paulo_activity_sf_20</span><span class="op">)</span>
 <span class="co">#&gt; Simple feature collection with 6 features and 4 fields</span>
 <span class="co">#&gt; Geometry type: LINESTRING</span>
@@ -279,20 +278,12 @@
 <span class="co">#&gt; 5 00030743103     24900 Walk  Home    (-46.62906 -23.55553, -46.629 -23.55449)</span>
 <span class="co">#&gt; 6 00030743103     25500 Walk  School  (-46.629 -23.55449, -46.62906 -23.55553)</span>
 <span class="va">sp_20_json</span> <span class="op">=</span> <span class="fu"><a href="../reference/ab_json.html">ab_json</a></span><span class="op">(</span><span class="va">sao_paulo_activity_sf_20</span>, mode_column <span class="op">=</span> <span class="st">"mode"</span>, scenario_name <span class="op">=</span> <span class="st">"20-agents"</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/ab_save.html">ab_save</a></span><span class="op">(</span><span class="va">sp_20_json</span>, <span class="st">"activity_sp_20.json"</span><span class="op">)</span> <span class="co"># save in current folder, or:</span>
 <span class="co"># save to directory where you cloned the abstreet repo </span>
 <span class="co"># (replace '~/orgs...' with the path to your local directory)</span>
 <span class="co"># ab_save(sp_20_json, "~/orgs/a-b-street/abstreet/activity_sp_20.json")</span></code></pre></div>
-<p>As with the Leeds example, you can import the data, after saving it with <code><a href="../reference/ab_save.html">ab_save()</a></code> into the folder where you have cloned the <code>a-b-street/abstreet</code> repo, from the system command line as follows:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">git</span> clone git@github.com:a-b-street/abstreet</span>
-<span id="cb21-2"><a href="#cb21-2"></a><span class="bu">cd</span> abstreet <span class="co"># or wherever you cloned the A/B Street repo</span></span>
-<span id="cb21-3"><a href="#cb21-3"></a><span class="ex">./import.sh</span> --raw --map --city=br/sao_paulo</span>
-<span id="cb21-4"><a href="#cb21-4"></a><span class="ex">cargo</span> run --bin import_traffic -- --map=data/system/br/sao_paulo/maps/center.bin --input=activity_sp_20.json</span></code></pre></div>
-<p>Then you can run the game as follows (you can also run the game directly and import the scenario by selecting a file using the GUI):</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1"></a><span class="ex">cargo</span> run --bin game -- --dev data/system/br/sao_paulo/maps/center.bin</span></code></pre></div>
-<p>After running the game you should see a button to change scenario as shown below. Clicking on this will allow you to change to a scenario you have generated with <code>abstr</code>. After that you should see a simulation, as shown in the GIF <a href="https://twitter.com/robinlovelace/status/1438086347672236033">here</a>.</p>
-<p><img src="https://user-images.githubusercontent.com/1825120/133446982-043eaad3-e832-4e7e-bcd3-2371a9094ad8.png"></p>
+<p>As with the Leeds example, you can import the data, after saving it with <code><a href="../reference/ab_save.html">ab_save()</a></code>. Use A/B Street to download São Paulo, then import the JSON file.</p>
 </div>
   </div>
 
