@@ -5,6 +5,8 @@ vignette: >
   %\VignetteIndexEntry{Multi-trip activity models}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+author: 
+- "Robin Lovelace and Lucas Dias"
 ---
 
 ```{r, include = FALSE}
