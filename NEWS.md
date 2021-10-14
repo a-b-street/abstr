@@ -3,10 +3,11 @@
 # abstr 0.4.0
 
 * Multiple destinations per agents now possible (#23)
-* New vignette introducing the concept of an ‘activity model’ with abstr & A/B Street
-* New vignette to reproduce cycle potential with the Propensity to Cycle Tool (PCT) & A/B Street
-* New open travel data for São Paulo  
-* ab_time_normal upstream fix
+* New vignette introducing the concept of an ‘activity model’ with abstr & A/B Street (#76)
+* New vignette to reproduce cycle potential with the Propensity to Cycle Tool (PCT) & A/B Street (#67)
+* New open travel data for São Paulo (#70)
+* Organise first abstr hackathon (#69)
+* `ab_time_normal upstream()` fix (#31)
 
 # abstr 0.3.0
 
