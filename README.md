@@ -50,6 +50,10 @@ U.S.
 ``` r
 library(abstr)
 library(tmap) # for map making
+#> Registered S3 methods overwritten by 'stars':
+#>   method             from
+#>   st_bbox.SpatRaster sf  
+#>   st_crs.SpatRaster  sf
 tm_shape(montlake_zones) + tm_polygons(col = "grey") +
   tm_shape(montlake_buildings) + tm_polygons(col = "blue")  +
 tm_style("classic")
