@@ -173,4 +173,4 @@ In 2018 the beasty `stplanr` (sustainable transport planning) package and R jour
 Finally, on the R side, in 2021 the `od` package was released which provided functions for working with origin-destination data.
 A central focus in all of the packages and papers mentioned above is to provide open access transport tools to support data driven transport policies based on an objective and transparent evidence base.
 
-For more on the history motivating the development of the `abstr` package see the [`pct_to_abstr` vignette]()
+For more on the history motivating the development of the `abstr` package see the [`pct_to_abstr` vignette](https://a-b-street.github.io/abstr/articles/pct_to_abstr.html)
