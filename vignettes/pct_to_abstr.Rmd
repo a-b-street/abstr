@@ -70,27 +70,27 @@ library(dplyr)
 
 Data in the PCT for England and Wales is divided into regions, which can be seen below.
 
-```{r}
-pct::pct_regions$region_name
+```{r eval=FALSE}
+pct_regions$region_name
 ```
 
 To run the example below, replace `devon` with a different region from the list above (warning, this may not work for large regions).
 
-```{r}
+```{r eval=FALSE}
 region_name = "devon"
 ```
 
 You can select a specific local authority of interest from those available in the region of interest.
 You can check which are available in your region of interest as follows:
 
-```{r}
+```{r eval=FALSE}
 lookup = pct::pct_regions_lookup
 table(lookup$lad16nm[lookup$region_name == region_name])
 ```
 
 For the purposes of this article we will use Exeter as the case study:
 
-```{r}
+```{r eval=FALSE}
 lad_name = "Exeter"
 ```
 
