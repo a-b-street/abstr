@@ -206,7 +206,7 @@ to a file.</p></td>
       <th>modes</th>
       <td><p>Character string containing the names of the modes of travel to
 include in the outputs. These must match column names in the <code>od</code> input
-data frame. The default is <code><a href='https://rdrr.io/r/base/c.html'>c("Walk", "Bike", "Drive", "Transit")</a></code>,
+data frame. The default is <code>c("Walk", "Bike", "Drive", "Transit")</code>,
 matching the mode names allowed in the A/B Street scenario schema.</p></td>
     </tr>
     <tr>
@@ -222,36 +222,55 @@ between randomly selected points (or buildings when available)
 between the zones represented in the OD data.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>od</span> <span class='op'>=</span> <span class='va'>leeds_od</span>
-<span class='va'>zones</span> <span class='op'>=</span> <span class='va'>leeds_zones</span>
-<span class='va'>od</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"E02006876"</span><span class='op'>)</span>
-<span class='va'>ablines</span> <span class='op'>=</span> <span class='fu'>ab_scenario</span><span class='op'>(</span><span class='va'>od</span>, zones <span class='op'>=</span> <span class='va'>zones</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>0 origins with no match in zone ids</span></div><div class='output co'>#&gt; <span class='message'>0 destinations with no match in zone ids</span></div><div class='output co'>#&gt; <span class='message'> points not in od data removed.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>ablines</span><span class='op'>)</span>
-</div><div class='img'><img src='ab_scenario-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>ablines</span><span class='op'>$</span><span class='va'>mode</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
-#&gt;    Bike   Drive Transit    Walk 
-#&gt;       1       2       3      15 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/colSums.html'>colSums</a></span><span class='op'>(</span><span class='va'>od</span><span class='op'>[</span><span class='fl'>3</span><span class='op'>:</span><span class='fl'>7</span><span class='op'>]</span><span class='op'>)</span> <span class='co'># 0.17 vs 0.05 for ab_scenario</span>
-</div><div class='output co'>#&gt;     All    Walk    Bike   Drive Transit 
-#&gt;      21      15       1       2       3 </div><div class='input'><span class='va'>ablines</span> <span class='op'>=</span> <span class='fu'>ab_scenario</span><span class='op'>(</span><span class='va'>od</span>, zones <span class='op'>=</span> <span class='va'>zones</span>, origin_buildings <span class='op'>=</span> <span class='va'>leeds_buildings</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: st_centroid assumes attributes are constant over geometries of x</span></div><div class='output co'>#&gt; <span class='message'>0 origins with no match in zone ids</span></div><div class='output co'>#&gt; <span class='message'>0 destinations with no match in zone ids</span></div><div class='output co'>#&gt; <span class='message'> points not in od data removed.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>leeds_zones</span><span class='op'>$</span><span class='va'>geometry</span><span class='op'>)</span>
-</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>leeds_buildings</span><span class='op'>$</span><span class='va'>geometry</span>, add <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>ablines</span><span class='op'>[</span><span class='st'>"mode"</span><span class='op'>]</span>, add <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='img'><img src='ab_scenario-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='va'>ablines_json</span> <span class='op'>=</span> <span class='fu'><a href='ab_json.html'>ab_json</a></span><span class='op'>(</span><span class='va'>ablines</span>, scenario_name <span class='op'>=</span> <span class='st'>"test"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Default scenario name of 'test' used.</span></div><div class='input'><span class='va'>od</span> <span class='op'>=</span> <span class='va'>leeds_desire_lines</span>
-<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>od</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>4</span><span class='op'>:</span><span class='fl'>6</span><span class='op'>]</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Walk"</span>, <span class='st'>"Bike"</span>, <span class='st'>"Drive"</span><span class='op'>)</span>
-<span class='va'>ablines</span> <span class='op'>=</span> <span class='fu'>ab_scenario</span><span class='op'>(</span>
-  od <span class='op'>=</span> <span class='va'>od</span>,
-  zones <span class='op'>=</span> <span class='va'>leeds_site_area</span>,
-  zones_d <span class='op'>=</span> <span class='va'>leeds_zones</span>,
-  origin_buildings <span class='op'>=</span> <span class='va'>leeds_houses</span>,
-  destination_buildings <span class='op'>=</span> <span class='va'>leeds_buildings</span>,
-  output <span class='op'>=</span> <span class='st'>"sf"</span>
-<span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: st_centroid assumes attributes are constant over geometries of x</span></div><div class='output co'>#&gt; <span class='warning'>Warning: st_centroid assumes attributes are constant over geometries of x</span></div><div class='output co'>#&gt; <span class='message'>0 origins with no match in zone ids</span></div><div class='output co'>#&gt; <span class='message'>0 destinations with no match in zone ids</span></div><div class='output co'>#&gt; <span class='message'> points not in od data removed.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>ablines</span><span class='op'>)</span>
-</div><div class='img'><img src='ab_scenario-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>ablines</span><span class='op'>$</span><span class='va'>geometry</span><span class='op'>)</span>
-</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>leeds_site_area</span><span class='op'>$</span><span class='va'>geometry</span>, add <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>leeds_buildings</span><span class='op'>$</span><span class='va'>geometry</span>, add <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='img'><img src='ab_scenario-4.png' alt='' width='700' height='433' /></div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>od</span> <span class='op'>=</span> <span class='va'>leeds_od</span></span>
+<span class='r-in'><span class='va'>zones</span> <span class='op'>=</span> <span class='va'>leeds_zones</span></span>
+<span class='r-in'><span class='va'>od</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"E02006876"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>ablines</span> <span class='op'>=</span> <span class='fu'>ab_scenario</span><span class='op'>(</span><span class='va'>od</span>, zones <span class='op'>=</span> <span class='va'>zones</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> 0 origins with no match in zone ids</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> 0 destinations with no match in zone ids</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>  points not in od data removed.</span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>ablines</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='ab_scenario-1.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>ablines</span><span class='op'>$</span><span class='va'>mode</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    Bike   Drive Transit    Walk </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>       1       2       3      15 </span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/colSums.html'>colSums</a></span><span class='op'>(</span><span class='va'>od</span><span class='op'>[</span><span class='fl'>3</span><span class='op'>:</span><span class='fl'>7</span><span class='op'>]</span><span class='op'>)</span> <span class='co'># 0.17 vs 0.05 for ab_scenario</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     All    Walk    Bike   Drive Transit </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      21      15       1       2       3 </span>
+<span class='r-in'><span class='va'>ablines</span> <span class='op'>=</span> <span class='fu'>ab_scenario</span><span class='op'>(</span><span class='va'>od</span>, zones <span class='op'>=</span> <span class='va'>zones</span>, origin_buildings <span class='op'>=</span> <span class='va'>leeds_buildings</span><span class='op'>)</span></span>
+<span class='r-wrn co'><span class='r-pr'>#&gt;</span> <span class='warning'>Warning: </span>st_centroid assumes attributes are constant over geometries of x</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> 0 origins with no match in zone ids</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> 0 destinations with no match in zone ids</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>  points not in od data removed.</span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>leeds_zones</span><span class='op'>$</span><span class='va'>geometry</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>leeds_buildings</span><span class='op'>$</span><span class='va'>geometry</span>, add <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>ablines</span><span class='op'>[</span><span class='st'>"mode"</span><span class='op'>]</span>, add <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='ab_scenario-2.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='va'>ablines_json</span> <span class='op'>=</span> <span class='fu'><a href='ab_json.html'>ab_json</a></span><span class='op'>(</span><span class='va'>ablines</span>, scenario_name <span class='op'>=</span> <span class='st'>"test"</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Default scenario name of 'test' used.</span>
+<span class='r-in'><span class='va'>od</span> <span class='op'>=</span> <span class='va'>leeds_desire_lines</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>od</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>4</span><span class='op'>:</span><span class='fl'>6</span><span class='op'>]</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Walk"</span>, <span class='st'>"Bike"</span>, <span class='st'>"Drive"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>ablines</span> <span class='op'>=</span> <span class='fu'>ab_scenario</span><span class='op'>(</span></span>
+<span class='r-in'>  od <span class='op'>=</span> <span class='va'>od</span>,</span>
+<span class='r-in'>  zones <span class='op'>=</span> <span class='va'>leeds_site_area</span>,</span>
+<span class='r-in'>  zones_d <span class='op'>=</span> <span class='va'>leeds_zones</span>,</span>
+<span class='r-in'>  origin_buildings <span class='op'>=</span> <span class='va'>leeds_houses</span>,</span>
+<span class='r-in'>  destination_buildings <span class='op'>=</span> <span class='va'>leeds_buildings</span>,</span>
+<span class='r-in'>  output <span class='op'>=</span> <span class='st'>"sf"</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-wrn co'><span class='r-pr'>#&gt;</span> <span class='warning'>Warning: </span>st_centroid assumes attributes are constant over geometries of x</span>
+<span class='r-wrn co'><span class='r-pr'>#&gt;</span> <span class='warning'>Warning: </span>st_centroid assumes attributes are constant over geometries of x</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> 0 origins with no match in zone ids</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> 0 destinations with no match in zone ids</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>  points not in od data removed.</span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>ablines</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='ab_scenario-3.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>ablines</span><span class='op'>$</span><span class='va'>geometry</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>leeds_site_area</span><span class='op'>$</span><span class='va'>geometry</span>, add <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>leeds_buildings</span><span class='op'>$</span><span class='va'>geometry</span>, add <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='ab_scenario-4.png' alt='' width='700' height='433' /></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

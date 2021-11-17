@@ -167,45 +167,53 @@ sao_paulo_activity_sf_20 represents the movement of 20 people." />
 in the package's GitHub repo.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span><span class='op'>(</span><span class='va'>sao_paulo_activity_sf_20</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 88  5</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>sao_paulo_activity_sf_20</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "person"    "departure" "mode"      "purpose"   "geometry" </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>sao_paulo_activity_sf_20</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Simple feature collection with 6 features and 4 fields
-#&gt; Geometry type: LINESTRING
-#&gt; Dimension:     XY
-#&gt; Bounding box:  xmin: -46.63044 ymin: -23.55553 xmax: -46.629 ymax: -23.554
-#&gt; Geodetic CRS:  WGS 84
-#&gt; <span style='color: #949494;'># A tibble: 6 × 5</span>
-#&gt;   person      departure mode  purpose                                 geometry
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                           <span style='color: #949494; font-style: italic;'>&lt;LINESTRING [°]&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span> 00030710102     <span style='text-decoration: underline;'>28</span>800 Walk  Home    (-46.63041 -23.554, -46.63044 -23.55409)
-#&gt; <span style='color: #BCBCBC;'>2</span> 00030710102     <span style='text-decoration: underline;'>46</span>800 Walk  Work    (-46.63044 -23.55409, -46.63041 -23.554)
-#&gt; <span style='color: #BCBCBC;'>3</span> 00030710102     <span style='text-decoration: underline;'>49</span>200 Walk  Home    (-46.63041 -23.554, -46.63044 -23.55409)
-#&gt; <span style='color: #BCBCBC;'>4</span> 00030710102     <span style='text-decoration: underline;'>61</span>200 Walk  Work    (-46.63044 -23.55409, -46.63041 -23.554)
-#&gt; <span style='color: #BCBCBC;'>5</span> 00030743103     <span style='text-decoration: underline;'>24</span>900 Walk  Home    (-46.62906 -23.55553, -46.629 -23.55449)
-#&gt; <span style='color: #BCBCBC;'>6</span> 00030743103     <span style='text-decoration: underline;'>25</span>500 Walk  School  (-46.629 -23.55449, -46.62906 -23.55553)</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>sao_paulo_activity_sf_20</span><span class='op'>$</span><span class='va'>mode</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
-#&gt;   Drive Transit    Walk 
-#&gt;      12       4      72 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>sao_paulo_activity_sf_20</span><span class='op'>$</span><span class='va'>purpose</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
-#&gt;       Home       Meal Recreation     School   Shopping       Work 
-#&gt;         39          2          3         14          2         28 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span><span class='op'>(</span><span class='va'>sao_paulo_activity_sf_2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 6 5</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>sao_paulo_activity_sf_2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "person"    "departure" "mode"      "purpose"   "geometry" </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>sao_paulo_activity_sf_2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Simple feature collection with 6 features and 4 fields
-#&gt; Geometry type: LINESTRING
-#&gt; Dimension:     XY
-#&gt; Bounding box:  xmin: -46.64341 ymin: -23.56186 xmax: -46.63204 ymax: -23.54425
-#&gt; Geodetic CRS:  WGS 84
-#&gt; <span style='color: #949494;'># A tibble: 6 × 5</span>
-#&gt;   person      departure mode    purpose                                 geometry
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                           <span style='color: #949494; font-style: italic;'>&lt;LINESTRING [°]&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span> 00240507101     <span style='text-decoration: underline;'>30</span>600 Transit Home       (-46.63204 -23.5592, -46.63422 -23.5…
-#&gt; <span style='color: #BCBCBC;'>2</span> 00240507101     <span style='text-decoration: underline;'>33</span>600 Walk    Shopping   (-46.63422 -23.55028, -46.64341 -23.…
-#&gt; <span style='color: #BCBCBC;'>3</span> 00240507101     <span style='text-decoration: underline;'>63</span>000 Transit Work       (-46.64341 -23.54499, -46.63204 -23.…
-#&gt; <span style='color: #BCBCBC;'>4</span> 00241455101     <span style='text-decoration: underline;'>39</span>600 Transit Home       (-46.63329 -23.56186, -46.63264 -23.…
-#&gt; <span style='color: #BCBCBC;'>5</span> 00241455101     <span style='text-decoration: underline;'>45</span>600 Transit Shopping   (-46.63264 -23.54425, -46.63508 -23.…
-#&gt; <span style='color: #BCBCBC;'>6</span> 00241455101     <span style='text-decoration: underline;'>52</span>200 Walk    Recreation (-46.63508 -23.55833, -46.63329 -23.…</div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span><span class='op'>(</span><span class='va'>sao_paulo_activity_sf_20</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 88  5</span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>sao_paulo_activity_sf_20</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "person"    "departure" "mode"      "purpose"   "geometry" </span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>sao_paulo_activity_sf_20</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Simple feature collection with 6 features and 4 fields</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Geometry type: LINESTRING</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Dimension:     XY</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Bounding box:  xmin: -46.63044 ymin: -23.55553 xmax: -46.629 ymax: -23.554</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Geodetic CRS:  WGS 84</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 6 × 5</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   person      departure mode  purpose                                 geometry</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                           <span style='color: #949494; font-style: italic;'>&lt;LINESTRING [°]&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> 00030710102     <span style='text-decoration: underline;'>28</span>800 Walk  Home    (-46.63041 -23.554, -46.63044 -23.55409)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span> 00030710102     <span style='text-decoration: underline;'>46</span>800 Walk  Work    (-46.63044 -23.55409, -46.63041 -23.554)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>3</span> 00030710102     <span style='text-decoration: underline;'>49</span>200 Walk  Home    (-46.63041 -23.554, -46.63044 -23.55409)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>4</span> 00030710102     <span style='text-decoration: underline;'>61</span>200 Walk  Work    (-46.63044 -23.55409, -46.63041 -23.554)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>5</span> 00030743103     <span style='text-decoration: underline;'>24</span>900 Walk  Home    (-46.62906 -23.55553, -46.629 -23.55449)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>6</span> 00030743103     <span style='text-decoration: underline;'>25</span>500 Walk  School  (-46.629 -23.55449, -46.62906 -23.55553)</span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>sao_paulo_activity_sf_20</span><span class='op'>$</span><span class='va'>mode</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Drive Transit    Walk </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      12       4      72 </span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>sao_paulo_activity_sf_20</span><span class='op'>$</span><span class='va'>purpose</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>       Home       Meal Recreation     School   Shopping       Work </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         39          2          3         14          2         28 </span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span><span class='op'>(</span><span class='va'>sao_paulo_activity_sf_2</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 6 5</span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>sao_paulo_activity_sf_2</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "person"    "departure" "mode"      "purpose"   "geometry" </span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>sao_paulo_activity_sf_2</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Simple feature collection with 6 features and 4 fields</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Geometry type: LINESTRING</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Dimension:     XY</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Bounding box:  xmin: -46.64341 ymin: -23.56186 xmax: -46.63204 ymax: -23.54425</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Geodetic CRS:  WGS 84</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 6 × 5</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   person      departure mode    purpose                                 geometry</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                           <span style='color: #949494; font-style: italic;'>&lt;LINESTRING [°]&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> 00240507101     <span style='text-decoration: underline;'>30</span>600 Transit Home       (-46.63204 -23.5592, -46.63422 -23.5…</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span> 00240507101     <span style='text-decoration: underline;'>33</span>600 Walk    Shopping   (-46.63422 -23.55028, -46.64341 -23.…</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>3</span> 00240507101     <span style='text-decoration: underline;'>63</span>000 Transit Work       (-46.64341 -23.54499, -46.63204 -23.…</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>4</span> 00241455101     <span style='text-decoration: underline;'>39</span>600 Transit Home       (-46.63329 -23.56186, -46.63264 -23.…</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>5</span> 00241455101     <span style='text-decoration: underline;'>45</span>600 Transit Shopping   (-46.63264 -23.54425, -46.63508 -23.…</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>6</span> 00241455101     <span style='text-decoration: underline;'>52</span>200 Walk    Recreation (-46.63508 -23.55833, -46.63329 -23.…</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
