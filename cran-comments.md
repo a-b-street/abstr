@@ -1,9 +1,3 @@
-## Resubmission
-This is a resubmission. In this version the package maintainer has:
-
-* Converted CRAN urls in abstr.html to canonical format 
-* Update the `stplanr` url
-
 ## Test Environments
 
 * MacOS-latest, R (release)

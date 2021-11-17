@@ -1,4 +1,7 @@
 # abstr (development version)
+# abstr 0.4.1
+
+* Get `abstr` back on CRAN (#90)
 
 # abstr 0.4.0
 
