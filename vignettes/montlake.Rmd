@@ -212,6 +212,11 @@ The first trip schedule should look something like this, matching [A/B Street's 
     }
 ```
 
+```{r, include=FALSE}
+# remove just generated .json file
+file.remove("montlake_scenarios.json")
+```
+
 ### Importing scenario files into A/B Street
 
 After generating a `montlake_scenario.json`, you can import and simulate it as follows.

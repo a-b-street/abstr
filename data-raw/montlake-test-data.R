@@ -143,3 +143,7 @@ ab_save(ab_json(output_sf, time_fun = ab_time_normal,
                 scenario_name = "Montlake Example"),
         f = "montlake_scenarios.json")
 
+# remove just generated .json file
+file.remove("montlake_scenarios.json")
+
+
