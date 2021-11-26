@@ -105,7 +105,7 @@
 <div id="introduction" class="section level1">
 <h1 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h1>
-<p>The <code>abstr</code> package was originally developed as part of the ActDev project, a tool that provides evidence on active travel provision and potential in and around planned and proposed development sites. <!-- Todo: cite  --> <!-- the Active Travel Orientated Development paper by Talbot et al. (2021): this study assessed the active travel prevision of new and proposed housing development sites in England and Wales. --> The <a href="https://actdev.cyipt.bike/">ActDev</a> website demonstrates the potential for new developments to support walking and cycling by visualising data generated using reproducible R <a href="https://github.com/cyipt/actdev/tree/main/code">code</a>. A key challenge was to create a simulation for each of the case study sites based on the input origin-destination datasets. To overcome this challenge, A/B Street developers were commissioned to extend the ActDev tool to enable real time simulation of scenarios of change. At the time there was no way to get the OD data we had in the R world into the A/B Street world. This was motivation for creating the <code>abstr</code> R package. As outlined in the package’s README, the package’s main job is to take origin-destination data from <code>.csv</code> files (and other tabular file types) and outputs <code>.json</code> files that can be imported and visualised in A/B Street.</p>
+<p>The <code>abstr</code> package was originally developed as part of the ActDev project, which involved the development of a prototype web application that provides evidence on active travel provision and potential in and around planned and proposed development sites, as outlined in a <a href="https://osf.io/7fuq5/">paper</a> describing the tool. The <a href="https://actdev.cyipt.bike/">ActDev</a> website demonstrates the potential for new developments to support walking and cycling by visualising data generated using reproducible R <a href="https://github.com/cyipt/actdev/tree/main/code">code</a>. A key challenge was to create a simulation for each of the case study sites based on the input origin-destination datasets. To overcome this challenge, A/B Street developers were commissioned to extend the ActDev tool to enable real time simulation of scenarios of change. At the time there was no way to get the OD data we had in the R world into the A/B Street world. This was motivation for creating the <code>abstr</code> R package. As outlined in the package’s README, the package’s main job is to take origin-destination data from <code>.csv</code> files (and other tabular file types) and outputs <code>.json</code> files that can be imported and visualised in A/B Street.</p>
 <p>Given you have all of the above, you are ready to start transforming data-frames into simulations! So lets set an aim for the vignette</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">####</span>
@@ -129,7 +129,7 @@
 <p>To begin with, you need to install and load the necessary packages for this vignette.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#### INSTALL PACKAGES ####</span>
-<span class="va">cran_pkgs</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"abstr"</span>,<span class="st">"pct"</span>,<span class="st">"osmextract"</span>,<span class="st">"sf"</span>,<span class="st">"tidyverse"</span><span class="op">)</span>
+<span class="va">cran_pkgs</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"abstr"</span>, <span class="st">"pct"</span>, <span class="st">"osmextract"</span>, <span class="st">"sf"</span>, <span class="st">"tidyverse"</span><span class="op">)</span>
 <span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_cran.html">install_cran</a></span><span class="op">(</span><span class="va">cran_pkgs</span><span class="op">)</span>
 <span class="co">#### LOAD PACKAGES ####</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/a-b-street/abstr">abstr</a></span><span class="op">)</span>
@@ -328,6 +328,10 @@
 <code class="sourceCode R"><span class="co">#### SAVE JSON FILE ####</span>
 <span class="va">output_json</span> <span class="op">=</span> <span class="fu"><a href="../reference/ab_json.html">ab_json</a></span><span class="op">(</span><span class="va">output_sf</span>, time_fun <span class="op">=</span> <span class="va">ab_time_normal</span>, scenario_name <span class="op">=</span> <span class="st">"Go Dutch"</span><span class="op">)</span>
 <span class="fu"><a href="../reference/ab_save.html">ab_save</a></span><span class="op">(</span><span class="va">output_json</span>, f <span class="op">=</span> <span class="st">"dutch.json"</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Upload the json file for future reference</span>
+<span class="fu">piggyback</span><span class="fu">::</span><span class="fu">pb_upload</span><span class="op">(</span><span class="st">"dutch.json"</span><span class="op">)</span>
+<span class="fu">piggyback</span><span class="fu">::</span><span class="fu">pb_download_url</span><span class="op">(</span><span class="st">"dutch.json"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="importing-scenario-files-into-ab-street" class="section level1">
 <h1 class="hasAnchor">
@@ -352,8 +356,8 @@
 <p>This vignette is by no means simple, and if you get stuck please raise an issue in the <a href="https://github.com/a-b-street/abstr/issues">Github</a>. If you succeed in generating a simulation for chosen city please share it on social media tagging the authors <code>abstr</code> so we can see how you have used the methods/data. If you are looking to extend this work presented in this vignette, why not try:</p>
 <ul>
 <li>building a simulation with a different uptake model</li>
-<li>integrating school commute data from the PCT package</li>
-<li>build your own uptake model</li>
+<li>exploring route network data representing cycling potential to schools from the PCT package</li>
+<li>creating your own uptake model (see the <a href="https://itsleeds.github.io/pct/articles/getting.html"><code>getting</code></a> vignette from the <code>pct</code> R package)</li>
 </ul>
 </div>
   </div>
