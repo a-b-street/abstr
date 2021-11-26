@@ -165,8 +165,9 @@ If you're generating many JSON scenarios, you might not want to manually use A/B
 
 ```bash
 # git clone git@github.com:a-b-street/abstreet
-# cd a-b-street
-./cli import-scenario --input ../montlake.json --map data/system/us/seattle/maps/montlake.bin
+# cd abstreet
+# cargo build
+./target/cli import-scenario --input ../montlake.json --map data/system/us/seattle/maps/montlake.bin
 ```
 
 If you're using Windows, you'll instead run `cli.exe`.
