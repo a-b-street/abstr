@@ -124,10 +124,6 @@
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/a-b-street/abstr">abstr</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mtennekes/tmap">tmap</a></span><span class="op">)</span> <span class="co"># for map making</span>
-<span class="co">#&gt; Registered S3 methods overwritten by 'stars':</span>
-<span class="co">#&gt;   method             from</span>
-<span class="co">#&gt;   st_bbox.SpatRaster sf  </span>
-<span class="co">#&gt;   st_crs.SpatRaster  sf</span>
 <span class="fu"><a href="https://rdrr.io/pkg/tmap/man/tm_shape.html">tm_shape</a></span><span class="op">(</span><span class="va">montlake_zones</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/pkg/tmap/man/tm_polygons.html">tm_polygons</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"grey"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://rdrr.io/pkg/tmap/man/tm_shape.html">tm_shape</a></span><span class="op">(</span><span class="va">montlake_buildings</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/pkg/tmap/man/tm_polygons.html">tm_polygons</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span>  <span class="op">+</span>
 <span class="fu"><a href="https://rdrr.io/pkg/tmap/man/tm_layout.html">tm_style</a></span><span class="op">(</span><span class="st">"classic"</span><span class="op">)</span></code></pre></div>
@@ -172,10 +168,10 @@
 <p>The <code>ab_save</code> and <code>ab_json</code> functions conclude the <code>abstr</code> workflow by outputting a local JSON file, matching the <a href="https://a-b-street.github.io/docs/tech/dev/formats/scenarios.html">A/B Street’s schema</a>.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">output_json</span> <span class="op">=</span> <span class="fu"><a href="reference/ab_json.html">ab_json</a></span><span class="op">(</span><span class="va">output_sf</span>, time_fun <span class="op">=</span> <span class="va">ab_time_normal</span>, scenario_name <span class="op">=</span> <span class="st">"Montlake Example"</span><span class="op">)</span>
-<span class="fu"><a href="reference/ab_save.html">ab_save</a></span><span class="op">(</span><span class="va">output_json</span>, f <span class="op">=</span> <span class="st">"montlake_scenarios.json"</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="reference/ab_save.html">ab_save</a></span><span class="op">(</span><span class="va">output_json</span>, f <span class="op">=</span> <span class="st">"montlake.json"</span><span class="op">)</span></code></pre></div>
 <p>Let’s see what is in the file:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/file.edit.html">file.edit</a></span><span class="op">(</span><span class="st">"ab_scenario.json"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/file.edit.html">file.edit</a></span><span class="op">(</span><span class="st">"montlake.json"</span><span class="op">)</span></code></pre></div>
 <p>The first trip schedule should look something like this, matching <a href="https://a-b-street.github.io/docs/tech/dev/formats/scenarios.html">A/B Street’s schema</a>.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">{</span></span>
 <span id="cb9-2"><a href="#cb9-2"></a>  <span class="dt">"scenario_name"</span><span class="fu">:</span> <span class="st">"Montlake Example"</span><span class="fu">,</span></span>
@@ -222,11 +218,13 @@
 <p>If you’re generating many JSON scenarios, you might not want to manually use A/B Street’s user interface to import each file. You can instead run a command.</p>
 <ol>
 <li>Install the <a href="https://a-b-street.github.io/docs/user/index.html">latest build</a> of A/B Street for your platform, or <a href="https://a-b-street.github.io/docs/tech/dev/index.html">build from source</a>.</li>
-<li>From the main A/B Street directory, run the following command:</li>
+<li>From the main A/B Street repo directory, run the following commands (commented lines of code clone and set the working directory, replace <code>../montlake.json</code> with the path to the scenario file:</li>
 </ol>
-<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1"></a><span class="ex">./cli</span> import-scenario --input path/to/scenario.json --map data/system/us/seattle/maps/montlake.bin</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># git clone git@github.com:a-b-street/abstreet</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="co"># cd a-b-street</span></span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="ex">./cli</span> import-scenario --input ../montlake.json --map data/system/us/seattle/maps/montlake.bin</span></code></pre></div>
 <p>If you’re using Windows, you’ll instead run <code>cli.exe</code>. If you’re building from source use the following command:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1"></a><span class="ex">cargo</span> run --release --bin cli -- import-scenario --input path/to/scenario.json --map data/system/us/seattle/maps/montlake.bin</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1"></a><span class="ex">cargo</span> run --release --bin cli -- import-scenario --input path/to/montlake.json --map data/system/us/seattle/maps/montlake.bin</span></code></pre></div>
 </div>
 </div>
 <div id="next-steps" class="section level2">
