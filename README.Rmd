@@ -101,13 +101,13 @@ The `ab_save` and `ab_json` functions conclude the `abstr` workflow by outputtin
 
 ```{r message=FALSE, warning=FALSE}
 output_json = ab_json(output_sf, time_fun = ab_time_normal, scenario_name = "Montlake Example")
-ab_save(output_json, f = "montlake_scenarios.json")
+ab_save(output_json, f = "montlake.json")
 ```
 
 Let's see what is in the file:
 
 ```r
-file.edit("ab_scenario.json")
+file.edit("montlake.json")
 ```
 
 The first trip schedule should look something like this, matching [A/B Street's schema](https://a-b-street.github.io/docs/tech/dev/formats/scenarios.html).
@@ -161,17 +161,23 @@ Note: Instead of installing a pre-built version of A/B Street in the first step,
 If you're generating many JSON scenarios, you might not want to manually use A/B Street's user interface to import each file. You can instead run a command.
 
 1.  Install the [latest build](https://a-b-street.github.io/docs/user/index.html) of A/B Street for your platform, or [build from source](https://a-b-street.github.io/docs/tech/dev/index.html).
-2.  From the main A/B Street directory, run the following command:
+2.  From the main A/B Street repo directory, run the following commands (commented lines of code clone and set the working directory, replace `../montlake.json` with the path to the scenario file:
 
 ```bash
-./cli import-scenario --input path/to/scenario.json --map data/system/us/seattle/maps/montlake.bin
+# git clone git@github.com:a-b-street/abstreet
+# cd a-b-street
+./cli import-scenario --input ../montlake.json --map data/system/us/seattle/maps/montlake.bin
 ```
 
 If you're using Windows, you'll instead run `cli.exe`.
 If you're building from source use the following command:
 
 ```bash
-cargo run --release --bin cli -- import-scenario --input path/to/scenario.json --map data/system/us/seattle/maps/montlake.bin
+cargo run --release --bin cli -- import-scenario --input path/to/montlake.json --map data/system/us/seattle/maps/montlake.bin
+```
+
+```{r, include=FALSE}
+file.remove("montlake.json")
 ```
 
 ## Next steps
@@ -183,3 +189,4 @@ See the following articles for reproducible examples that will help you getting 
 - The [`abstr` vignette](https://a-b-street.github.io/abstr/articles/abstr.html) for more detail on getting started with the package and context
 - The [`activity` vignette](https://a-b-street.github.io/abstr/articles/activity.html) on representing multi-trip-per-person activity models in R and A/B Street
 - The [`pct_to_abstr` vignette](https://a-b-street.github.io/abstr/articles/pct_to_abstr.html) on importing output from an established project, the Propensity to Cycle Tool, into A/B Street
+
