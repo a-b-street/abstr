@@ -47,7 +47,6 @@ Suggests:
     knitr,
     dplyr (>= 1.0.0),
     rmarkdown,
-    pct,
     tmap,
     foreign
 Encoding: UTF-8
