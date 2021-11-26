@@ -48,6 +48,7 @@ Suggests:
     dplyr (>= 1.0.0),
     rmarkdown,
     tmap,
+    pct,
     foreign
 Encoding: UTF-8
 LazyData: true
