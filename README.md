@@ -208,20 +208,28 @@ not necessary for any integration with the `abstr` package.
 
 If you’re generating many JSON scenarios, you might not want to manually
 use A/B Street’s user interface to import each file. You can instead run
-a command.
+a command to do the import. See the docs at
+[a-b-street.github.io/docs/tech/dev/](https://a-b-street.github.io/docs/tech/dev/index.html)
+for details, but the basic steps are:
 
 1.  Install the [latest
     build](https://a-b-street.github.io/docs/user/index.html) of A/B
     Street for your platform, or [build from
     source](https://a-b-street.github.io/docs/tech/dev/index.html).
-2.  From the main A/B Street repo directory, run the following commands
-    (commented lines of code clone and set the working directory,
-    replace `../montlake.json` with the path to the scenario file:
+2.  From the main A/B Street repo directory import the scenario
+
+These steps can be achieved by running the following lines of code (run
+the commented lines of code to install Rust, clone the A/B Street repo
+and set the working directory, you can also replace `../montlake.json`
+with a different path to the scenario file):
 
 ``` bash
+# curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh # install rust
 # git clone git@github.com:a-b-street/abstreet
-# cd a-b-street
-./cli import-scenario --input ../montlake.json --map data/system/us/seattle/maps/montlake.bin
+# cd abstreet
+# cargo run --bin updater -- download --minimal
+cargo run --bin cli -- import-scenario --input ../montlake.json --map data/system/us/seattle/maps/montlake.bin
+cargo run --bin game --release
 ```
 
 If you’re using Windows, you’ll instead run `cli.exe`. If you’re
