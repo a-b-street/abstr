@@ -1,3 +1,10 @@
+## Resubmission
+This is a resubmission. In this version I have:
+
+* Updated the CLI commands in the `README.md` file (#92)
+
+* Test pct conditionally (#91) 
+
 ## R CMD check results
 
 There were no ERRORs or WARNINGs. 
