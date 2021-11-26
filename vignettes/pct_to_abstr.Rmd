@@ -9,18 +9,17 @@ author:
 - "Nathanael Sheehan and Robin Lovelace"
 ---
 
-```{r, include = FALSE}
+```{r, include=FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  eval = FALSE
 )
 ```
 
 # Introduction
 
-The `abstr` package was originally developed as part of the ActDev project, a tool that provides evidence on active travel provision and potential in and around planned and proposed development sites.
-<!-- Todo: cite  -->
-<!-- the Active Travel Orientated Development paper by Talbot et al. (2021): this study assessed the active travel prevision of new and proposed housing development sites in England and Wales. -->
+The `abstr` package was originally developed as part of the ActDev project, which involved the development of a prototype web application that provides evidence on active travel provision and potential in and around planned and proposed development sites, as outlined in a [paper](https://osf.io/7fuq5/) describing the tool.
 The [ActDev](https://actdev.cyipt.bike/) website demonstrates the potential for new developments to support walking and cycling by visualising data generated using reproducible R [code](https://github.com/cyipt/actdev/tree/main/code).
 A key challenge was to create a simulation for each of the case study sites based on the input origin-destination datasets.
 To overcome this challenge, A/B Street developers were commissioned to extend the ActDev tool to enable real time simulation of scenarios of change.
@@ -31,7 +30,7 @@ As outlined in the package's README, the package's main job is to take origin-de
 Given you have all of the above, you are ready to start transforming data-frames into simulations!
 So lets set an aim for the vignette
 
-```{r eval=FALSE}
+```{r}
 ####
 ####
 #### AIM: Use PCT data to create scenario of change where commuting cycling levels increase and car journeys decrease which can be imported
@@ -54,9 +53,9 @@ The first stage is to install the necessary packages (see the [`abstr`](https://
 
 To begin with, you need to install and load the necessary packages for this vignette.
 
-```{r eval=FALSE}
+```{r}
 #### INSTALL PACKAGES ####
-cran_pkgs = c("abstr","pct","osmextract","sf","tidyverse")
+cran_pkgs = c("abstr", "pct", "osmextract", "sf", "tidyverse")
 remotes::install_cran(cran_pkgs)
 #### LOAD PACKAGES ####
 library(abstr)
@@ -70,27 +69,27 @@ library(dplyr)
 
 Data in the PCT for England and Wales is divided into regions, which can be seen below.
 
-```{r eval=FALSE}
+```{r}
 pct_regions$region_name
 ```
 
 To run the example below, replace `devon` with a different region from the list above (warning, this may not work for large regions).
 
-```{r eval=FALSE}
+```{r}
 region_name = "devon"
 ```
 
 You can select a specific local authority of interest from those available in the region of interest.
 You can check which are available in your region of interest as follows:
 
-```{r eval=FALSE}
+```{r}
 lookup = pct::pct_regions_lookup
 table(lookup$lad16nm[lookup$region_name == region_name])
 ```
 
 For the purposes of this article we will use Exeter as the case study:
 
-```{r eval=FALSE}
+```{r}
 lad_name = "Exeter"
 ```
 
@@ -100,7 +99,7 @@ Next you want to fetch two types of PCT data.
 Firstly, zone data, which is gathered using the `get_pct_zones()` function and is filtered to only include a local authority of choice, in this example we use Exeter.
 Secondly, commute data, which is gathered using the `get_pct_lines()` function and is also filtered to only include trips within the local authority.
 
-```{r eval=FALSE}
+```{r}
 ####    READ DATA ####
 devon_zones = get_pct_zones(region = region_name, geography = "msoa") # get zone data
 # filter for exeter
@@ -120,7 +119,7 @@ Next, you calculate the scenario of change, in this example we use the `uptake_p
 The results from this PCT function allow you to calculate the mode shift from driving to cycling.
 Finally, we subset the data to only include the columns which are needed to progress.
 
-```{r eval=FALSE}
+```{r}
 exeter_commute_od = exeter_commute_od %>%
   mutate(cycle_base = bicycle) %>%
   mutate(walk_base = foot) %>%
@@ -156,7 +155,7 @@ exeter_commute_od = exeter_commute_od %>%
 
 As a quick sanity check we can make sure our model has not generated any new commutes and we still have the same base number of commuters as before.
 
-```{r eval=FALSE}
+```{r}
 # sanity check: ensure total remains the same
 # (this is not a dynamic model where population change is factored in)
 identical(exeter_commute_od$all_base, exeter_commute_od$all_go_dutch) 
@@ -169,7 +168,7 @@ In this example we use the `osmextract` package to fetch a PBF (protocolbuffer b
 You then need to filter the contents of the PBF file to only include the defined building types and subset the data to only include `osm_way_id, name, building` columns.
 Following this, you should ensure you only include valid sf buildings and then aggregate the building data against the zone boundary.
 
-```{r eval=FALSE}
+```{r}
 ####    DOWNLOAD OSM BUILDING DATA ####
 osm_polygons = osmextract::oe_read(
   "https://download.geofabrik.de/europe/great-britain/england/devon-latest.osm.pbf",
@@ -229,7 +228,7 @@ exeter_osm_buildings_all = osm_buildings_valid[exeter_zones, ]
 Subsequently, you can join the OSM buildings data with the `exeter_zones` geography in order to create the complete building table.
 This table is filtered to not include any `NA's` and is aggregated to only include
 
-```{r eval = FALSE}
+```{r}
 ####  JOIN OSM BUILDINGS WITH ZONE DATA ####
 exeter_osm_buildings_all_joined = exeter_osm_buildings_all %>%
   sf::st_join(exeter_zones)
@@ -248,7 +247,7 @@ However, `abstr` takes a strict column name definition as to adhere to the AB st
 This means you need to rename mode columns for scenario generation.
 In order to make things easy, we can create a simple logic gate that renames our mode columns depending on the boolean value `go_active`.
 
-```{r eval = FALSE}
+```{r}
 set.seed(2021) # for reproducible builds
 ####  LOGIC GATE ####
 # Logic gate for go_dutch scenario of change, where cycling levels increase to a proportion reflecting the Netherlands.
@@ -276,7 +275,7 @@ if (go_dutch == TRUE) {
 Voila, you are ready to generate simulation files from your data-frames.
 Lets start by using the `ab_scenario()` function with our `exeter_od`, `exeter_zones` and `exeter_osm_buildings_tbl` data-frames.
 
-```{r eval = FALSE}
+```{r}
 ####  GENERATE A/B STREET SCENARIO ####
 output_sf = ab_scenario(
   od = exeter_od,
@@ -294,13 +293,13 @@ output_sf = ab_scenario(
 To conclude you will need to generate a `JSON` format using the `ab_json()` function and then save the json file to your local machine using the `ab_save()` function.
 (You can download this [file](https://github.com/a-b-street/abstr/releases/download/6543bdc/dutch.json) from the repo's releases.)
 
-```{r eval = FALSE}
+```{r}
 #### SAVE JSON FILE ####
 output_json = ab_json(output_sf, time_fun = ab_time_normal, scenario_name = "Go Dutch")
 ab_save(output_json, f = "dutch.json")
 ```
 
-```{r, eval=FALSE, echo=FALSE}
+```{r}
 # Upload the json file for future reference
 piggyback::pb_upload("dutch.json")
 piggyback::pb_download_url("dutch.json")
@@ -337,5 +336,5 @@ If you succeed in generating a simulation for chosen city please share it on soc
 If you are looking to extend this work presented in this vignette, why not try:
 
 -   building a simulation with a different uptake model
--   integrating school commute data from the PCT package
--   build your own uptake model
+-   exploring route network data representing cycling potential to schools from the PCT package 
+-   creating your own uptake model (see the [`getting`](https://itsleeds.github.io/pct/articles/getting.html) vignette from the `pct` R package)
