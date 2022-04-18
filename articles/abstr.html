@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,18 +33,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">abstr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.1</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../articles/abstr.html">Get started</a>
 </li>
@@ -50,7 +46,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -73,7 +69,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/a-b-street/abstr/">
+  <a href="https://github.com/a-b-street/abstr/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -94,64 +90,63 @@
       <h1 data-toc-skip>Get started with abstr</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/a-b-street/abstr/blob/master/vignettes/abstr.Rmd"><code>vignettes/abstr.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/a-b-street/abstr/blob/HEAD/vignettes/abstr.Rmd" class="external-link"><code>vignettes/abstr.Rmd</code></a></small>
       <div class="hidden name"><code>abstr.Rmd</code></div>
 
     </div>
 
     
     
-<div id="getting-started" class="section level1">
-<h1 class="hasAnchor">
-<a href="#getting-started" class="anchor"></a>Getting started</h1>
-<div id="installing-r" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installing-r" class="anchor"></a>Installing R</h2>
-<p>To generate new scenario files to import into A/B Street with the <code>abstr</code> R package, you need to have installed a stable version of <a href="https://www.rstudio.com/products/rstudio/">Rstudio and R</a>.</p>
+<div class="section level2">
+<h2 id="getting-started">Getting started<a class="anchor" aria-label="anchor" href="#getting-started"></a>
+</h2>
+<div class="section level3">
+<h3 id="installing-r">Installing R<a class="anchor" aria-label="anchor" href="#installing-r"></a>
+</h3>
+<p>To generate new scenario files to import into A/B Street with the <code>abstr</code> R package, you need to have installed a stable version of <a href="https://www.rstudio.com/products/rstudio/" class="external-link">Rstudio and R</a>.</p>
 </div>
-<div id="installing-ab-street" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installing-ab-street" class="anchor"></a>Installing A/B Street</h2>
-<p>Install the <a href="https://a-b-street.github.io/docs/user/index.html">latest build</a> of A/B Street for your platform. Or if you prefer, <a href="https://a-b-street.github.io/docs/tech/dev/index.html">build from source</a>, but it’s not necessary for any integration with the <code>abstr</code> package.</p>
+<div class="section level3">
+<h3 id="installing-ab-street">Installing A/B Street<a class="anchor" aria-label="anchor" href="#installing-ab-street"></a>
+</h3>
+<p>Install the <a href="https://a-b-street.github.io/docs/user/index.html" class="external-link">latest build</a> of A/B Street for your platform. Or if you prefer, <a href="https://a-b-street.github.io/docs/tech/dev/index.html" class="external-link">build from source</a>, but it’s not necessary for any integration with the <code>abstr</code> package.</p>
 </div>
 </div>
-<div id="using-abstr" class="section level1">
-<h1 class="hasAnchor">
-<a href="#using-abstr" class="anchor"></a>Using <code>abstr</code>
-</h1>
+<div class="section level2">
+<h2 id="using-abstr">Using <code>abstr</code><a class="anchor" aria-label="anchor" href="#using-abstr"></a>
+</h2>
 <p>Load the package as follows:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/a-b-street/abstr">abstr</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/a-b-street/abstr" class="external-link">abstr</a></span><span class="op">)</span></code></pre></div>
 <p>The input datasets include <code>sf</code> objects representing buildings, origin-destination (OD) data represented as desire lines and administrative zones representing the areas within which trips in the desire lines start and end. With the exception of OD data, each of the input datasets is readily available for most cities. The input datasets are illustrated in the plots below, which show example data shipped in the package, taken from the Seattle, U.S.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/a-b-street/abstr">abstr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mtennekes/tmap">tmap</a></span><span class="op">)</span> <span class="co"># for map making</span>
-<span class="fu"><a href="https://rdrr.io/pkg/tmap/man/tm_shape.html">tm_shape</a></span><span class="op">(</span><span class="va">montlake_zones</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/pkg/tmap/man/tm_polygons.html">tm_polygons</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"grey"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/tmap/man/tm_shape.html">tm_shape</a></span><span class="op">(</span><span class="va">montlake_buildings</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/pkg/tmap/man/tm_polygons.html">tm_polygons</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span>  <span class="op">+</span>
-<span class="fu"><a href="https://rdrr.io/pkg/tmap/man/tm_layout.html">tm_style</a></span><span class="op">(</span><span class="st">"classic"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/a-b-street/abstr" class="external-link">abstr</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/r-tmap/tmap" class="external-link">tmap</a></span><span class="op">)</span> <span class="co"># for map making</span>
+<span class="fu"><a href="https://rdrr.io/pkg/tmap/man/tm_shape.html" class="external-link">tm_shape</a></span><span class="op">(</span><span class="va">montlake_zones</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/pkg/tmap/man/tm_polygons.html" class="external-link">tm_polygons</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"grey"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/tmap/man/tm_shape.html" class="external-link">tm_shape</a></span><span class="op">(</span><span class="va">montlake_buildings</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/pkg/tmap/man/tm_polygons.html" class="external-link">tm_polygons</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span>  <span class="op">+</span>
+<span class="fu"><a href="https://rdrr.io/pkg/tmap/man/tm_layout.html" class="external-link">tm_style</a></span><span class="op">(</span><span class="st">"classic"</span><span class="op">)</span></code></pre></div>
 <div class="figure">
 <img src="abstr_files/figure-html/input-1.png" alt="Example data that can be used as an input by functions in abstr to generate trip-level scenarios that can be imported by A/B Street." width="700"><p class="caption">
 Example data that can be used as an input by functions in abstr to generate trip-level scenarios that can be imported by A/B Street.
 </p>
 </div>
-<p>The map above is a graphical representation of the Montlake residential neighborhood in central Seattle, Washington. Here, <code>montlake_zones</code> represents neighborhood residential zones declared by Seattle local government and <code>montlake_buildings</code> being the accumulation of buildings listed in <a link href="https://www.openstreetmap.org/#map=5/54.910/-3.432"> OpenStreetMap</a></p>
+<p>The map above is a graphical representation of the Montlake residential neighborhood in central Seattle, Washington. Here, <code>montlake_zones</code> represents neighborhood residential zones declared by Seattle local government and <code>montlake_buildings</code> being the accumulation of buildings listed in <a link href="https://www.openstreetmap.org/#map=5/54.910/-3.432" class="external-link"> OpenStreetMap</a></p>
 <p>The final piece of the <code>abstr</code> puzzle is OD data.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">montlake_od</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 6 × 6</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">montlake_od</span><span class="op">)</span>
+<span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 6</span></span>
 <span class="co">#&gt;    o_id  d_id Drive Transit  Bike  Walk</span>
-<span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;   &lt;int&gt; &lt;int&gt; &lt;int&gt;</span>
-<span class="co">#&gt; 1   281   361    23       1     2    14</span>
-<span class="co">#&gt; 2   282   361    37       4     0    11</span>
-<span class="co">#&gt; 3   282   369    14       3     0     8</span>
-<span class="co">#&gt; 4   301   361    27       4     3    15</span>
-<span class="co">#&gt; 5   301   368     6       2     1    16</span>
-<span class="co">#&gt; 6   301   369    14       2     0    13</span></code></pre></div>
+<span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">1</span>   281   361    23       1     2    14</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">2</span>   282   361    37       4     0    11</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">3</span>   282   369    14       3     0     8</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">4</span>   301   361    27       4     3    15</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">5</span>   301   368     6       2     1    16</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">6</span>   301   369    14       2     0    13</span></code></pre></div>
 <p>In this example, the first two columns correspond to the origin and destination zones in Montlake, with the subsequent columns representing the transport mode share between these zones.</p>
 <p>Let’s combine each of the elements outlined above, the zone, building and OD data. We do this using the <code><a href="../reference/ab_scenario.html">ab_scenario()</a></code> function in the <code>abstr</code> package, which generates a data frame representing tavel between the <code>montlake_buildings</code>. While the OD data contains information on origin and destination zone, <code><a href="../reference/ab_scenario.html">ab_scenario()</a></code> ‘disaggregates’ the data and randomly selects building within each origin and destination zone to simulate travel at the individual level, as illustrated in the chunk below which uses only a sample of the <code>montlake_od</code> data, showing travel between three pairs of zones, to illustrate the process:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span>
-<span class="va">montlake_od_minimal</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">montlake_od</span>, <span class="va">o_id</span> <span class="op">==</span> <span class="st">"373"</span> <span class="op">|</span><span class="va">o_id</span> <span class="op">==</span> <span class="st">"402"</span> <span class="op">|</span> <span class="va">o_id</span> <span class="op">==</span> <span class="st">"281"</span> <span class="op">|</span> <span class="va">o_id</span> <span class="op">==</span> <span class="st">"588"</span> <span class="op">|</span> <span class="va">o_id</span> <span class="op">==</span> <span class="st">"301"</span> <span class="op">|</span> <span class="va">o_id</span> <span class="op">==</span> <span class="st">"314"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span>
+<span class="va">montlake_od_minimal</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">montlake_od</span>, <span class="va">o_id</span> <span class="op">==</span> <span class="st">"373"</span> <span class="op">|</span><span class="va">o_id</span> <span class="op">==</span> <span class="st">"402"</span> <span class="op">|</span> <span class="va">o_id</span> <span class="op">==</span> <span class="st">"281"</span> <span class="op">|</span> <span class="va">o_id</span> <span class="op">==</span> <span class="st">"588"</span> <span class="op">|</span> <span class="va">o_id</span> <span class="op">==</span> <span class="st">"301"</span> <span class="op">|</span> <span class="va">o_id</span> <span class="op">==</span> <span class="st">"314"</span><span class="op">)</span>
 <span class="va">output_sf</span> <span class="op">=</span> <span class="fu"><a href="../reference/ab_scenario.html">ab_scenario</a></span><span class="op">(</span>
   od <span class="op">=</span> <span class="va">montlake_od_minimal</span>,
   zones <span class="op">=</span> <span class="va">montlake_zones</span>,
@@ -161,24 +156,24 @@ Example data that can be used as an input by functions in abstr to generate trip
   pop_var <span class="op">=</span> <span class="fl">3</span>,
   time_fun <span class="op">=</span> <span class="va">ab_time_normal</span>,
   output <span class="op">=</span> <span class="st">"sf"</span>,
-  modes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Walk"</span>, <span class="st">"Bike"</span>, <span class="st">"Drive"</span>, <span class="st">"Transit"</span><span class="op">)</span>
+  modes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Walk"</span>, <span class="st">"Bike"</span>, <span class="st">"Drive"</span>, <span class="st">"Transit"</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
-<p>The <code>output_sf</code> object created above can be further transformed to match <a href="https://a-b-street.github.io/docs/tech/dev/formats/scenarios.html">A/B Street’s schema</a> and visualised in A/B Street, or visualised in R (using the <code>tmap</code> package in the code chunk below):</p>
+<p>The <code>output_sf</code> object created above can be further transformed to match <a href="https://a-b-street.github.io/docs/tech/dev/formats/scenarios.html" class="external-link">A/B Street’s schema</a> and visualised in A/B Street, or visualised in R (using the <code>tmap</code> package in the code chunk below):</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/tmap/man/tm_shape.html">tm_shape</a></span><span class="op">(</span><span class="va">output_sf</span><span class="op">)</span> <span class="op">+</span> <span class="fu">tmap</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tmap/man/tm_lines.html">tm_lines</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"mode"</span>, lwd <span class="op">=</span> <span class="fl">.8</span>, lwd.legeld.col <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/tmap/man/tm_shape.html">tm_shape</a></span><span class="op">(</span><span class="va">montlake_zones</span><span class="op">)</span> <span class="op">+</span> <span class="fu">tmap</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tmap/man/tm_polygons.html">tm_borders</a></span><span class="op">(</span>lwd <span class="op">=</span> <span class="fl">1.2</span>, col <span class="op">=</span> <span class="st">"gray"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/tmap/man/tm_text.html">tm_text</a></span><span class="op">(</span><span class="st">"id"</span>, size <span class="op">=</span> <span class="fl">0.6</span><span class="op">)</span> <span class="op">+</span>
-<span class="fu"><a href="https://rdrr.io/pkg/tmap/man/tm_layout.html">tm_style</a></span><span class="op">(</span><span class="st">"cobalt"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/tmap/man/tm_shape.html" class="external-link">tm_shape</a></span><span class="op">(</span><span class="va">output_sf</span><span class="op">)</span> <span class="op">+</span> <span class="fu">tmap</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tmap/man/tm_lines.html" class="external-link">tm_lines</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"mode"</span>, lwd <span class="op">=</span> <span class="fl">.8</span>, lwd.legeld.col <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/tmap/man/tm_shape.html" class="external-link">tm_shape</a></span><span class="op">(</span><span class="va">montlake_zones</span><span class="op">)</span> <span class="op">+</span> <span class="fu">tmap</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tmap/man/tm_polygons.html" class="external-link">tm_borders</a></span><span class="op">(</span>lwd <span class="op">=</span> <span class="fl">1.2</span>, col <span class="op">=</span> <span class="st">"gray"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/tmap/man/tm_text.html" class="external-link">tm_text</a></span><span class="op">(</span><span class="st">"id"</span>, size <span class="op">=</span> <span class="fl">0.6</span><span class="op">)</span> <span class="op">+</span>
+<span class="fu"><a href="https://rdrr.io/pkg/tmap/man/tm_layout.html" class="external-link">tm_style</a></span><span class="op">(</span><span class="st">"cobalt"</span><span class="op">)</span></code></pre></div>
 <p><img src="abstr_files/figure-html/outputplot-1.png" width="700"></p>
 <p>Each line in the plot above represents a single trip, with the color representing each transport mode. Moreover, each trip is configured with an associated departure time, that can be represented in A/B Street.</p>
-<p>The <code>ab_save</code> and <code>ab_json</code> functions conclude the <code>abstr</code> workflow by outputting a local JSON file, matching the <a href="https://a-b-street.github.io/docs/tech/dev/formats/scenarios.html">A/B Street’s schema</a>.</p>
+<p>The <code>ab_save</code> and <code>ab_json</code> functions conclude the <code>abstr</code> workflow by outputting a local JSON file, matching the <a href="https://a-b-street.github.io/docs/tech/dev/formats/scenarios.html" class="external-link">A/B Street’s schema</a>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">output_json</span> <span class="op">=</span> <span class="fu"><a href="../reference/ab_json.html">ab_json</a></span><span class="op">(</span><span class="va">output_sf</span>, time_fun <span class="op">=</span> <span class="va">ab_time_normal</span>, scenario_name <span class="op">=</span> <span class="st">"Montlake Example"</span><span class="op">)</span>
 <span class="fu"><a href="../reference/ab_save.html">ab_save</a></span><span class="op">(</span><span class="va">output_json</span>, f <span class="op">=</span> <span class="st">"montlake_scenarios.json"</span><span class="op">)</span></code></pre></div>
 <p>Let’s see what is in the file:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/file.edit.html">file.edit</a></span><span class="op">(</span><span class="st">"ab_scenario.json"</span><span class="op">)</span></code></pre></div>
-<p>The first trip schedule should look something like this, matching <a href="https://a-b-street.github.io/docs/tech/dev/formats/">A/B Street’s schema</a>.</p>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/file.edit.html" class="external-link">file.edit</a></span><span class="op">(</span><span class="st">"ab_scenario.json"</span><span class="op">)</span></code></pre></div>
+<p>The first trip schedule should look something like this, matching <a href="https://a-b-street.github.io/docs/tech/dev/formats/" class="external-link">A/B Street’s schema</a>.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">{</span></span>
 <span id="cb8-2"><a href="#cb8-2"></a>  <span class="dt">"scenario_name"</span><span class="fu">:</span> <span class="st">"Montlake Example"</span><span class="fu">,</span></span>
 <span id="cb8-3"><a href="#cb8-3"></a>  <span class="dt">"people"</span><span class="fu">:</span> <span class="ot">[</span></span>
@@ -204,9 +199,9 @@ Example data that can be used as an input by functions in abstr to generate trip
 <span id="cb8-23"><a href="#cb8-23"></a>      <span class="ot">]</span></span>
 <span id="cb8-24"><a href="#cb8-24"></a>    <span class="fu">}</span></span></code></pre></div>
 </div>
-<div id="importing-scenario-files-into-ab-street" class="section level1">
-<h1 class="hasAnchor">
-<a href="#importing-scenario-files-into-ab-street" class="anchor"></a>Importing scenario files into A/B Street</h1>
+<div class="section level2">
+<h2 id="importing-scenario-files-into-ab-street">Importing scenario files into A/B Street<a class="anchor" aria-label="anchor" href="#importing-scenario-files-into-ab-street"></a>
+</h2>
 <p>After generating a <code>montlake_scenario.json</code>, you can import and simulate it as follows.</p>
 <ol style="list-style-type: decimal">
 <li>Run A/B Street, and choose “Sandbox” on the title screen.</li>
@@ -215,34 +210,33 @@ Example data that can be used as an input by functions in abstr to generate trip
 </ol>
 <p>After you successfully import this file once, it will be available in the list of scenarios, under the “Montlake Example” name, or whatever <code>name</code> specified by the JSON file.</p>
 </div>
-<div id="projects-supporting-abstr" class="section level1">
-<h1 class="hasAnchor">
-<a href="#projects-supporting-abstr" class="anchor"></a>Projects supporting <code>abstr</code>
-</h1>
+<div class="section level2">
+<h2 id="projects-supporting-abstr">Projects supporting <code>abstr</code><a class="anchor" aria-label="anchor" href="#projects-supporting-abstr"></a>
+</h2>
 <p>Several open source R packages enabled the creation of <code>abstr</code>.</p>
 <p>These include:</p>
 <ul>
 <li>
-<a href="https://cran.r-project.org/package=jsonlite">jsonlite</a> for awesome JSON parsing and generation</li>
+<a href="https://cran.r-project.org/package=jsonlite" class="external-link">jsonlite</a> for awesome JSON parsing and generation</li>
 <li>
-<a href="https://cran.r-project.org/package=magrittr">magrittr</a> for magic <code>%&gt;%</code> pipe-command chaining</li>
+<a href="https://cran.r-project.org/package=magrittr" class="external-link">magrittr</a> for magic <code>%&gt;%</code> pipe-command chaining</li>
 <li>
-<a href="https://cran.r-project.org/package=sf">sf</a> for simple feature support</li>
+<a href="https://cran.r-project.org/package=sf" class="external-link">sf</a> for simple feature support</li>
 <li>
-<a href="https://cran.r-project.org/package=tibble">tibble</a> for strict data-frame declaration</li>
+<a href="https://cran.r-project.org/package=tibble" class="external-link">tibble</a> for strict data-frame declaration</li>
 <li>
-<a href="https://cran.r-project.org/package=tidyr">tidyr</a> for all things data cleaning</li>
+<a href="https://cran.r-project.org/package=tidyr" class="external-link">tidyr</a> for all things data cleaning</li>
 </ul>
 </div>
-<div id="context" class="section level1">
-<h1 class="hasAnchor">
-<a href="#context" class="anchor"></a>Context</h1>
-<p>To further understand the methods and motivations behind <code>abstr</code>, it helps to have some context. The package builds on the ecosystem of open source software for geospatial data (<a href="https://foss4g.org/">FOSS4G</a>) and packages such as <a href="https://docs.ropensci.org/stplanr/"><code>stplanr</code></a> for working with transport data in R. <code>stplanr</code> was developed to support development of the the Propensity to Cycle Tool (<a href="https://www.pct.bike/">PCT</a>), an open source transport planning system for England and Wales. The PCT <a href="https://github.com/ITSLeeds/pct">package</a> enables access to the data generated by the PCT project, plus scenario of change modeling (not forecasting) at the origin-destination level, which can provide results at regions, local, route and route network levels.</p>
+<div class="section level2">
+<h2 id="context">Context<a class="anchor" aria-label="anchor" href="#context"></a>
+</h2>
+<p>To further understand the methods and motivations behind <code>abstr</code>, it helps to have some context. The package builds on the ecosystem of open source software for geospatial data (<a href="https://foss4g.org/" class="external-link">FOSS4G</a>) and packages such as <a href="https://docs.ropensci.org/stplanr/" class="external-link"><code>stplanr</code></a> for working with transport data in R. <code>stplanr</code> was developed to support development of the the Propensity to Cycle Tool (<a href="https://www.pct.bike/" class="external-link">PCT</a>), an open source transport planning system for England and Wales. The PCT <a href="https://github.com/ITSLeeds/pct" class="external-link">package</a> enables access to the data generated by the PCT project, plus scenario of change modeling (not forecasting) at the origin-destination level, which can provide results at regions, local, route and route network levels.</p>
 <p><img src="https://www.pct.bike/www/static/01_logos/pct-logo.png"></p>
-<p>The PCT provides a range of deterministic scenarios of change, such as <code>go_dutch</code> (where cycling levels matches that of the Netherlands), <code>gender_eq</code> (where there is equal levels of cycling among Female and Males) and <code>gov_target</code> (where cycling levels reflect that of UK government current targets). An academic <a href="https://www.jtlu.org/index.php/jtlu/article/view/862">paper</a> on the PCT provides further detail on the motivations for and methods underlying the project. In 2018 the beasty <code>stplanr</code> (sustainable transport planning) package and R journal <a href="https://journal.r-project.org/archive/2018/RJ-2018-053/RJ-2018-053.pdf">article</a> came on the scene, and further provided functions for solving common problems in transport planning and modeling, as well as advocating a transparency in tool usage within the transport planning paradigm.</p>
-<p><a href="https://github.com/ropensci/stplanr"><img src="https://raw.githubusercontent.com/ropensci/stplanr/master/man/figures/stplanr.png"></a></p>
+<p>The PCT provides a range of deterministic scenarios of change, such as <code>go_dutch</code> (where cycling levels matches that of the Netherlands), <code>gender_eq</code> (where there is equal levels of cycling among Female and Males) and <code>gov_target</code> (where cycling levels reflect that of UK government current targets). An academic <a href="https://www.jtlu.org/index.php/jtlu/article/view/862" class="external-link">paper</a> on the PCT provides further detail on the motivations for and methods underlying the project. In 2018 the beasty <code>stplanr</code> (sustainable transport planning) package and R journal <a href="https://journal.r-project.org/archive/2018/RJ-2018-053/RJ-2018-053.pdf" class="external-link">article</a> came on the scene, and further provided functions for solving common problems in transport planning and modeling, as well as advocating a transparency in tool usage within the transport planning paradigm.</p>
+<p><a href="https://github.com/ropensci/stplanr" class="external-link"><img src="https://raw.githubusercontent.com/ropensci/stplanr/master/man/figures/stplanr.png"></a></p>
 <p>Finally, on the R side, in 2021 the <code>od</code> package was released which provided functions for working with origin-destination data. A central focus in all of the packages and papers mentioned above is to provide open access transport tools to support data driven transport policies based on an objective and transparent evidence base.</p>
-<p>For more on the history motivating the development of the <code>abstr</code> package see the <a href="https://a-b-street.github.io/abstr/articles/pct_to_abstr.html"><code>pct_to_abstr</code> vignette</a></p>
+<p>For more on the history motivating the development of the <code>abstr</code> package see the <a href="https://a-b-street.github.io/abstr/articles/pct_to_abstr.html" class="external-link"><code>pct_to_abstr</code> vignette</a></p>
 </div>
   </div>
 
@@ -257,11 +251,13 @@ Example data that can be used as an input by functions in abstr to generate trip
 
 
       <footer><div class="copyright">
-  <p>Developed by Nathanael Sheehan, Robin Lovelace, Trevor Nederlof, Dustin Carlino.</p>
+  <p></p>
+<p>Developed by Nathanael Sheehan, Robin Lovelace, Trevor Nederlof, Dustin Carlino.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -269,6 +265,8 @@ Example data that can be used as an input by functions in abstr to generate trip
 
   
 
+
+  
 
   </body>
 </html>
