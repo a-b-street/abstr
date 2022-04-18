@@ -99,25 +99,13 @@ ab_scenario = function(
       destination_buildings = sf::st_centroid(destination_buildings)
     })
   }
-  if(utils::packageVersion("od") < "0.4.0") {
-    res = od::od_jitter(
+  res = od::od_jitter(
     od = od_longer,
     z = zones,
     zd = zones_d,
     subpoints_o = origin_buildings,
     subpoints_d = destination_buildings
-    )
-  } else {
-    res = od::od_jitter(
-    od = od_longer,
-    z = zones,
-    zd = zones_d,
-    subpoints_o = origin_buildings,
-    subpoints_d = destination_buildings,
-    disag = FALSE
-    )
-  }
-  
+  )
 
   if(output == "sf") {
     return(res)
