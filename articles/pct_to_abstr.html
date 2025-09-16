@@ -6,20 +6,19 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Visualising cycling potential with A/B Street • abstr</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Visualising cycling potential with A/B Street">
-<meta property="og:description" content="abstr">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -48,7 +47,7 @@
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
@@ -71,7 +70,7 @@
 <li>
   <a href="https://github.com/a-b-street/abstr/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul>
@@ -82,16 +81,18 @@
 </div>
 <!--/.navbar -->
 
-      
 
-      </header><script src="pct_to_abstr_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Visualising cycling potential with A/B Street</h1>
-                        <h4 data-toc-skip class="author">Nathanael Sheehan and Robin Lovelace</h4>
+      <h1 data-toc-skip>Visualising cycling potential with A/B
+Street</h1>
+                        <h4 data-toc-skip class="author">Nathanael
+Sheehan and Robin Lovelace</h4>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/a-b-street/abstr/blob/HEAD/vignettes/pct_to_abstr.Rmd" class="external-link"><code>vignettes/pct_to_abstr.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/a-b-street/abstr/blob/main/vignettes/pct_to_abstr.Rmd" class="external-link"><code>vignettes/pct_to_abstr.Rmd</code></a></small>
       <div class="hidden name"><code>pct_to_abstr.Rmd</code></div>
 
     </div>
@@ -101,268 +102,363 @@
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>The <code>abstr</code> package was originally developed as part of the ActDev project, which involved the development of a prototype web application that provides evidence on active travel provision and potential in and around planned and proposed development sites, as outlined in a <a href="https://osf.io/7fuq5/" class="external-link">paper</a> describing the tool. The <a href="https://actdev.cyipt.bike/" class="external-link">ActDev</a> website demonstrates the potential for new developments to support walking and cycling by visualising data generated using reproducible R <a href="https://github.com/cyipt/actdev/tree/main/code" class="external-link">code</a>. A key challenge was to create a simulation for each of the case study sites based on the input origin-destination datasets. To overcome this challenge, A/B Street developers were commissioned to extend the ActDev tool to enable real time simulation of scenarios of change. At the time there was no way to get the OD data we had in the R world into the A/B Street world. This was motivation for creating the <code>abstr</code> R package. As outlined in the package’s README, the package’s main job is to take origin-destination data from <code>.csv</code> files (and other tabular file types) and outputs <code>.json</code> files that can be imported and visualised in A/B Street.</p>
-<p>Given you have all of the above, you are ready to start transforming data-frames into simulations! So lets set an aim for the vignette</p>
+<p>The <code>abstr</code> package was originally developed as part of
+the ActDev project, which involved the development of a prototype web
+application that provides evidence on active travel provision and
+potential in and around planned and proposed development sites, as
+outlined in a <a href="https://osf.io/7fuq5/" class="external-link">paper</a> describing the
+tool. The <a href="https://actdev.cyipt.bike/" class="external-link">ActDev</a> website
+demonstrates the potential for new developments to support walking and
+cycling by visualising data generated using reproducible R <a href="https://github.com/cyipt/actdev/tree/main/code" class="external-link">code</a>. A key
+challenge was to create a simulation for each of the case study sites
+based on the input origin-destination datasets. To overcome this
+challenge, A/B Street developers were commissioned to extend the ActDev
+tool to enable real time simulation of scenarios of change. At the time
+there was no way to get the OD data we had in the R world into the A/B
+Street world. This was motivation for creating the <code>abstr</code> R
+package. As outlined in the package’s README, the package’s main job is
+to take origin-destination data from <code>.csv</code> files (and other
+tabular file types) and outputs <code>.json</code> files that can be
+imported and visualised in A/B Street.</p>
+<p>Given you have all of the above, you are ready to start transforming
+data-frames into simulations! So lets set an aim for the vignette</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">####</span>
-<span class="co">####</span>
-<span class="co">#### AIM: Use PCT data to create scenario of change where commuting cycling levels increase and car journeys decrease which can be imported</span>
-<span class="co">####      into A/B Street city simulation software. This method should be fully reproducible for all other pct_regions.</span>
-<span class="co">####</span>
-<span class="co">####</span></code></pre></div>
-<p>While the PCT is a powerful and popular tool for strategic cycleway planning it has some key limitations that are addressed by A/B Street:</p>
+<code class="sourceCode R"><span><span class="co">####</span></span>
+<span><span class="co">####</span></span>
+<span><span class="co">#### AIM: Use PCT data to create scenario of change where commuting cycling levels increase and car journeys decrease which can be imported</span></span>
+<span><span class="co">####      into A/B Street city simulation software. This method should be fully reproducible for all other pct_regions.</span></span>
+<span><span class="co">####</span></span>
+<span><span class="co">####</span></span></code></pre></div>
+<p>While the PCT is a powerful and popular tool for strategic cycleway
+planning it has some key limitations that are addressed by A/B
+Street:</p>
 <ul>
-<li>The PCT only provides data on scenarios of behaviour change, providing little for people who want to visualise and explore scenarios of infrastructure change</li>
-<li>The PCT does not allow the user to edit the road network to help design the pro-cycling and traffic-reducing interventions that are needed to enable more people to cycle safely</li>
-<li>It does not provide evidence at high zoom levels, being designed for strategic planning <!-- - Any others (TODO) -->
+<li>The PCT only provides data on scenarios of behaviour change,
+providing little for people who want to visualise and explore scenarios
+of infrastructure change</li>
+<li>The PCT does not allow the user to edit the road network to help
+design the pro-cycling and traffic-reducing interventions that are
+needed to enable more people to cycle safely</li>
+<li>It does not provide evidence at high zoom levels, being designed for
+strategic planning <!-- - Any others (TODO) -->
 </li>
 </ul>
-<p>This vignette aims to demonstrate how data from the PCT, which provides evidence-based visions of how cycling could become the natural choice for urban travel, can be visualised in A/B Street to overcome the limitations outlined above. The first stage is to install the necessary packages (see the <a href="https://a-b-street.github.io/abstr/articles/abstr.html" class="external-link"><code>abstr</code></a> vignette for a detailed introduction to software requirements).</p>
+<p>This vignette aims to demonstrate how data from the PCT, which
+provides evidence-based visions of how cycling could become the natural
+choice for urban travel, can be visualised in A/B Street to overcome the
+limitations outlined above. The first stage is to install the necessary
+packages (see the <a href="https://a-b-street.github.io/abstr/articles/abstr.html" class="external-link"><code>abstr</code></a>
+vignette for a detailed introduction to software requirements).</p>
 </div>
 <div class="section level2">
 <h2 id="installing-and-loading-packages">Installing and Loading Packages<a class="anchor" aria-label="anchor" href="#installing-and-loading-packages"></a>
 </h2>
-<p>To begin with, you need to install and load the necessary packages for this vignette.</p>
+<p>To begin with, you need to install and load the necessary packages
+for this vignette.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">#### INSTALL PACKAGES ####</span>
-<span class="va">cran_pkgs</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"abstr"</span>, <span class="st">"pct"</span>, <span class="st">"osmextract"</span>, <span class="st">"sf"</span>, <span class="st">"tidyverse"</span><span class="op">)</span>
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_cran.html" class="external-link">install_cran</a></span><span class="op">(</span><span class="va">cran_pkgs</span><span class="op">)</span>
-<span class="co">#### LOAD PACKAGES ####</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/a-b-street/abstr" class="external-link">abstr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://itsleeds.github.io/pct/" class="external-link">pct</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/osmextract/" class="external-link">osmextract</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/" class="external-link">sf</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">#### INSTALL PACKAGES ####</span></span>
+<span><span class="va">cran_pkgs</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"abstr"</span>, <span class="st">"pct"</span>, <span class="st">"osmextract"</span>, <span class="st">"sf"</span>, <span class="st">"tidyverse"</span><span class="op">)</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_cran.html" class="external-link">install_cran</a></span><span class="op">(</span><span class="va">cran_pkgs</span><span class="op">)</span></span>
+<span><span class="co">#### LOAD PACKAGES ####</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/a-b-street/abstr" class="external-link">abstr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://itsleeds.github.io/pct/" class="external-link">pct</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/osmextract/" class="external-link">osmextract</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/" class="external-link">sf</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="choosing-a-region">Choosing a region<a class="anchor" aria-label="anchor" href="#choosing-a-region"></a>
 </h2>
-<p>Data in the PCT for England and Wales is divided into regions, which can be seen below.</p>
+<p>Data in the PCT for England and Wales is divided into regions, which
+can be seen below.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">pct_regions</span><span class="op">$</span><span class="va">region_name</span></code></pre></div>
-<p>To run the example below, replace <code>devon</code> with a different region from the list above (warning, this may not work for large regions).</p>
+<code class="sourceCode R"><span><span class="va">pct_regions</span><span class="op">$</span><span class="va">region_name</span></span></code></pre></div>
+<p>To run the example below, replace <code>devon</code> with a different
+region from the list above (warning, this may not work for large
+regions).</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">region_name</span> <span class="op">=</span> <span class="st">"devon"</span></code></pre></div>
-<p>You can select a specific local authority of interest from those available in the region of interest. You can check which are available in your region of interest as follows:</p>
+<code class="sourceCode R"><span><span class="va">region_name</span> <span class="op">=</span> <span class="st">"devon"</span></span></code></pre></div>
+<p>You can select a specific local authority of interest from those
+available in the region of interest. You can check which are available
+in your region of interest as follows:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lookup</span> <span class="op">=</span> <span class="fu">pct</span><span class="fu">::</span><span class="va"><a href="https://itsleeds.github.io/pct/reference/pct_regions_lookup.html" class="external-link">pct_regions_lookup</a></span>
-<span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">lookup</span><span class="op">$</span><span class="va">lad16nm</span><span class="op">[</span><span class="va">lookup</span><span class="op">$</span><span class="va">region_name</span> <span class="op">==</span> <span class="va">region_name</span><span class="op">]</span><span class="op">)</span></code></pre></div>
-<p>For the purposes of this article we will use Exeter as the case study:</p>
+<code class="sourceCode R"><span><span class="va">lookup</span> <span class="op">=</span> <span class="fu">pct</span><span class="fu">::</span><span class="va"><a href="https://itsleeds.github.io/pct/reference/pct_regions_lookup.html" class="external-link">pct_regions_lookup</a></span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">lookup</span><span class="op">$</span><span class="va">lad16nm</span><span class="op">[</span><span class="va">lookup</span><span class="op">$</span><span class="va">region_name</span> <span class="op">==</span> <span class="va">region_name</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<p>For the purposes of this article we will use Exeter as the case
+study:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lad_name</span> <span class="op">=</span> <span class="st">"Exeter"</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">lad_name</span> <span class="op">=</span> <span class="st">"Exeter"</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="fetching-pct-data">Fetching PCT Data<a class="anchor" aria-label="anchor" href="#fetching-pct-data"></a>
 </h2>
-<p>Next you want to fetch two types of PCT data. Firstly, zone data, which is gathered using the <code><a href="https://itsleeds.github.io/pct/reference/get_pct_zones.html" class="external-link">get_pct_zones()</a></code> function and is filtered to only include a local authority of choice, in this example we use Exeter. Secondly, commute data, which is gathered using the <code><a href="https://itsleeds.github.io/pct/reference/get_pct_lines.html" class="external-link">get_pct_lines()</a></code> function and is also filtered to only include trips within the local authority.</p>
+<p>Next you want to fetch two types of PCT data. Firstly, zone data,
+which is gathered using the <code><a href="https://itsleeds.github.io/pct/reference/get_pct_zones.html" class="external-link">get_pct_zones()</a></code> function and is
+filtered to only include a local authority of choice, in this example we
+use Exeter. Secondly, commute data, which is gathered using the
+<code><a href="https://itsleeds.github.io/pct/reference/get_pct_lines.html" class="external-link">get_pct_lines()</a></code> function and is also filtered to only
+include trips within the local authority.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">####    READ DATA ####</span>
-<span class="va">devon_zones</span> <span class="op">=</span> <span class="fu"><a href="https://itsleeds.github.io/pct/reference/get_pct_zones.html" class="external-link">get_pct_zones</a></span><span class="op">(</span>region <span class="op">=</span> <span class="va">region_name</span>, geography <span class="op">=</span> <span class="st">"msoa"</span><span class="op">)</span> <span class="co"># get zone data</span>
-<span class="co"># filter for exeter</span>
-<span class="va">exeter_zones</span> <span class="op">=</span> <span class="va">devon_zones</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">lad_name</span> <span class="op">==</span> <span class="va">lad_name</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">geo_code</span><span class="op">)</span> 
-<span class="co"># get commute od data</span>
-<span class="va">exeter_commute_od</span> <span class="op">=</span> <span class="fu"><a href="https://itsleeds.github.io/pct/reference/get_pct_lines.html" class="external-link">get_pct_lines</a></span><span class="op">(</span>region <span class="op">=</span> <span class="va">region_name</span>, geography <span class="op">=</span> <span class="st">"msoa"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">lad_name1</span> <span class="op">==</span> <span class="va">lad_name</span> <span class="op">&amp;</span> <span class="va">lad_name2</span> <span class="op">==</span> <span class="va">lad_name</span><span class="op">)</span> <span class="co"># filter for exeter</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">####    READ DATA ####</span></span>
+<span><span class="va">devon_zones</span> <span class="op">=</span> <span class="fu"><a href="https://itsleeds.github.io/pct/reference/get_pct_zones.html" class="external-link">get_pct_zones</a></span><span class="op">(</span>region <span class="op">=</span> <span class="va">region_name</span>, geography <span class="op">=</span> <span class="st">"msoa"</span><span class="op">)</span> <span class="co"># get zone data</span></span>
+<span><span class="co"># filter for exeter</span></span>
+<span><span class="va">exeter_zones</span> <span class="op">=</span> <span class="va">devon_zones</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">lad_name</span> <span class="op">==</span> <span class="va">lad_name</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">geo_code</span><span class="op">)</span> </span>
+<span><span class="co"># get commute od data</span></span>
+<span><span class="va">exeter_commute_od</span> <span class="op">=</span> <span class="fu"><a href="https://itsleeds.github.io/pct/reference/get_pct_lines.html" class="external-link">get_pct_lines</a></span><span class="op">(</span>region <span class="op">=</span> <span class="va">region_name</span>, geography <span class="op">=</span> <span class="st">"msoa"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">lad_name1</span> <span class="op">==</span> <span class="va">lad_name</span> <span class="op">&amp;</span> <span class="va">lad_name2</span> <span class="op">==</span> <span class="va">lad_name</span><span class="op">)</span> <span class="co"># filter for exeter</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="data-cleaning-and-transformation">Data Cleaning and Transformation<a class="anchor" aria-label="anchor" href="#data-cleaning-and-transformation"></a>
 </h2>
-<p>Now you have your data, its time to clean and transform it. In fact, you only need to transform the <code>exeter_commute_od</code> dataframe as the <code>exeter_zones</code> is already in <code>abstr</code> format. The first step in cleaning the data requires renaming variables so that we can clearly see the difference between the base scenario and the scenario of change. Next, you calculate the scenario of change, in this example we use the <code><a href="https://itsleeds.github.io/pct/reference/uptake_pct_govtarget.html" class="external-link">uptake_pct_godutch_2020()</a></code> function which takes two arguments of <code>distance</code> and <code>gradient</code> in its model calculation. The results from this PCT function allow you to calculate the mode shift from driving to cycling. Finally, we subset the data to only include the columns which are needed to progress.</p>
+<p>Now you have your data, its time to clean and transform it. In fact,
+you only need to transform the <code>exeter_commute_od</code> dataframe
+as the <code>exeter_zones</code> is already in <code>abstr</code>
+format. The first step in cleaning the data requires renaming variables
+so that we can clearly see the difference between the base scenario and
+the scenario of change. Next, you calculate the scenario of change, in
+this example we use the <code><a href="https://itsleeds.github.io/pct/reference/uptake_pct_govtarget.html" class="external-link">uptake_pct_godutch_2020()</a></code> function
+which takes two arguments of <code>distance</code> and
+<code>gradient</code> in its model calculation. The results from this
+PCT function allow you to calculate the mode shift from driving to
+cycling. Finally, we subset the data to only include the columns which
+are needed to progress.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">exeter_commute_od</span> <span class="op">=</span> <span class="va">exeter_commute_od</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>cycle_base <span class="op">=</span> <span class="va">bicycle</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>walk_base <span class="op">=</span> <span class="va">foot</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>transit_base <span class="op">=</span> <span class="va">bus</span> <span class="op">+</span> <span class="va">train_tube</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># bunch of renaming -_-</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>drive_base <span class="op">=</span> <span class="va">car_driver</span> <span class="op">+</span> <span class="va">car_passenger</span> <span class="op">+</span> <span class="va">motorbike</span> <span class="op">+</span> <span class="va">taxi_other</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>all_base <span class="op">=</span> <span class="va">all</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>
-    <span class="co"># create new columns</span>
-    pcycle_godutch_uptake <span class="op">=</span> <span class="fu"><a href="https://itsleeds.github.io/pct/reference/uptake_pct_govtarget.html" class="external-link">uptake_pct_godutch_2020</a></span><span class="op">(</span>distance <span class="op">=</span> <span class="va">rf_dist_km</span>, gradient <span class="op">=</span> <span class="va">rf_avslope_perc</span><span class="op">)</span>,
-    cycle_godutch_additional <span class="op">=</span> <span class="va">pcycle_godutch_uptake</span> <span class="op">*</span> <span class="va">drive_base</span>,
-    cycle_godutch <span class="op">=</span> <span class="va">cycle_base</span> <span class="op">+</span> <span class="va">cycle_godutch_additional</span>,
-    pcycle_godutch <span class="op">=</span> <span class="va">cycle_godutch</span> <span class="op">/</span> <span class="va">all_base</span>,
-    drive__godutch <span class="op">=</span> <span class="va">drive_base</span> <span class="op">-</span> <span class="va">cycle_godutch_additional</span>,
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">drive__godutch</span>, <span class="va">cycle_godutch</span><span class="op">)</span>, <span class="va">round</span>, <span class="fl">0</span><span class="op">)</span>,
-    all_go_dutch <span class="op">=</span> <span class="va">drive__godutch</span> <span class="op">+</span> <span class="va">cycle_godutch</span> <span class="op">+</span> <span class="va">transit_base</span> <span class="op">+</span> <span class="va">walk_base</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span>
-    <span class="co"># select variables for new df</span>
-    <span class="va">geo_code1</span>,
-    <span class="va">geo_code2</span>,
-    <span class="va">cycle_base</span>,
-    <span class="va">drive_base</span>,
-    <span class="va">walk_base</span>,
-    <span class="va">transit_base</span>,
-    <span class="va">all_base</span>,
-    <span class="va">all_go_dutch</span>,
-    <span class="va">drive__godutch</span>,
-    <span class="va">cycle_godutch</span>,
-    <span class="va">cycle_godutch_additional</span>,
-    <span class="va">pcycle_godutch</span>
-  <span class="op">)</span></code></pre></div>
-<p>As a quick sanity check we can make sure our model has not generated any new commutes and we still have the same base number of commuters as before.</p>
+<code class="sourceCode R"><span><span class="va">exeter_commute_od</span> <span class="op">=</span> <span class="va">exeter_commute_od</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>cycle_base <span class="op">=</span> <span class="va">bicycle</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>walk_base <span class="op">=</span> <span class="va">foot</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>transit_base <span class="op">=</span> <span class="va">bus</span> <span class="op">+</span> <span class="va">train_tube</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># bunch of renaming -_-</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>drive_base <span class="op">=</span> <span class="va">car_driver</span> <span class="op">+</span> <span class="va">car_passenger</span> <span class="op">+</span> <span class="va">motorbike</span> <span class="op">+</span> <span class="va">taxi_other</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>all_base <span class="op">=</span> <span class="va">all</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
+<span>    <span class="co"># create new columns</span></span>
+<span>    pcycle_godutch_uptake <span class="op">=</span> <span class="fu"><a href="https://itsleeds.github.io/pct/reference/uptake_pct_govtarget.html" class="external-link">uptake_pct_godutch_2020</a></span><span class="op">(</span>distance <span class="op">=</span> <span class="va">rf_dist_km</span>, gradient <span class="op">=</span> <span class="va">rf_avslope_perc</span><span class="op">)</span>,</span>
+<span>    cycle_godutch_additional <span class="op">=</span> <span class="va">pcycle_godutch_uptake</span> <span class="op">*</span> <span class="va">drive_base</span>,</span>
+<span>    cycle_godutch <span class="op">=</span> <span class="va">cycle_base</span> <span class="op">+</span> <span class="va">cycle_godutch_additional</span>,</span>
+<span>    pcycle_godutch <span class="op">=</span> <span class="va">cycle_godutch</span> <span class="op">/</span> <span class="va">all_base</span>,</span>
+<span>    drive__godutch <span class="op">=</span> <span class="va">drive_base</span> <span class="op">-</span> <span class="va">cycle_godutch_additional</span>,</span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">drive__godutch</span>, <span class="va">cycle_godutch</span><span class="op">)</span>, <span class="va">round</span>, <span class="fl">0</span><span class="op">)</span>,</span>
+<span>    all_go_dutch <span class="op">=</span> <span class="va">drive__godutch</span> <span class="op">+</span> <span class="va">cycle_godutch</span> <span class="op">+</span> <span class="va">transit_base</span> <span class="op">+</span> <span class="va">walk_base</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span></span>
+<span>    <span class="co"># select variables for new df</span></span>
+<span>    <span class="va">geo_code1</span>,</span>
+<span>    <span class="va">geo_code2</span>,</span>
+<span>    <span class="va">cycle_base</span>,</span>
+<span>    <span class="va">drive_base</span>,</span>
+<span>    <span class="va">walk_base</span>,</span>
+<span>    <span class="va">transit_base</span>,</span>
+<span>    <span class="va">all_base</span>,</span>
+<span>    <span class="va">all_go_dutch</span>,</span>
+<span>    <span class="va">drive__godutch</span>,</span>
+<span>    <span class="va">cycle_godutch</span>,</span>
+<span>    <span class="va">cycle_godutch_additional</span>,</span>
+<span>    <span class="va">pcycle_godutch</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<p>As a quick sanity check we can make sure our model has not generated
+any new commutes and we still have the same base number of commuters as
+before.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># sanity check: ensure total remains the same</span>
-<span class="co"># (this is not a dynamic model where population change is factored in)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="va">exeter_commute_od</span><span class="op">$</span><span class="va">all_base</span>, <span class="va">exeter_commute_od</span><span class="op">$</span><span class="va">all_go_dutch</span><span class="op">)</span> </code></pre></div>
+<code class="sourceCode R"><span><span class="co"># sanity check: ensure total remains the same</span></span>
+<span><span class="co"># (this is not a dynamic model where population change is factored in)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="va">exeter_commute_od</span><span class="op">$</span><span class="va">all_base</span>, <span class="va">exeter_commute_od</span><span class="op">$</span><span class="va">all_go_dutch</span><span class="op">)</span> </span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="download-osm-building-data">Download OSM building data<a class="anchor" aria-label="anchor" href="#download-osm-building-data"></a>
 </h2>
-<p>Now, you need to download OSM building data to populate the AB Street simulation map. In this example we use the <code>osmextract</code> package to fetch a PBF (protocolbuffer binary format) file hosted on GeoFabrik. You then need to filter the contents of the PBF file to only include the defined building types and subset the data to only include <code>osm_way_id, name, building</code> columns. Following this, you should ensure you only include valid sf buildings and then aggregate the building data against the zone boundary.</p>
+<p>Now, you need to download OSM building data to populate the AB Street
+simulation map. In this example we use the <code>osmextract</code>
+package to fetch a PBF (protocolbuffer binary format) file hosted on
+GeoFabrik. You then need to filter the contents of the PBF file to only
+include the defined building types and subset the data to only include
+<code>osm_way_id, name, building</code> columns. Following this, you
+should ensure you only include valid sf buildings and then aggregate the
+building data against the zone boundary.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">####    DOWNLOAD OSM BUILDING DATA ####</span>
-<span class="va">osm_polygons</span> <span class="op">=</span> <span class="fu">osmextract</span><span class="fu">::</span><span class="fu">oe_read</span><span class="op">(</span>
-  <span class="st">"https://download.geofabrik.de/europe/great-britain/england/devon-latest.osm.pbf"</span>,
-  <span class="co"># download osm buildings for region using geofabrik</span>
-  layer <span class="op">=</span> <span class="st">"multipolygons"</span>
-<span class="op">)</span>
-
-<span class="va">building_types</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>
-  <span class="st">"yes"</span>,
-  <span class="st">"house"</span>,
-  <span class="st">"detached"</span>,
-  <span class="st">"residential"</span>,
-  <span class="st">"apartments"</span>,
-  <span class="st">"commercial"</span>,
-  <span class="st">"retail"</span>,
-  <span class="st">"school"</span>,
-  <span class="st">"industrial"</span>,
-  <span class="st">"semidetached_house"</span>,
-  <span class="st">"church"</span>,
-  <span class="st">"hangar"</span>,
-  <span class="st">"mobile_home"</span>,
-  <span class="st">"warehouse"</span>,
-  <span class="st">"office"</span>,
-  <span class="st">"college"</span>,
-  <span class="st">"university"</span>,
-  <span class="st">"public"</span>,
-  <span class="st">"garages"</span>,
-  <span class="st">"cabin"</span>,
-  <span class="st">"hospital"</span>,
-  <span class="st">"dormitory"</span>,
-  <span class="st">"hotel"</span>,
-  <span class="st">"service"</span>,
-  <span class="st">"parking"</span>,
-  <span class="st">"manufactured"</span>,
-  <span class="st">"civic"</span>,
-  <span class="st">"farm"</span>,
-  <span class="st">"manufacturing"</span>,
-  <span class="st">"floating_home"</span>,
-  <span class="st">"government"</span>,
-  <span class="st">"bungalow"</span>,
-  <span class="st">"transportation"</span>,
-  <span class="st">"motel"</span>,
-  <span class="st">"manufacture"</span>,
-  <span class="st">"kindergarten"</span>,
-  <span class="st">"house_boat"</span>,
-  <span class="st">"sports_centre"</span>
-<span class="op">)</span>
-<span class="va">osm_buildings</span>  <span class="op">=</span> <span class="va">osm_polygons</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">building</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">building_types</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">osm_way_id</span>, <span class="va">name</span>, <span class="va">building</span><span class="op">)</span>
-
-<span class="va">osm_buildings_valid</span> <span class="op">=</span> <span class="va">osm_buildings</span><span class="op">[</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/valid.html" class="external-link">st_is_valid</a></span><span class="op">(</span><span class="va">osm_buildings</span><span class="op">)</span>, <span class="op">]</span>
-
-<span class="va">exeter_osm_buildings_all</span> <span class="op">=</span> <span class="va">osm_buildings_valid</span><span class="op">[</span><span class="va">exeter_zones</span>, <span class="op">]</span></code></pre></div>
-<p>Subsequently, you can join the OSM buildings data with the <code>exeter_zones</code> geography in order to create the complete building table. This table is filtered to not include any <code>NA's</code> and is aggregated to only include</p>
+<code class="sourceCode R"><span><span class="co">####    DOWNLOAD OSM BUILDING DATA ####</span></span>
+<span><span class="va">osm_polygons</span> <span class="op">=</span> <span class="fu">osmextract</span><span class="fu">::</span><span class="fu">oe_read</span><span class="op">(</span></span>
+<span>  <span class="st">"https://download.geofabrik.de/europe/great-britain/england/devon-latest.osm.pbf"</span>,</span>
+<span>  <span class="co"># download osm buildings for region using geofabrik</span></span>
+<span>  layer <span class="op">=</span> <span class="st">"multipolygons"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">building_types</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>  <span class="st">"yes"</span>,</span>
+<span>  <span class="st">"house"</span>,</span>
+<span>  <span class="st">"detached"</span>,</span>
+<span>  <span class="st">"residential"</span>,</span>
+<span>  <span class="st">"apartments"</span>,</span>
+<span>  <span class="st">"commercial"</span>,</span>
+<span>  <span class="st">"retail"</span>,</span>
+<span>  <span class="st">"school"</span>,</span>
+<span>  <span class="st">"industrial"</span>,</span>
+<span>  <span class="st">"semidetached_house"</span>,</span>
+<span>  <span class="st">"church"</span>,</span>
+<span>  <span class="st">"hangar"</span>,</span>
+<span>  <span class="st">"mobile_home"</span>,</span>
+<span>  <span class="st">"warehouse"</span>,</span>
+<span>  <span class="st">"office"</span>,</span>
+<span>  <span class="st">"college"</span>,</span>
+<span>  <span class="st">"university"</span>,</span>
+<span>  <span class="st">"public"</span>,</span>
+<span>  <span class="st">"garages"</span>,</span>
+<span>  <span class="st">"cabin"</span>,</span>
+<span>  <span class="st">"hospital"</span>,</span>
+<span>  <span class="st">"dormitory"</span>,</span>
+<span>  <span class="st">"hotel"</span>,</span>
+<span>  <span class="st">"service"</span>,</span>
+<span>  <span class="st">"parking"</span>,</span>
+<span>  <span class="st">"manufactured"</span>,</span>
+<span>  <span class="st">"civic"</span>,</span>
+<span>  <span class="st">"farm"</span>,</span>
+<span>  <span class="st">"manufacturing"</span>,</span>
+<span>  <span class="st">"floating_home"</span>,</span>
+<span>  <span class="st">"government"</span>,</span>
+<span>  <span class="st">"bungalow"</span>,</span>
+<span>  <span class="st">"transportation"</span>,</span>
+<span>  <span class="st">"motel"</span>,</span>
+<span>  <span class="st">"manufacture"</span>,</span>
+<span>  <span class="st">"kindergarten"</span>,</span>
+<span>  <span class="st">"house_boat"</span>,</span>
+<span>  <span class="st">"sports_centre"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">osm_buildings</span>  <span class="op">=</span> <span class="va">osm_polygons</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">building</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">building_types</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">osm_way_id</span>, <span class="va">name</span>, <span class="va">building</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">osm_buildings_valid</span> <span class="op">=</span> <span class="va">osm_buildings</span><span class="op">[</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/valid.html" class="external-link">st_is_valid</a></span><span class="op">(</span><span class="va">osm_buildings</span><span class="op">)</span>, <span class="op">]</span></span>
+<span></span>
+<span><span class="va">exeter_osm_buildings_all</span> <span class="op">=</span> <span class="va">osm_buildings_valid</span><span class="op">[</span><span class="va">exeter_zones</span>, <span class="op">]</span></span></code></pre></div>
+<p>Subsequently, you can join the OSM buildings data with the
+<code>exeter_zones</code> geography in order to create the complete
+building table. This table is filtered to not include any
+<code>NA's</code> and is aggregated to only include</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">####  JOIN OSM BUILDINGS WITH ZONE DATA ####</span>
-<span class="va">exeter_osm_buildings_all_joined</span> <span class="op">=</span> <span class="va">exeter_osm_buildings_all</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_join.html" class="external-link">st_join</a></span><span class="op">(</span><span class="va">exeter_zones</span><span class="op">)</span>
-
-<span class="va">exeter_osm_buildings_sample</span> <span class="op">=</span> <span class="va">exeter_osm_buildings_all_joined</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">osm_way_id</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">exeter_osm_buildings_tbl</span> <span class="op">=</span> <span class="va">exeter_osm_buildings_all</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">osm_way_id</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">exeter_osm_buildings_sample</span><span class="op">$</span><span class="va">osm_way_id</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">####  JOIN OSM BUILDINGS WITH ZONE DATA ####</span></span>
+<span><span class="va">exeter_osm_buildings_all_joined</span> <span class="op">=</span> <span class="va">exeter_osm_buildings_all</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_join.html" class="external-link">st_join</a></span><span class="op">(</span><span class="va">exeter_zones</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">exeter_osm_buildings_sample</span> <span class="op">=</span> <span class="va">exeter_osm_buildings_all_joined</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">osm_way_id</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">exeter_osm_buildings_tbl</span> <span class="op">=</span> <span class="va">exeter_osm_buildings_all</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">osm_way_id</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">exeter_osm_buildings_sample</span><span class="op">$</span><span class="va">osm_way_id</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="using-abstr-to-generate-scenarios">Using Abstr to Generate Scenarios<a class="anchor" aria-label="anchor" href="#using-abstr-to-generate-scenarios"></a>
 </h2>
-<p>You now have everything in place to generate AB Street scenarios for both our base commute rate and our go_active commute rate. However, <code>abstr</code> takes a strict column name definition as to adhere to the AB street documentation. This means you need to rename mode columns for scenario generation. In order to make things easy, we can create a simple logic gate that renames our mode columns depending on the boolean value <code>go_active</code>.</p>
+<p>You now have everything in place to generate AB Street scenarios for
+both our base commute rate and our go_active commute rate. However,
+<code>abstr</code> takes a strict column name definition as to adhere to
+the AB street documentation. This means you need to rename mode columns
+for scenario generation. In order to make things easy, we can create a
+simple logic gate that renames our mode columns depending on the boolean
+value <code>go_active</code>.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">2021</span><span class="op">)</span> <span class="co"># for reproducible builds</span>
-<span class="co">####  LOGIC GATE ####</span>
-<span class="co"># Logic gate for go_dutch scenario of change, where cycling levels increase to a proportion reflecting the Netherlands.</span>
-<span class="co"># Switch to FALSE if you want census commuting OD</span>
-<span class="va">go_dutch</span> <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="kw">if</span> <span class="op">(</span><span class="va">go_dutch</span> <span class="op">==</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">exeter_od</span> <span class="op">=</span> <span class="va">exeter_commute_od</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>All <span class="op">=</span> <span class="va">all_go_dutch</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Bike <span class="op">=</span> <span class="va">cycle_godutch</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Transit <span class="op">=</span> <span class="va">transit_base</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Drive <span class="op">=</span> <span class="va">drive_base</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Walk <span class="op">=</span> <span class="va">walk_base</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">geo_code1</span>, <span class="va">geo_code2</span>, <span class="va">All</span>, <span class="va">Bike</span>, <span class="va">Transit</span>, <span class="va">Drive</span>, <span class="va">Walk</span>,<span class="va">geometry</span><span class="op">)</span>
-<span class="op">}</span> <span class="kw">else</span> <span class="op">{</span>
-  <span class="va">exeter_od</span> <span class="op">=</span> <span class="va">exeter_commute_od</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>All <span class="op">=</span> <span class="va">all_base</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Bike <span class="op">=</span> <span class="va">cycle_base</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Drive <span class="op">=</span> <span class="va">drive_base</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Transit <span class="op">=</span> <span class="va">transit_base</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Walk <span class="op">=</span> <span class="va">walk_base</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">geo_code1</span>, <span class="va">geo_code2</span>, <span class="va">All</span>, <span class="va">Bike</span>, <span class="va">Transit</span>, <span class="va">Drive</span>, <span class="va">Walk</span>, <span class="va">geometry</span><span class="op">)</span>
-<span class="op">}</span></code></pre></div>
-<p>Voila, you are ready to generate simulation files from your data-frames. Lets start by using the <code><a href="../reference/ab_scenario.html">ab_scenario()</a></code> function with our <code>exeter_od</code>, <code>exeter_zones</code> and <code>exeter_osm_buildings_tbl</code> data-frames.</p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">2021</span><span class="op">)</span> <span class="co"># for reproducible builds</span></span>
+<span><span class="co">####  LOGIC GATE ####</span></span>
+<span><span class="co"># Logic gate for go_dutch scenario of change, where cycling levels increase to a proportion reflecting the Netherlands.</span></span>
+<span><span class="co"># Switch to FALSE if you want census commuting OD</span></span>
+<span><span class="va">go_dutch</span> <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="kw">if</span> <span class="op">(</span><span class="va">go_dutch</span> <span class="op">==</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">exeter_od</span> <span class="op">=</span> <span class="va">exeter_commute_od</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>All <span class="op">=</span> <span class="va">all_go_dutch</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Bike <span class="op">=</span> <span class="va">cycle_godutch</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Transit <span class="op">=</span> <span class="va">transit_base</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Drive <span class="op">=</span> <span class="va">drive_base</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Walk <span class="op">=</span> <span class="va">walk_base</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">geo_code1</span>, <span class="va">geo_code2</span>, <span class="va">All</span>, <span class="va">Bike</span>, <span class="va">Transit</span>, <span class="va">Drive</span>, <span class="va">Walk</span>,<span class="va">geometry</span><span class="op">)</span></span>
+<span><span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>  <span class="va">exeter_od</span> <span class="op">=</span> <span class="va">exeter_commute_od</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>All <span class="op">=</span> <span class="va">all_base</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Bike <span class="op">=</span> <span class="va">cycle_base</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Drive <span class="op">=</span> <span class="va">drive_base</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Transit <span class="op">=</span> <span class="va">transit_base</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Walk <span class="op">=</span> <span class="va">walk_base</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">geo_code1</span>, <span class="va">geo_code2</span>, <span class="va">All</span>, <span class="va">Bike</span>, <span class="va">Transit</span>, <span class="va">Drive</span>, <span class="va">Walk</span>, <span class="va">geometry</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<p>Voila, you are ready to generate simulation files from your
+data-frames. Lets start by using the <code><a href="../reference/ab_scenario.html">ab_scenario()</a></code> function
+with our <code>exeter_od</code>, <code>exeter_zones</code> and
+<code>exeter_osm_buildings_tbl</code> data-frames.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">####  GENERATE A/B STREET SCENARIO ####</span>
-<span class="va">output_sf</span> <span class="op">=</span> <span class="fu"><a href="../reference/ab_scenario.html">ab_scenario</a></span><span class="op">(</span>
-  od <span class="op">=</span> <span class="va">exeter_od</span>,
-  zones <span class="op">=</span> <span class="va">exeter_zones</span>,
-  zones_d <span class="op">=</span> <span class="cn">NULL</span>,
-  origin_buildings <span class="op">=</span> <span class="va">exeter_osm_buildings_tbl</span>,
-  destination_buildings <span class="op">=</span> <span class="va">exeter_osm_buildings_tbl</span>,
-  pop_var <span class="op">=</span> <span class="fl">3</span>,
-  time_fun <span class="op">=</span> <span class="va">ab_time_normal</span>,
-  output <span class="op">=</span> <span class="st">"sf"</span>,
-  modes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Walk"</span>, <span class="st">"Bike"</span>, <span class="st">"Drive"</span>, <span class="st">"Transit"</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
-<p>To conclude you will need to generate a <code>JSON</code> format using the <code><a href="../reference/ab_json.html">ab_json()</a></code> function and then save the json file to your local machine using the <code><a href="../reference/ab_save.html">ab_save()</a></code> function. (You can download this <a href="https://github.com/a-b-street/abstr/releases/download/6543bdc/dutch.json" class="external-link">file</a> from the repo’s releases.)</p>
+<code class="sourceCode R"><span><span class="co">####  GENERATE A/B STREET SCENARIO ####</span></span>
+<span><span class="va">output_sf</span> <span class="op">=</span> <span class="fu"><a href="../reference/ab_scenario.html">ab_scenario</a></span><span class="op">(</span></span>
+<span>  od <span class="op">=</span> <span class="va">exeter_od</span>,</span>
+<span>  zones <span class="op">=</span> <span class="va">exeter_zones</span>,</span>
+<span>  zones_d <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  origin_buildings <span class="op">=</span> <span class="va">exeter_osm_buildings_tbl</span>,</span>
+<span>  destination_buildings <span class="op">=</span> <span class="va">exeter_osm_buildings_tbl</span>,</span>
+<span>  pop_var <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  time_fun <span class="op">=</span> <span class="va">ab_time_normal</span>,</span>
+<span>  output <span class="op">=</span> <span class="st">"sf"</span>,</span>
+<span>  modes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Walk"</span>, <span class="st">"Bike"</span>, <span class="st">"Drive"</span>, <span class="st">"Transit"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>To conclude you will need to generate a <code>JSON</code> format
+using the <code><a href="../reference/ab_json.html">ab_json()</a></code> function and then save the json file to
+your local machine using the <code><a href="../reference/ab_save.html">ab_save()</a></code> function. (You can
+download this <a href="https://github.com/a-b-street/abstr/releases/download/6543bdc/dutch.json" class="external-link">file</a>
+from the repo’s releases.)</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">#### SAVE JSON FILE ####</span>
-<span class="va">output_json</span> <span class="op">=</span> <span class="fu"><a href="../reference/ab_json.html">ab_json</a></span><span class="op">(</span><span class="va">output_sf</span>, time_fun <span class="op">=</span> <span class="va">ab_time_normal</span>, scenario_name <span class="op">=</span> <span class="st">"Go Dutch"</span><span class="op">)</span>
-<span class="fu"><a href="../reference/ab_save.html">ab_save</a></span><span class="op">(</span><span class="va">output_json</span>, f <span class="op">=</span> <span class="st">"dutch.json"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">#### SAVE JSON FILE ####</span></span>
+<span><span class="va">output_json</span> <span class="op">=</span> <span class="fu"><a href="../reference/ab_json.html">ab_json</a></span><span class="op">(</span><span class="va">output_sf</span>, time_fun <span class="op">=</span> <span class="va">ab_time_normal</span>, scenario_name <span class="op">=</span> <span class="st">"Go Dutch"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/ab_save.html">ab_save</a></span><span class="op">(</span><span class="va">output_json</span>, f <span class="op">=</span> <span class="st">"dutch.json"</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Upload the json file for future reference</span>
-<span class="fu">piggyback</span><span class="fu">::</span><span class="fu">pb_upload</span><span class="op">(</span><span class="st">"dutch.json"</span><span class="op">)</span>
-<span class="fu">piggyback</span><span class="fu">::</span><span class="fu">pb_download_url</span><span class="op">(</span><span class="st">"dutch.json"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Upload the json file for future reference</span></span>
+<span><span class="fu">piggyback</span><span class="fu">::</span><span class="fu">pb_upload</span><span class="op">(</span><span class="st">"dutch.json"</span><span class="op">)</span></span>
+<span><span class="fu">piggyback</span><span class="fu">::</span><span class="fu">pb_download_url</span><span class="op">(</span><span class="st">"dutch.json"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="importing-scenario-files-into-ab-street">Importing scenario files into A/B Street<a class="anchor" aria-label="anchor" href="#importing-scenario-files-into-ab-street"></a>
 </h2>
-<p>Now that you’ve generated a scenario, you can simulate it. First install the <a href="https://a-b-street.github.io/docs/user/index.html" class="external-link">latest build</a> of A/B Street for your platform. Run the software, and choose “Sandbox” on the title screen.</p>
-<p>You can then change the default map to other cities across the world. A/B Street contains over 40 sites in England from the ActDev project. If the local authority you have generated a scenario for is not included, you can also import a new city from the user interface.</p>
-<p>After loading the correct map, change the traffic scenario from the default “weekday” or “none” pattern. Choose “import JSON scenario,” then select your <code>dutch</code> file.</p>
+<p>Now that you’ve generated a scenario, you can simulate it. First
+install the <a href="https://a-b-street.github.io/docs/user/index.html" class="external-link">latest
+build</a> of A/B Street for your platform. Run the software, and choose
+“Sandbox” on the title screen.</p>
+<p>You can then change the default map to other cities across the world.
+A/B Street contains over 40 sites in England from the ActDev project. If
+the local authority you have generated a scenario for is not included,
+you can also import a new city from the user interface.</p>
+<p>After loading the correct map, change the traffic scenario from the
+default “weekday” or “none” pattern. Choose “import JSON scenario,” then
+select your <code>dutch</code> file.</p>
 <p><img src="https://user-images.githubusercontent.com/1825120/131586308-212caee2-3ebe-48f4-8e15-39efacedf3b4.png"></p>
 <!-- Alternatively, you can skip the first import command and use the GUI to select a scenario file to import. -->
 <!-- In any case,  -->
-<p>After selecting your scenario, you should see something like this, a Go Dutch scenario of cycling taking place before your eyes, making the OD data frames come to life in a real time simulation!</p>
+<p>After selecting your scenario, you should see something like this, a
+Go Dutch scenario of cycling taking place before your eyes, making the
+OD data frames come to life in a real time simulation!</p>
 <!-- https://github.com/a-b-street/abstr/issues/67 -->
 <!-- Large gif -->
 <!-- ![](https://user-images.githubusercontent.com/1825120/131586989-6ac002e0-55b0-4124-817e-4fa999421100.gif) -->
 <!-- Small gif -->
 <p><img src="https://user-images.githubusercontent.com/1825120/132119415-0bdf5289-9ff2-4dfb-953e-39bcb2ac7765.gif"></p>
-<p>Then let your eyes wonder on the simulation you have created and let your imagination explore the possibilities of transforming your local area into an active travel utopia.</p>
+<p>Then let your eyes wonder on the simulation you have created and let
+your imagination explore the possibilities of transforming your local
+area into an active travel utopia.</p>
 </div>
 <div class="section level2">
 <h2 id="conclusions-and-next-steps">Conclusions and next steps<a class="anchor" aria-label="anchor" href="#conclusions-and-next-steps"></a>
 </h2>
-<p>This vignette is by no means simple, and if you get stuck please raise an issue in the <a href="https://github.com/a-b-street/abstr/issues" class="external-link">Github</a>. If you succeed in generating a simulation for chosen city please share it on social media tagging the authors <code>abstr</code> so we can see how you have used the methods/data. If you are looking to extend this work presented in this vignette, why not try:</p>
+<p>This vignette is by no means simple, and if you get stuck please
+raise an issue in the <a href="https://github.com/a-b-street/abstr/issues" class="external-link">Github</a>. If you
+succeed in generating a simulation for chosen city please share it on
+social media tagging the authors <code>abstr</code> so we can see how
+you have used the methods/data. If you are looking to extend this work
+presented in this vignette, why not try:</p>
 <ul>
 <li>building a simulation with a different uptake model</li>
-<li>exploring route network data representing cycling potential to schools from the PCT package</li>
-<li>creating your own uptake model (see the <a href="https://itsleeds.github.io/pct/articles/getting.html" class="external-link"><code>getting</code></a> vignette from the <code>pct</code> R package)</li>
+<li>exploring route network data representing cycling potential to
+schools from the PCT package</li>
+<li>creating your own uptake model (see the <a href="https://itsleeds.github.io/pct/articles/getting.html" class="external-link"><code>getting</code></a>
+vignette from the <code>pct</code> R package)</li>
 </ul>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
-        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
-    </nav>
-</div>
+      </div>
 
 </div>
 
@@ -375,16 +471,16 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
       </footer>
 </div>
 
-  
 
 
-  
+
+
 
   </body>
 </html>
