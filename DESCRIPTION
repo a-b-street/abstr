@@ -3,16 +3,17 @@ Package: abstr
 Title: R Interface to the A/B Street Transport System Simulation Software
 Version: 0.4.2
 Authors@R:
-    c(person(given = "Nathanael",
-             family = "Sheehan",
-             role = c("aut", "cre"),
-             email = "nathanaelsheehan@gmail.com",
-             comment = c(ORCID = "0000-0002-2779-0976")),
-     person(given = "Robin",
+    c(
+      person(given = "Robin",
              family = "Lovelace",
-             role = "aut",
+             role = c("aut", "cre"),
              email = "rob00x@gmail.com",
              comment = c(ORCID = "0000-0001-5679-6536")),
+      person(given = "Nathanael",
+             family = "Sheehan",
+             role = "aut",
+             email = "nathanaelsheehan@gmail.com",
+             comment = c(ORCID = "0000-0002-2779-0976")),
       person(given = "Trevor",
              family = "Nederlof",
              role = "aut"),
