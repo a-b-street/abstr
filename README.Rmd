@@ -17,6 +17,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/a-b-street/abstr/workflows/R-CMD-check/badge.svg)](https://github.com/a-b-street/abstr/actions)
+[![R-CMD-check](https://github.com/a-b-street/abstr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/a-b-street/abstr/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 <img src="https://user-images.githubusercontent.com/22789869/129973263-5fc74ae3-ed17-4155-9a8c-7f382f7796cc.png" align="left" height="164px" width="164px" margin="10%" />
