@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">abstr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.2</span>
       </span>
     </div>
 
@@ -118,20 +118,22 @@
 <span><span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_shape.html" class="external-link">tm_shape</a></span><span class="op">(</span><span class="va">montlake_zones</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_polygons.html" class="external-link">tm_polygons</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"grey"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_shape.html" class="external-link">tm_shape</a></span><span class="op">(</span><span class="va">montlake_buildings</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_polygons.html" class="external-link">tm_polygons</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span>  <span class="op">+</span></span>
 <span><span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_layout.html" class="external-link">tm_style</a></span><span class="op">(</span><span class="st">"classic"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-input-1.png" title="Example data that can be used as an input by functions in abstr to generate trip-level scenarios that can be imported by A/B Street." alt="Example data that can be used as an input by functions in abstr to generate trip-level scenarios that can be imported by A/B Street." width="100%"></p>
+<div class="figure">
+<img src="reference/figures/README-input-1.png" alt="Example data that can be used as an input by functions in abstr to generate trip-level scenarios that can be imported by A/B Street." width="100%"><p class="caption">
+Example data that can be used as an input by functions in abstr to generate trip-level scenarios that can be imported by A/B Street.
+</p>
+</div>
 <p>The map above is a graphical representation of the Montlake residential neighborhood in central Seattle, Washington. Here, <code>montlake_zones</code> represents neighborhood residential zones declared by Seattle local government and <code>montlake_buildings</code> being the accumulation of buildings listed in <a link href="https://www.openstreetmap.org/#map=5/54.910/-3.432" class="external-link"> OpenStreetMap</a></p>
 <p>The final piece of the <code>abstr</code> puzzle is OD data.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">montlake_od</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 6 × 6</span></span>
-<span><span class="co">#&gt;    o_id  d_id Drive Transit  Bike  Walk</span></span>
-<span><span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;   &lt;int&gt; &lt;int&gt; &lt;int&gt;</span></span>
-<span><span class="co">#&gt; 1   281   361    23       1     2    14</span></span>
-<span><span class="co">#&gt; 2   282   361    37       4     0    11</span></span>
-<span><span class="co">#&gt; 3   282   369    14       3     0     8</span></span>
-<span><span class="co">#&gt; 4   301   361    27       4     3    15</span></span>
-<span><span class="co">#&gt; 5   301   368     6       2     1    16</span></span>
-<span><span class="co">#&gt; 6   301   369    14       2     0    13</span></span></code></pre></div>
+<span><span class="co">#&gt;   o_id d_id Drive Transit Bike Walk</span></span>
+<span><span class="co">#&gt; 1  281  361    23       1    2   14</span></span>
+<span><span class="co">#&gt; 2  282  361    37       4    0   11</span></span>
+<span><span class="co">#&gt; 3  282  369    14       3    0    8</span></span>
+<span><span class="co">#&gt; 4  301  361    27       4    3   15</span></span>
+<span><span class="co">#&gt; 5  301  368     6       2    1   16</span></span>
+<span><span class="co">#&gt; 6  301  369    14       2    0   13</span></span></code></pre></div>
 <p>In this example, the first two columns correspond to the origin and destination zones in Montlake, with the subsequent columns representing the transport mode share between these zones.</p>
 <p>Let’s combine each of the elements outlined above, the zone, building and OD data. We do this using the <code><a href="reference/ab_scenario.html">ab_scenario()</a></code> function in the <code>abstr</code> package, which generates a data frame representing tavel between the <code>montlake_buildings</code>. While the OD data contains information on origin and destination zone, <code><a href="reference/ab_scenario.html">ab_scenario()</a></code> ‘disaggregates’ the data and randomly selects building within each origin and destination zone to simulate travel at the individual level, as illustrated in the chunk below which uses only a sample of the <code>montlake_od</code> data, showing travel between three pairs of zones, to illustrate the process:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
@@ -153,7 +155,8 @@
 <code class="sourceCode R"><span><span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_shape.html" class="external-link">tm_shape</a></span><span class="op">(</span><span class="va">output_sf</span><span class="op">)</span> <span class="op">+</span> <span class="fu">tmap</span><span class="fu">::</span><span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_lines.html" class="external-link">tm_lines</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"mode"</span>, lwd <span class="op">=</span> <span class="fl">.8</span>, lwd.legeld.col <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_shape.html" class="external-link">tm_shape</a></span><span class="op">(</span><span class="va">montlake_zones</span><span class="op">)</span> <span class="op">+</span> <span class="fu">tmap</span><span class="fu">::</span><span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_polygons.html" class="external-link">tm_borders</a></span><span class="op">(</span>lwd <span class="op">=</span> <span class="fl">1.2</span>, col <span class="op">=</span> <span class="st">"gray"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_text.html" class="external-link">tm_text</a></span><span class="op">(</span><span class="st">"id"</span>, size <span class="op">=</span> <span class="fl">0.6</span><span class="op">)</span> <span class="op">+</span></span>
-<span><span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_layout.html" class="external-link">tm_style</a></span><span class="op">(</span><span class="st">"cobalt"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_layout.html" class="external-link">tm_style</a></span><span class="op">(</span><span class="st">"cobalt"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [tm_lines()] Argument `lwd.legeld.col` unknown.</span></span></code></pre></div>
 <p><img src="reference/figures/README-outputplot-1.png" width="100%"></p>
 <p>Each line in the plot above represents a single trip, with the color representing each transport mode. Moreover, each trip is configured with an associated departure time, that can be represented in A/B Street.</p>
 <p>The <code>ab_save</code> and <code>ab_json</code> functions conclude the <code>abstr</code> workflow by outputting a local JSON file, matching the <a href="https://a-b-street.github.io/docs/tech/dev/formats/scenarios.html" class="external-link">A/B Street’s schema</a>.</p>
@@ -276,6 +279,7 @@
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://github.com/a-b-street/abstr/actions" class="external-link"><img src="https://github.com/a-b-street/abstr/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://github.com/a-b-street/abstr/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/a-b-street/abstr/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
 </ul>
 </div>
 
