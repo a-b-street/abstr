@@ -43,18 +43,8 @@ library(abstr)
 Now lets start with fetching the polygon area for Montlake. To be consistent with whats on A/B street currently, we can grab the official polygon from the github repo. Following this we can clean the data and convert it to WGS84. 
 
 ```{r}
-montlake_poly_url = "https://raw.githubusercontent.com/a-b-street/abstreet/master/importer/config/us/seattle/montlake.poly"
-
-raw_boundary_vec = readr::read_lines(montlake_poly_url)
-boundary_matrix = raw_boundary_vec[(raw_boundary_vec != "boundary") & (raw_boundary_vec != "1") & (raw_boundary_vec != "END")] %>%
-  stringr::str_trim() %>%
-  tibble::as_tibble() %>%
-  dplyr::mutate(y_boundary = as.numeric(lapply(stringr::str_split(value, "    "), `[[`, 1)),
-                x_boundary = as.numeric(lapply(stringr::str_split(value, "    "), `[[`, 2))) %>%
-  dplyr::select(-value) %>%
-  as.matrix()
-boundary_sf_poly = sf::st_sf(geometry = sf::st_sfc(sf::st_polygon(list(boundary_matrix)), crs = 4326))
-
+montlake_poly_url = "https://github.com/a-b-street/abstreet/raw/refs/heads/main/importer/config/us/seattle/montlake.geojson"
+boundary_sf_poly = sf::read_sf(montlake_poly_url)
 ```
 
 ### Parsing zones
