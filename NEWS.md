@@ -1,4 +1,9 @@
 # abstr (development version)
+
+# abstr 0.4.2
+
+* Fixed pkgdown GitHub Actions workflow by updating action versions and fixing gfortran removal error
+
 # abstr 0.4.1
 
 * Get `abstr` back on CRAN (#90)

@@ -291,7 +291,6 @@ output_sf = ab_scenario(
 ```
 
 To conclude you will need to generate a `JSON` format using the `ab_json()` function and then save the json file to your local machine using the `ab_save()` function.
-(You can download this [file](https://github.com/a-b-street/abstr/releases/download/6543bdc/dutch.json) from the repo's releases.)
 
 ```{r}
 #### SAVE JSON FILE ####

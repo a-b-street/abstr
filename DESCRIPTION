@@ -1,8 +1,8 @@
 Type: Package
 Package: abstr
 Title: R Interface to the A/B Street Transport System Simulation Software
-Version: 0.4.1
-Authors@R: 
+Version: 0.4.2
+Authors@R:
     c(person(given = "Nathanael",
              family = "Sheehan",
              role = c("aut", "cre"),

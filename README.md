@@ -6,6 +6,7 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/a-b-street/abstr/workflows/R-CMD-check/badge.svg)](https://github.com/a-b-street/abstr/actions)
+[![R-CMD-check](https://github.com/a-b-street/abstr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/a-b-street/abstr/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 ## <img src="https://user-images.githubusercontent.com/22789869/129973263-5fc74ae3-ed17-4155-9a8c-7f382f7796cc.png" align="left" height="164px" width="164px" margin="10%" />
@@ -55,7 +56,15 @@ tm_shape(montlake_zones) + tm_polygons(col = "grey") +
 tm_style("classic")
 ```
 
-<img src="man/figures/README-input-1.png" title="Example data that can be used as an input by functions in abstr to generate trip-level scenarios that can be imported by A/B Street." alt="Example data that can be used as an input by functions in abstr to generate trip-level scenarios that can be imported by A/B Street." width="100%" />
+<div class="figure">
+
+<img src="man/figures/README-input-1.png" alt="Example data that can be used as an input by functions in abstr to generate trip-level scenarios that can be imported by A/B Street." width="100%" />
+<p class="caption">
+Example data that can be used as an input by functions in abstr to
+generate trip-level scenarios that can be imported by A/B Street.
+</p>
+
+</div>
 
 The map above is a graphical representation of the Montlake residential
 neighborhood in central Seattle, Washington. Here, `montlake_zones`
@@ -69,15 +78,13 @@ The final piece of the `abstr` puzzle is OD data.
 
 ``` r
 head(montlake_od)
-#> # A tibble: 6 × 6
-#>    o_id  d_id Drive Transit  Bike  Walk
-#>   <dbl> <dbl> <int>   <int> <int> <int>
-#> 1   281   361    23       1     2    14
-#> 2   282   361    37       4     0    11
-#> 3   282   369    14       3     0     8
-#> 4   301   361    27       4     3    15
-#> 5   301   368     6       2     1    16
-#> 6   301   369    14       2     0    13
+#>   o_id d_id Drive Transit Bike Walk
+#> 1  281  361    23       1    2   14
+#> 2  282  361    37       4    0   11
+#> 3  282  369    14       3    0    8
+#> 4  301  361    27       4    3   15
+#> 5  301  368     6       2    1   16
+#> 6  301  369    14       2    0   13
 ```
 
 In this example, the first two columns correspond to the origin and
@@ -121,6 +128,7 @@ tm_shape(output_sf) + tmap::tm_lines(col = "mode", lwd = .8, lwd.legeld.col = "b
   tm_shape(montlake_zones) + tmap::tm_borders(lwd = 1.2, col = "gray") +
   tm_text("id", size = 0.6) +
 tm_style("cobalt")
+#> [tm_lines()] Argument `lwd.legeld.col` unknown.
 ```
 
 <img src="man/figures/README-outputplot-1.png" width="100%" />
@@ -252,14 +260,14 @@ your valuable origin-destination and activity data into a dynamic
 transport simulation environment for visualisation, model exaperiments
 and more:
 
--   The [`abstr`
-    vignette](https://a-b-street.github.io/abstr/articles/abstr.html)
-    for more detail on getting started with the package and context
--   The [`activity`
-    vignette](https://a-b-street.github.io/abstr/articles/activity.html)
-    on representing multi-trip-per-person activity models in R and A/B
-    Street
--   The [`pct_to_abstr`
-    vignette](https://a-b-street.github.io/abstr/articles/pct_to_abstr.html)
-    on importing output from an established project, the Propensity to
-    Cycle Tool, into A/B Street
+- The [`abstr`
+  vignette](https://a-b-street.github.io/abstr/articles/abstr.html) for
+  more detail on getting started with the package and context
+- The [`activity`
+  vignette](https://a-b-street.github.io/abstr/articles/activity.html)
+  on representing multi-trip-per-person activity models in R and A/B
+  Street
+- The [`pct_to_abstr`
+  vignette](https://a-b-street.github.io/abstr/articles/pct_to_abstr.html)
+  on importing output from an established project, the Propensity to
+  Cycle Tool, into A/B Street
